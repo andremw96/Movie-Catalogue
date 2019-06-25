@@ -23,6 +23,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
 
     private final Context context;
     private ArrayList<Movie> listMovie;
+    private OnItemClickListener mOnItemClickListener;
 
     private ArrayList<Movie> getListMovie() {
         return listMovie;
@@ -32,15 +33,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
         this.listMovie = listMovie;
     }
 
-    public MovieAdapter(Context context) {
+    public MovieAdapter(Context context, OnItemClickListener onItemClickListener) {
         this.context = context;
+        this.mOnItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
     public CardViewViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_movie, viewGroup, false);
-        return new CardViewViewHolder(view);
+        return new CardViewViewHolder(view, mOnItemClickListener);
     }
 
     @Override
@@ -54,24 +56,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
         cardViewViewHolder.txtTitle.setText(movie.getTitle());
         cardViewViewHolder.txtDate.setText(String.format("%s%s", context.getString(R.string.releaseDateString), movie.getDate()));
         cardViewViewHolder.txtRating.setText(String.format("%s%s", context.getString(R.string.ratingString), movie.getRating()));
-
-        cardViewViewHolder.cardView.setOnClickListener(new ItemClickListener(i, new ItemClickListener.OnItemClickCallback() {
-            @Override
-            public void onItemClicked() {
-                Movie intentMovie = new Movie();
-                intentMovie.setTitle(movie.getTitle());
-                intentMovie.setPhoto(movie.getPhoto());
-                intentMovie.setRating(movie.getRating());
-                intentMovie.setDate(movie.getDate());
-                intentMovie.setDirector(movie.getDirector());
-                intentMovie.setDescription(movie.getDescription());
-
-                Intent goToDetail = new Intent(context, DetailMovieActivity.class);
-                goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, intentMovie);
-                context.startActivity(goToDetail);
-            }
-        }));
-
     }
 
     @Override
@@ -79,20 +63,30 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
         return getListMovie().size();
     }
 
-    public class CardViewViewHolder extends RecyclerView.ViewHolder {
+    public class CardViewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final CardView cardView;
         final ImageView imgPhoto;
         final TextView txtTitle;
         final TextView txtDate;
         final TextView txtRating;
 
-        CardViewViewHolder(View itemView) {
+        OnItemClickListener onItemClickListener;
+
+        CardViewViewHolder(View itemView, OnItemClickListener onItemClickListener)  {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardview_movie);
             imgPhoto = itemView.findViewById(R.id.img_movie);
             txtTitle = itemView.findViewById(R.id.txt_movie_title);
             txtDate = itemView.findViewById(R.id.txt_date);
             txtRating = itemView.findViewById(R.id.txt_rating);
+            this.onItemClickListener = onItemClickListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onItemClickListener.onItemClicked(getAdapterPosition());
         }
     }
 }
