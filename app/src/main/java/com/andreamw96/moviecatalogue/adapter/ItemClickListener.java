@@ -8,7 +8,6 @@ class ItemClickListener implements View.OnClickListener {
     private final OnItemClickCallback onItemClickCallback;
 
     ItemClickListener(int position, OnItemClickCallback onItemClickCallback) {
-        int position1 = position;
         this.onItemClickCallback = onItemClickCallback;
     }
     @Override
