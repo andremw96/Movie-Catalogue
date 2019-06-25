@@ -49,13 +49,14 @@ public class DetailMovieActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        this.finish();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        
         return super.onOptionsItemSelected(item);
     }
 }
