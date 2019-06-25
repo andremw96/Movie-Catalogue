@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.andreamw96.moviecatalogue.R;
 import com.andreamw96.moviecatalogue.adapter.MovieAdapter;
@@ -30,5 +31,7 @@ public class MainActivity extends AppCompatActivity {
         MovieAdapter movieAdapter = new MovieAdapter(this);
         movieAdapter.setListMovie(list);
         rvMovie.setAdapter(movieAdapter);
+
+        Log.d("APAKAH ADA KESALAHAN??", "MAYBEE");
     }
 }
