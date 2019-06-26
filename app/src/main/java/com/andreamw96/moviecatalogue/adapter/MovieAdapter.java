@@ -1,7 +1,6 @@
 package com.andreamw96.moviecatalogue.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andreamw96.moviecatalogue.R;
-import com.andreamw96.moviecatalogue.activity.DetailMovieActivity;
 import com.andreamw96.moviecatalogue.model.Movie;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewViewHolder> {
 
-    private final Context context;
+    private Context context;
     private ArrayList<Movie> listMovie;
     private OnItemClickListener mOnItemClickListener;
 
@@ -33,8 +31,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
         this.listMovie = listMovie;
     }
 
-    public MovieAdapter(Context context, OnItemClickListener onItemClickListener) {
-        this.context = context;
+    public MovieAdapter(ArrayList<Movie> listMovie, OnItemClickListener onItemClickListener) {
+        this.listMovie = listMovie;
         this.mOnItemClickListener = onItemClickListener;
     }
 
@@ -72,7 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
 
         OnItemClickListener onItemClickListener;
 
-        CardViewViewHolder(View itemView, OnItemClickListener onItemClickListener)  {
+        CardViewViewHolder(View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardview_movie);
             imgPhoto = itemView.findViewById(R.id.img_movie);
@@ -86,7 +84,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
 
         @Override
         public void onClick(View view) {
-            onItemClickListener.onItemClicked(getAdapterPosition());
+            if (mOnItemClickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onItemClicked(getAdapterPosition());
+                }
+            }
         }
     }
 }

@@ -24,8 +24,10 @@ public class DetailMovieActivity extends AppCompatActivity {
 
         Movie movie = getIntent().getParcelableExtra(INTENT_MOVIE);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(movie.getTitle());
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(movie.getTitle());
+        }
 
         CircleImageView detail_image_movie = findViewById(R.id.detail_image_movie);
         TextView detail_title_movie = findViewById(R.id.detail_title_movie);

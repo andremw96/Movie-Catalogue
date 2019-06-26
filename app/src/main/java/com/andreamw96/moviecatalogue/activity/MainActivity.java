@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         rvMovie.setHasFixedSize(true);
 
         rvMovie.setLayoutManager(new LinearLayoutManager(this));
-        MovieAdapter movieAdapter = new MovieAdapter(this, this);
+        MovieAdapter movieAdapter = new MovieAdapter(list, this);
         movieAdapter.setListMovie(list);
         rvMovie.setAdapter(movieAdapter);
     }
