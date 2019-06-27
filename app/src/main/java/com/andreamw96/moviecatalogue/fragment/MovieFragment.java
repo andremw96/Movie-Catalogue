@@ -57,16 +57,8 @@ public class MovieFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClicked(int position) {
-        Movie intentMovie = new Movie();
-        intentMovie.setTitle(list.get(position).getTitle());
-        intentMovie.setPhoto(list.get(position).getPhoto());
-        intentMovie.setRating(list.get(position).getRating());
-        intentMovie.setDate(list.get(position).getDate());
-        intentMovie.setDirector(list.get(position).getDirector());
-        intentMovie.setDescription(list.get(position).getDescription());
-
         Intent goToDetail = new Intent(getActivity(), DetailMovieActivity.class);
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, intentMovie);
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, list.get(position));
         startActivity(goToDetail);
     }
 }
