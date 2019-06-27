@@ -1,16 +1,15 @@
 package com.andreamw96.moviecatalogue.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andreamw96.moviecatalogue.R;
 import com.andreamw96.moviecatalogue.model.Movie;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class DetailMovieActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(movie.getTitle());
         }
 
-        CircleImageView detail_image_movie = findViewById(R.id.detail_image_movie);
+        ImageView detail_image_movie = findViewById(R.id.detail_image_movie);
         TextView detail_title_movie = findViewById(R.id.detail_title_movie);
         TextView detail_director_movie = findViewById(R.id.detail_director_movie);
         TextView detail_description_movie = findViewById(R.id.detail_description_movie);

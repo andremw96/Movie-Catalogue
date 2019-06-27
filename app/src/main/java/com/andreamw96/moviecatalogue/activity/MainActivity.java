@@ -1,52 +1,75 @@
 package com.andreamw96.moviecatalogue.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.andreamw96.moviecatalogue.R;
-import com.andreamw96.moviecatalogue.adapter.MovieAdapter;
-import com.andreamw96.moviecatalogue.adapter.OnItemClickListener;
-import com.andreamw96.moviecatalogue.model.Movie;
-import com.andreamw96.moviecatalogue.model.MovieData;
+import com.andreamw96.moviecatalogue.fragment.MovieFragment;
+import com.andreamw96.moviecatalogue.fragment.TVShowFragment;
 
-import java.util.ArrayList;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements OnItemClickListener {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-    private final ArrayList<Movie> list = new ArrayList<>();
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+
+            switch (item.getItemId()) {
+                case R.id.navigation_movie:
+
+                    fragment = new MovieFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                            .commit();
+                    return true;
+                case R.id.navigation_tv_shows:
+
+                    fragment = new TVShowFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                            .commit();
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        list.addAll(MovieData.getListData());
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        RecyclerView rvMovie = findViewById(R.id.rv_movie);
-        rvMovie.setHasFixedSize(true);
-
-        rvMovie.setLayoutManager(new LinearLayoutManager(this));
-        MovieAdapter movieAdapter = new MovieAdapter(list, this);
-        movieAdapter.setListMovie(list);
-        rvMovie.setAdapter(movieAdapter);
+        if (savedInstanceState == null){
+            navigation.setSelectedItemId(R.id.navigation_movie);
+        }
     }
 
     @Override
-    public void onItemClicked(int position) {
-        Movie intentMovie = new Movie();
-        intentMovie.setTitle(list.get(position).getTitle());
-        intentMovie.setPhoto(list.get(position).getPhoto());
-        intentMovie.setRating(list.get(position).getRating());
-        intentMovie.setDate(list.get(position).getDate());
-        intentMovie.setDirector(list.get(position).getDirector());
-        intentMovie.setDescription(list.get(position).getDescription());
-
-        Intent goToDetail = new Intent(this, DetailMovieActivity.class);
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, intentMovie);
-        startActivity(goToDetail);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_change_settings){
+            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(mIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

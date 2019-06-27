@@ -31,7 +31,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CardViewView
         this.listMovie = listMovie;
     }
 
-    public MovieAdapter(ArrayList<Movie> listMovie, OnItemClickListener onItemClickListener) {
+    public MovieAdapter(Context context, ArrayList<Movie> listMovie, OnItemClickListener onItemClickListener) {
+        this.context = context;
         this.listMovie = listMovie;
         this.mOnItemClickListener = onItemClickListener;
     }
