@@ -16,6 +16,7 @@ import com.andreamw96.moviecatalogue.adapter.MovieAdapter
 import com.andreamw96.moviecatalogue.adapter.OnItemClickListener
 import com.andreamw96.moviecatalogue.model.Movie
 import com.andreamw96.moviecatalogue.model.MovieData
+import kotlinx.android.synthetic.main.fragment_movie.*
 
 import java.util.ArrayList
 
@@ -38,13 +39,10 @@ class MovieFragment : Fragment(), OnItemClickListener {
 
         list.addAll(MovieData.listData)
 
-        val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
-        rvMovie.setHasFixedSize(true)
-
-        rvMovie.layoutManager = LinearLayoutManager(activity)
+        rv_movie.setHasFixedSize(true)
+        rv_movie.layoutManager = LinearLayoutManager(activity)
         val movieAdapter = MovieAdapter(context, list, this)
-        movieAdapter.listMovie = list
-        rvMovie.adapter = movieAdapter
+        rv_movie.adapter = movieAdapter
     }
 
     override fun onItemClicked(position: Int) {

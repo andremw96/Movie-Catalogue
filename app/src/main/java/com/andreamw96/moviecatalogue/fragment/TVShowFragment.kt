@@ -16,6 +16,7 @@ import com.andreamw96.moviecatalogue.adapter.MovieAdapter
 import com.andreamw96.moviecatalogue.adapter.OnItemClickListener
 import com.andreamw96.moviecatalogue.model.Movie
 import com.andreamw96.moviecatalogue.model.TVShowData
+import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 import java.util.ArrayList
 
@@ -38,13 +39,10 @@ class TVShowFragment : Fragment(), OnItemClickListener {
 
         list.addAll(TVShowData.listData)
 
-        val rvTVShow = view.findViewById<RecyclerView>(R.id.rv_tv_show)
-        rvTVShow.setHasFixedSize(true)
-
-        rvTVShow.layoutManager = LinearLayoutManager(activity)
+        rv_tv_show.setHasFixedSize(true)
+        rv_tv_show.layoutManager = LinearLayoutManager(activity)
         val tvShowAdapter = MovieAdapter(activity, list, this)
-        tvShowAdapter.listMovie = list
-        rvTVShow.adapter = tvShowAdapter
+        rv_tv_show.adapter = tvShowAdapter
     }
 
     override fun onItemClicked(position: Int) {
