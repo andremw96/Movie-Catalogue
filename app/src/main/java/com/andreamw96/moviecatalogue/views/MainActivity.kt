@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.activity
+package com.andreamw96.moviecatalogue.views
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,8 @@ import android.view.Menu
 import android.view.MenuItem
 
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.fragment.MovieFragment
-import com.andreamw96.moviecatalogue.fragment.TVShowFragment
+import com.andreamw96.moviecatalogue.views.movies.MovieFragment
+import com.andreamw96.moviecatalogue.views.tvshows.TVShowFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

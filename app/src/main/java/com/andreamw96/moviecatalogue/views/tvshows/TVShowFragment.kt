@@ -1,29 +1,28 @@
-package com.andreamw96.moviecatalogue.fragment
+package com.andreamw96.moviecatalogue.views.tvshows
 
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.activity.DetailMovieActivity
-import com.andreamw96.moviecatalogue.adapter.MovieAdapter
-import com.andreamw96.moviecatalogue.adapter.OnItemClickListener
+import com.andreamw96.moviecatalogue.views.movies.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.movies.MovieAdapter
+import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.model.Movie
-import com.andreamw96.moviecatalogue.model.MovieData
-import kotlinx.android.synthetic.main.fragment_movie.*
+import com.andreamw96.moviecatalogue.model.TVShowData
+import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 import java.util.ArrayList
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment(), OnItemClickListener {
+class TVShowFragment : Fragment(), OnItemClickListener {
 
     private val list = ArrayList<Movie>()
 
@@ -31,18 +30,18 @@ class MovieFragment : Fragment(), OnItemClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+        return inflater.inflate(R.layout.fragment_tvshow, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.addAll(MovieData.listData)
+        list.addAll(TVShowData.listData)
 
-        rv_movie.setHasFixedSize(true)
-        rv_movie.layoutManager = LinearLayoutManager(activity)
-        val movieAdapter = MovieAdapter(context, list, this)
-        rv_movie.adapter = movieAdapter
+        rv_tv_show.setHasFixedSize(true)
+        rv_tv_show.layoutManager = LinearLayoutManager(activity)
+        val tvShowAdapter = MovieAdapter(activity, list, this)
+        rv_tv_show.adapter = tvShowAdapter
     }
 
     override fun onItemClicked(position: Int) {
@@ -50,4 +49,5 @@ class MovieFragment : Fragment(), OnItemClickListener {
         goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, list[position])
         startActivity(goToDetail)
     }
+
 }

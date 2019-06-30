@@ -1,10 +1,8 @@
-package com.andreamw96.moviecatalogue.activity
+package com.andreamw96.moviecatalogue.views.movies
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.TextView
 
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.Movie

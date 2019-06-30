@@ -1,16 +1,14 @@
-package com.andreamw96.moviecatalogue.adapter
+package com.andreamw96.moviecatalogue.views.movies
 
 import android.content.Context
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.Movie
+import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.extensions.LayoutContainer
