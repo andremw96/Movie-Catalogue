@@ -10,6 +10,7 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -24,13 +25,6 @@ class DetailMovieActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.title = movie.title
         }
-
-        val detail_image_movie = findViewById<ImageView>(R.id.detail_image_movie)
-        val detail_title_movie = findViewById<TextView>(R.id.detail_title_movie)
-        val detail_director_movie = findViewById<TextView>(R.id.detail_director_movie)
-        val detail_description_movie = findViewById<TextView>(R.id.detail_description_movie)
-        val detail_rating_movie = findViewById<TextView>(R.id.detail_rating_movie)
-        val detail_date_movie = findViewById<TextView>(R.id.detail_date_movie)
 
         Glide.with(this)
                 .load(movie.photo ?: "")

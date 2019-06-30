@@ -12,6 +12,7 @@ import android.view.MenuItem
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.fragment.MovieFragment
 import com.andreamw96.moviecatalogue.fragment.TVShowFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,11 +44,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         if (savedInstanceState == null) {
-            navigation.selectedItemId = R.id.navigation_movie
+            bottom_navigation.selectedItemId = R.id.navigation_movie
         }
     }
 
