@@ -13,16 +13,12 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.cardview_movie.*
 
 import java.util.ArrayList
 
-class MovieAdapter(private val context: Context?, listMovie: ArrayList<Movie>, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
-
-    var listMovie: ArrayList<Movie>? = null
-
-    init {
-        this.listMovie = listMovie
-    }
+class MovieAdapter(private val context: Context?, private val listMovie: ArrayList<Movie>, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CardViewViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.cardview_movie, viewGroup, false)
@@ -30,37 +26,25 @@ class MovieAdapter(private val context: Context?, listMovie: ArrayList<Movie>, p
     }
 
     override fun onBindViewHolder(cardViewViewHolder: CardViewViewHolder, i: Int) {
-        val movie = listMovie!![i]
-
-        context?.let {
-            Glide.with(it)
-                .load(movie.photo)
-                .apply(RequestOptions().override(350, 550))
-                .into(cardViewViewHolder.imgPhoto)
-        }
-
-        cardViewViewHolder.txtTitle.text = movie.title
-        cardViewViewHolder.txtDate.setText(String.format("%s%s", context?.getString(R.string.releaseDateString), movie.date))
-        cardViewViewHolder.txtRating.setText(String.format("%s%s", context?.getString(R.string.ratingString), movie.rating))
+        cardViewViewHolder.bindItem(listMovie[i])
     }
 
     override fun getItemCount(): Int {
-        return listMovie!!.size
+        return listMovie.size
     }
 
-    inner class CardViewViewHolder internal constructor(itemView: View, internal var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        internal val cardView: CardView
-        internal val imgPhoto: ImageView
-        internal val txtTitle: TextView
-        internal val txtDate: TextView
-        internal val txtRating: TextView
+    inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
+        fun bindItem(movie : Movie) {
+            context?.let {
+                Glide.with(it)
+                        .load(movie.photo)
+                        .apply(RequestOptions().override(350, 550))
+                        .into(img_movie)
+            }
 
-        init {
-            cardView = itemView.findViewById(R.id.cardview_movie)
-            imgPhoto = itemView.findViewById(R.id.img_movie)
-            txtTitle = itemView.findViewById(R.id.txt_movie_title)
-            txtDate = itemView.findViewById(R.id.txt_date)
-            txtRating = itemView.findViewById(R.id.txt_rating)
+            txt_movie_title.text = movie.title
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.date)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.rating)
 
             itemView.setOnClickListener(this)
         }
