@@ -9,9 +9,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class root {
-    lateinit var mRetrofit : Retrofit
-    lateinit var mMovieApi : MovieApi
+class Root {
+    private lateinit var mRetrofit : Retrofit
+    private lateinit var mMovieApi : MovieApi
 
     fun getRetrofit() : Retrofit {
         if(!::mRetrofit.isInitialized) {
@@ -32,6 +32,8 @@ class root {
                     .client(clientBuilder.build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+
+            return mRetrofit
         }
 
         return mRetrofit

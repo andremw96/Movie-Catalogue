@@ -3,27 +3,27 @@ package com.andreamw96.moviecatalogue.views.movies
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.dummydata.Movie
-import com.andreamw96.moviecatalogue.model.dummydata.MovieData
+import com.andreamw96.moviecatalogue.model.MovieResult
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
+import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.fragment_movie.*
 
-import java.util.ArrayList
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment(), OnItemClickListener {
+class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
-    private val list = ArrayList<Movie>()
-
+    private lateinit var movieViewModel: MovieViewModel
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,17 +34,36 @@ class MovieFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.addAll(MovieData.listData)
+        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
+        movieViewModel.getMovies().observe(this, getMovies)
 
         rv_movie.setHasFixedSize(true)
         rv_movie.layoutManager = LinearLayoutManager(activity)
-        val movieAdapter = MovieAdapter(context, list, this)
+        movieAdapter = MovieAdapter(context, this)
         rv_movie.adapter = movieAdapter
+
+        showLoading()
+        movieViewModel.setMovies()
+    }
+
+    private val getMovies = Observer<List<MovieResult>> { movieItems ->
+        if (movieItems != null) {
+            movieAdapter.bindData(movieItems)
+            hideLoading()
+        }
     }
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, list[position])
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position])
         startActivity(goToDetail)
+    }
+
+    override fun showLoading() {
+        progressBarMovieFrag.setVisibility(View.VISIBLE)
+    }
+
+    override fun hideLoading() {
+        progressBarMovieFrag.setVisibility(View.GONE)
     }
 }

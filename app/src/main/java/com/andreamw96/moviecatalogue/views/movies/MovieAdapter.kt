@@ -5,8 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.andreamw96.moviecatalogue.BuildConfig
 
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.model.MovieResult
+import com.andreamw96.moviecatalogue.model.Movies
 import com.andreamw96.moviecatalogue.model.dummydata.Movie
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.bumptech.glide.Glide
@@ -16,7 +20,15 @@ import kotlinx.android.synthetic.main.cardview_movie.*
 
 import java.util.ArrayList
 
-class MovieAdapter(private val context: Context?, private val listMovie: ArrayList<Movie>, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
+class MovieAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
+
+    val listMovie: ArrayList<MovieResult> = arrayListOf()
+
+    fun bindData(movies: List<MovieResult>) {
+        listMovie.clear()
+        listMovie.addAll(movies)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CardViewViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.cardview_movie, viewGroup, false)
@@ -32,17 +44,14 @@ class MovieAdapter(private val context: Context?, private val listMovie: ArrayLi
     }
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
-        fun bindItem(movie : Movie) {
-            context?.let {
-                Glide.with(it)
-                        .load(movie.photo)
-                        .apply(RequestOptions().override(350, 550))
-                        .into(img_movie)
-            }
 
+        fun bindItem(movie : MovieResult) {
+
+            img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
+                    .append(movie.backdropPath).toString())
             txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.date)
-            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.rating)
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
 
             itemView.setOnClickListener(this)
         }
@@ -54,4 +63,11 @@ class MovieAdapter(private val context: Context?, private val listMovie: ArrayLi
             }
         }
     }
+}
+
+fun ImageView.loadImage(source: String?) {
+    val requestBuilder = Glide.with(this.context)
+            .load(source ?: "")
+
+    requestBuilder.into(this)
 }

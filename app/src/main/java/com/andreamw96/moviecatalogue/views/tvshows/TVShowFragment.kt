@@ -40,7 +40,7 @@ class TVShowFragment : Fragment(), OnItemClickListener {
 
         rv_tv_show.setHasFixedSize(true)
         rv_tv_show.layoutManager = LinearLayoutManager(activity)
-        val tvShowAdapter = MovieAdapter(activity, list, this)
+        val tvShowAdapter = MovieAdapter(activity, this)
         rv_tv_show.adapter = tvShowAdapter
     }
 
