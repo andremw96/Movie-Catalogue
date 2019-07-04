@@ -1,29 +1,27 @@
 package com.andreamw96.moviecatalogue.views.movies
 
-import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.BuildConfig
-
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.MovieResult
-import com.andreamw96.moviecatalogue.model.dummydata.Movie
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.andreamw96.moviecatalogue.utils.loadImageDetail
+import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
-class DetailMovieActivity : AppCompatActivity() {
+class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
 
     companion object {
-        val INTENT_MOVIE = "intent_movie"
+        const val INTENT_MOVIE = "intent_movie"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
+
+        showLoading()
 
         val movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
 
@@ -32,12 +30,14 @@ class DetailMovieActivity : AppCompatActivity() {
             supportActionBar?.title = movie.title
         }
 
-        detail_image_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
+        detail_image_movie.loadImageDetail(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
                 .append(movie.backdropPath).toString())
         detail_title_movie.text = movie.title
         detail_description_movie.text = movie.overview
         detail_rating_movie.text = String.format("%s%s", getString(R.string.ratingString), movie.voteAverage)
         detail_date_movie.text = String.format("%s%s", getString(R.string.releaseDateString), movie.releaseDate)
+
+        hideLoading()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -48,10 +48,11 @@ class DetailMovieActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun ImageView.loadImage(source: String?) {
-        val requestBuilder = Glide.with(this.context)
-                .load(source ?: "")
+    override fun showLoading() {
+        progressBarMovieDetail.visibility = View.VISIBLE
+    }
 
-        requestBuilder.into(this)
+    override fun hideLoading() {
+        progressBarMovieDetail.visibility = View.GONE
     }
 }

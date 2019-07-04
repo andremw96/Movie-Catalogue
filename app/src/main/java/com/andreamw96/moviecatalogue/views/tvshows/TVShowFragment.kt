@@ -8,13 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.andMovieAdapter.ktreamw96.moviecatalogue.views.tvshows.TvShowsAdapter
 
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.model.TvResult
 import com.andreamw96.moviecatalogue.views.movies.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.movies.MovieAdapter
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.model.dummydata.Movie
 import com.andreamw96.moviecatalogue.model.dummydata.TVShowData
+import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 import java.util.ArrayList
@@ -22,10 +27,10 @@ import java.util.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class TVShowFragment : Fragment(), OnItemClickListener {
+class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
-    private val list = ArrayList<Movie>()
-
+    private lateinit var tvShowMovieViewModel: TvShowViewModel
+    private lateinit var tvShowsAdapter: TvShowsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,18 +41,37 @@ class TVShowFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.addAll(TVShowData.listData)
+        tvShowMovieViewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
+        tvShowMovieViewModel.getTvShows().observe(this, getTvShows)
 
         rv_tv_show.setHasFixedSize(true)
         rv_tv_show.layoutManager = LinearLayoutManager(activity)
-        val tvShowAdapter = MovieAdapter(activity, this)
-        rv_tv_show.adapter = tvShowAdapter
+        tvShowsAdapter = TvShowsAdapter(activity, this)
+        rv_tv_show.adapter = tvShowsAdapter
+
+        showLoading()
+        tvShowMovieViewModel.setTvShows()
     }
 
     override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, list[position])
+        val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
+        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
         startActivity(goToDetail)
+    }
+
+    private val getTvShows = Observer<List<TvResult>> { tvItems ->
+        if (tvItems != null) {
+            tvShowsAdapter.bindData(tvItems)
+            hideLoading()
+        }
+    }
+
+    override fun showLoading() {
+        progressBarTvFrag.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progressBarTvFrag.visibility = View.GONE
     }
 
 }
