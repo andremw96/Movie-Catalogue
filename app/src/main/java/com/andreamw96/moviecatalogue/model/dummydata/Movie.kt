@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.model
+package com.andreamw96.moviecatalogue.model.dummydata
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

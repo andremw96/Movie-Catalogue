@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.Movie
-import com.andreamw96.moviecatalogue.model.MovieData
+import com.andreamw96.moviecatalogue.model.dummydata.Movie
+import com.andreamw96.moviecatalogue.model.dummydata.MovieData
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import kotlinx.android.synthetic.main.fragment_movie.*
 

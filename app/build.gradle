@@ -12,6 +12,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'API_KEY', '"52b1fef17cd428dc289311a98ecfd8b0"'
+        buildConfigField 'String', 'API_BASE_URL', '"http://api.themoviedb.org/3/"'
+        buildConfigField 'String', 'IMAGE_BASE_URL', '"https://image.tmdb.org/t/p/w500"'
     }
     buildTypes {
         release {
@@ -39,6 +43,20 @@ dependencies {
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+    //reactive
+    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
+
+    //gson
+    implementation "com.google.code.gson:gson:2.8.5"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.4.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.4.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
 
     //test
     testImplementation 'junit:junit:4.12'

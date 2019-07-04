@@ -13,8 +13,8 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.movies.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.movies.MovieAdapter
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.andreamw96.moviecatalogue.model.Movie
-import com.andreamw96.moviecatalogue.model.TVShowData
+import com.andreamw96.moviecatalogue.model.dummydata.Movie
+import com.andreamw96.moviecatalogue.model.dummydata.TVShowData
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 import java.util.ArrayList

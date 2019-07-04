@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.Movie
+import com.andreamw96.moviecatalogue.model.dummydata.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail_movie.*
