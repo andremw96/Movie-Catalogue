@@ -3,15 +3,14 @@ package com.andreamw96.moviecatalogue.views
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.movies.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.TVShowFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

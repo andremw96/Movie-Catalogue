@@ -2,7 +2,6 @@
     <string name="app_name">Movie Catalogue</string>
     <string name="overview_string">OVERVIEW</string>
     <string name="imageviewmovie">imageViewMovie</string>
-    <string name="directorString">Director : \t</string>
     <string name="ratingString">Rating : \t</string>
     <string name="releaseDateString">Release Date :\t</string>
 

@@ -10,11 +10,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class Root {
-    private lateinit var mRetrofit : Retrofit
-    private lateinit var mMovieApi : MovieApi
+    private lateinit var mRetrofit: Retrofit
+    private lateinit var mMovieApi: MovieApi
 
-    fun getRetrofit() : Retrofit {
-        if(!::mRetrofit.isInitialized) {
+    private fun getRetrofit(): Retrofit {
+        if (!::mRetrofit.isInitialized) {
 
             //init okhttp
             val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -27,20 +27,19 @@ class Root {
                     .addInterceptor(httpLoggingInterceptor)
 
             // init retrofit
-            val mRetrofit = Retrofit.Builder()
+
+            return Retrofit.Builder()
                     .baseUrl(BuildConfig.API_BASE_URL)
                     .client(clientBuilder.build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-
-            return mRetrofit
         }
 
         return mRetrofit
     }
 
-    fun getMovieAPI() : MovieApi {
-        if(!::mMovieApi.isInitialized) {
+    fun getMovieAPI(): MovieApi {
+        if (!::mMovieApi.isInitialized) {
             mMovieApi = getRetrofit().create(MovieApi::class.java)
         }
         return mMovieApi

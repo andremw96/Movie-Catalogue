@@ -1,9 +1,9 @@
 package com.andreamw96.moviecatalogue.views.tvshows
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.TvResult
@@ -23,19 +23,19 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
 
         showLoading()
 
-        val tv_show = intent.getParcelableExtra<TvResult>(INTENT_TV_SHOW)
+        val tvShow = intent.getParcelableExtra<TvResult>(INTENT_TV_SHOW)
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.title = tv_show.name
+            supportActionBar?.title = tvShow.name
         }
 
         detail_image_tvshow.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                .append(tv_show.backdropPath).toString())
-        detail_title_tvshow.text = tv_show.name
-        detail_description_tvshow.text = tv_show.overview
-        detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), tv_show.voteAverage)
-        detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), tv_show.firstAirDate)
+                .append(tvShow.backdropPath).toString())
+        detail_title_tvshow.text = tvShow.name
+        detail_description_tvshow.text = tvShow.overview
+        detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), tvShow.voteAverage)
+        detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), tvShow.firstAirDate)
 
         hideLoading()
     }

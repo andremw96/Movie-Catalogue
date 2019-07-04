@@ -1,27 +1,18 @@
-package com.andMovieAdapter.ktreamw96.moviecatalogue.views.tvshows
+package com.andreamw96.moviecatalogue.views.tvshows
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
-
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.MovieResult
-import com.andreamw96.moviecatalogue.model.Movies
 import com.andreamw96.moviecatalogue.model.TvResult
-import com.andreamw96.moviecatalogue.model.TvShows
-import com.andreamw96.moviecatalogue.model.dummydata.Movie
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
-
-import java.util.ArrayList
+import java.util.*
 
 class TvShowsAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
 

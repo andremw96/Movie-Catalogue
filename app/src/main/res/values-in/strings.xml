@@ -3,7 +3,6 @@
     <string name="app_name">Katalog Film</string>
     <string name="overview_string">DESKRIPSI</string>
     <string name="imageviewmovie">posterFilm</string>
-    <string name="directorString">Sutradara : \t</string>
     <string name="ratingString">Skor : \t</string>
     <string name="releaseDateString">Tanggal Rilis : \t</string>
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.model.MovieResult
 import com.andreamw96.moviecatalogue.model.TvResult
 import com.andreamw96.moviecatalogue.network.MovieApi
 import io.reactivex.android.schedulers.AndroidSchedulers

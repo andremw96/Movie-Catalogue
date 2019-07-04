@@ -1,25 +1,18 @@
 package com.andreamw96.moviecatalogue.views.movies
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
-
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.MovieResult
-import com.andreamw96.moviecatalogue.model.Movies
-import com.andreamw96.moviecatalogue.model.dummydata.Movie
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
-
-import java.util.ArrayList
+import java.util.*
 
 class MovieAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
 
@@ -46,7 +39,7 @@ class MovieAdapter(private val context: Context?, private val mOnItemClickListen
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-        fun bindItem(movie : MovieResult) {
+        fun bindItem(movie: MovieResult) {
 
             img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
                     .append(movie.backdropPath).toString())
