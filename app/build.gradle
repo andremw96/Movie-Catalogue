@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -14,7 +15,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField 'String', 'API_KEY', '"52b1fef17cd428dc289311a98ecfd8b0"'
-        buildConfigField 'String', 'API_BASE_URL', '"http://api.themoviedb.org/3/"'
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.themoviedb.org/3/"'
         buildConfigField 'String', 'IMAGE_BASE_URL', '"https://image.tmdb.org/t/p/w500"'
     }
     buildTypes {
@@ -27,7 +28,6 @@ android {
     androidExtensions {
         experimental = true
     }
-
 }
 
 dependencies {
