@@ -7,7 +7,7 @@ import android.view.View
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.TvResult
-import com.andreamw96.moviecatalogue.utils.loadImageDetail
+import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 
@@ -30,7 +30,7 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
             supportActionBar?.title = tv_show.name
         }
 
-        detail_image_tvshow.loadImageDetail(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
+        detail_image_tvshow.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
                 .append(tv_show.backdropPath).toString())
         detail_title_tvshow.text = tv_show.name
         detail_description_tvshow.text = tv_show.overview

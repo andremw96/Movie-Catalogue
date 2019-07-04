@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.MovieResult
-import com.andreamw96.moviecatalogue.utils.loadImageDetail
+import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
@@ -30,7 +30,7 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
             supportActionBar?.title = movie.title
         }
 
-        detail_image_movie.loadImageDetail(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
+        detail_image_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
                 .append(movie.backdropPath).toString())
         detail_title_movie.text = movie.title
         detail_description_movie.text = movie.overview

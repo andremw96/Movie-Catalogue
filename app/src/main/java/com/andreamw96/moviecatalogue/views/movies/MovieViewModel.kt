@@ -1,6 +1,8 @@
 package com.andreamw96.moviecatalogue.views.movies
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +18,7 @@ class MovieViewModel : ViewModel() {
     private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
     private val TAG = MovieViewModel::class.java.simpleName
     private val listMovies = MutableLiveData<List<MovieResult>>()
+    var status = MutableLiveData<Boolean?>()
 
     fun setMovies() {
         mMoviesApi
@@ -24,8 +27,10 @@ class MovieViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listMovies.postValue(it.results)
+                    status.value = true
                 }, {
                     Log.d(TAG, "error fetching movies")
+                    status.value = false
                 })
     }
 

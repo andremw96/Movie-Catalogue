@@ -20,6 +20,7 @@ import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.model.dummydata.Movie
 import com.andreamw96.moviecatalogue.model.dummydata.TVShowData
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 import java.util.ArrayList
@@ -51,6 +52,13 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
         showLoading()
         tvShowMovieViewModel.setTvShows()
+
+        tvShowMovieViewModel.status.observe(this, Observer { status ->
+            if (status == false) {
+                Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_LONG).show()
+                hideLoading()
+            }}
+        )
     }
 
     override fun onItemClicked(position: Int) {

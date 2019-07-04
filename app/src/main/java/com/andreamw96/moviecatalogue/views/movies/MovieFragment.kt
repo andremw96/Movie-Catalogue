@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +15,7 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.MovieResult
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 
@@ -44,6 +46,13 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
         showLoading()
         movieViewModel.setMovies()
+
+        movieViewModel.status.observe(this, Observer { status ->
+            if (status == false) {
+                Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
+                hideLoading()
+            }}
+        )
     }
 
     private val getMovies = Observer<List<MovieResult>> { movieItems ->
@@ -60,10 +69,10 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     }
 
     override fun showLoading() {
-        progressBarMovieFrag.setVisibility(View.VISIBLE)
+        progressBarMovieFrag.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        progressBarMovieFrag.setVisibility(View.GONE)
+        progressBarMovieFrag.visibility = View.GONE
     }
 }

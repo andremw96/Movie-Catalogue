@@ -17,6 +17,7 @@ class TvShowViewModel : ViewModel() {
     private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
+    var status = MutableLiveData<Boolean?>()
 
     fun setTvShows() {
         mMoviesApi
@@ -25,8 +26,10 @@ class TvShowViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listTvShows.postValue(it.results)
+                    status.value = true
                 }, {
                     Log.d(TAG, "error fetching tv shows")
+                    status.value = false
                 })
     }
 

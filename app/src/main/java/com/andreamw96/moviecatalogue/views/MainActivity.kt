@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
                 fragment = MovieFragment()
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container_layout, fragment, fragment.javaClass.getSimpleName())
+                        .replace(R.id.container_layout, fragment, fragment.javaClass.simpleName)
                         .commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
                 fragment = TVShowFragment()
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container_layout, fragment, fragment.javaClass.getSimpleName())
+                        .replace(R.id.container_layout, fragment, fragment.javaClass.simpleName)
                         .commit()
                 return@OnNavigationItemSelectedListener true
             }
