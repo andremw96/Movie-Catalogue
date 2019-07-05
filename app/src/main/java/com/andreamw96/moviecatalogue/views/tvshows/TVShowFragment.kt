@@ -37,10 +37,12 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         tvShowMovieViewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
         tvShowMovieViewModel.getTvShows().observe(this, getTvShows)
 
-        rv_tv_show.setHasFixedSize(true)
-        rv_tv_show.layoutManager = LinearLayoutManager(activity)
         tvShowsAdapter = TvShowsAdapter(activity, this)
-        rv_tv_show.adapter = tvShowsAdapter
+        rv_tv_show.apply {
+            setHasFixedSize(true)
+            rv_tv_show.layoutManager = LinearLayoutManager(activity)
+            rv_tv_show.adapter = tvShowsAdapter
+        }
 
         showLoading()
         tvShowMovieViewModel.setTvShows()

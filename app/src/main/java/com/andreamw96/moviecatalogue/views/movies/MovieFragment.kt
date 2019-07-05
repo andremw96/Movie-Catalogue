@@ -38,10 +38,13 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
         movieViewModel.getMovies().observe(this, getMovies)
 
-        rv_movie.setHasFixedSize(true)
-        rv_movie.layoutManager = LinearLayoutManager(activity)
         movieAdapter = MovieAdapter(context, this)
-        rv_movie.adapter = movieAdapter
+
+        rv_movie.apply {
+            setHasFixedSize(true)
+            rv_movie.layoutManager = LinearLayoutManager(activity)
+            rv_movie.adapter = movieAdapter
+        }
 
         showLoading()
         movieViewModel.setMovies()

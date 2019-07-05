@@ -33,9 +33,7 @@ class MovieAdapter(private val context: Context?, private val mOnItemClickListen
         cardViewViewHolder.bindItem(listMovie[i])
     }
 
-    override fun getItemCount(): Int {
-        return listMovie.size
-    }
+    override fun getItemCount(): Int = listMovie.size
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 

@@ -33,9 +33,7 @@ class TvShowsAdapter(private val context: Context?, private val mOnItemClickList
         cardViewViewHolder.bindItem(listTvShows[i])
     }
 
-    override fun getItemCount(): Int {
-        return listTvShows.size
-    }
+    override fun getItemCount(): Int = listTvShows.size
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
