@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.TvResult
+import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.google.android.material.snackbar.Snackbar
@@ -40,8 +41,9 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         tvShowsAdapter = TvShowsAdapter(activity, this)
         rv_tv_show.apply {
             setHasFixedSize(true)
-            rv_tv_show.layoutManager = LinearLayoutManager(activity)
-            rv_tv_show.adapter = tvShowsAdapter
+            layoutManager = LinearLayoutManager(activity)
+            adapter = tvShowsAdapter
+            tvShowsAdapter.notifyDataSetChanged()
         }
 
         showLoading()
@@ -51,9 +53,10 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
             if (status == false) {
                 Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_LONG).show()
                 hideLoading()
+            } else {
+                runAnimation(rv_tv_show)
             }
-        }
-        )
+        })
     }
 
     override fun onItemClicked(position: Int) {

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.MovieResult
+import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.google.android.material.snackbar.Snackbar
@@ -42,8 +43,9 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
         rv_movie.apply {
             setHasFixedSize(true)
-            rv_movie.layoutManager = LinearLayoutManager(activity)
-            rv_movie.adapter = movieAdapter
+            layoutManager = LinearLayoutManager(activity)
+            adapter = movieAdapter
+            movieAdapter.notifyDataSetChanged()
         }
 
         showLoading()
@@ -53,9 +55,10 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
             if (status == false) {
                 Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
                 hideLoading()
+            } else {
+                runAnimation(rv_movie)
             }
-        }
-        )
+        })
     }
 
     private val getMovies = Observer<List<MovieResult>> { movieItems ->
