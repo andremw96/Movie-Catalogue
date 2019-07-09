@@ -19,7 +19,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewPagerAdapter = ViewPagerAdapter(fragmentManager)
+        val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
         //adding fragments
         viewPagerAdapter.addFragment(FavMovieFragment(), "Movies")
         viewPagerAdapter.addFragment(FavTvFragment(), "TV Shows")
