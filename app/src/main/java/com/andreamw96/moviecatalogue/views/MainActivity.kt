@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +31,14 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_tv_shows -> {
 
                 fragment = TVShowFragment()
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container_layout, fragment, fragment.javaClass.simpleName)
+                        .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_favorites -> {
+
+                fragment = FavoriteFragment()
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.container_layout, fragment, fragment.javaClass.simpleName)
                         .commit()
