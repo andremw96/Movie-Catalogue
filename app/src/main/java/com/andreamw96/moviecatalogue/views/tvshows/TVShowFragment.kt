@@ -49,7 +49,7 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         showLoading()
         tvShowMovieViewModel.setTvShows()
 
-        tvShowMovieViewModel.status.observe(this, Observer { status ->
+        tvShowMovieViewModel.getStatus().observe(this, Observer { status ->
             if (status == false) {
                 Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_LONG).show()
                 hideLoading()

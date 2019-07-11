@@ -3,14 +3,12 @@ package com.andreamw96.moviecatalogue.views.favorites
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.data.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.model.Favorite
 
 class FavoriteViewModel(application: Application?) : AndroidViewModel(application!!) {
 
     private var favoriteRepository = FavoriteRepository(application!!)
-    private val listFavs = MutableLiveData<List<Favorite>>()
 
     fun insertFav(favorite: Favorite) {
         favoriteRepository.insert(favorite)

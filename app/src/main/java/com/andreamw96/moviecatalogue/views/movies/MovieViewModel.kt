@@ -1,38 +1,26 @@
 package com.andreamw96.moviecatalogue.views.movies
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.data.network.MovieApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.andreamw96.moviecatalogue.data.network.MovieRepository
 
 
 class MovieViewModel : ViewModel() {
 
-    private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
-    private val TAG = MovieViewModel::class.java.simpleName
-    private val listMovies = MutableLiveData<List<MovieResult>>()
-    var status = MutableLiveData<Boolean?>()
+    private var movieRepository = MovieRepository()
 
     fun setMovies() {
-        mMoviesApi
-                .getMovies(BuildConfig.API_KEY, "en-US")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listMovies.postValue(it.results)
-                    status.value = true
-                }, {
-                    Log.d(TAG, "error fetching movies")
-                    status.value = false
-                })
+        movieRepository.setMovies()
     }
 
-    fun getMovies(): LiveData<List<MovieResult>> {
-        return listMovies
+    fun getMovies() : LiveData<List<MovieResult>> {
+        return movieRepository.getMovies()
     }
+
+    fun getStatus() : MutableLiveData<Boolean?> {
+        return movieRepository.getStatusNetwork()
+    }
+
 }

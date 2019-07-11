@@ -51,7 +51,7 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         showLoading()
         movieViewModel.setMovies()
 
-        movieViewModel.status.observe(this, Observer { status ->
+        movieViewModel.getStatus().observe(this, Observer { status ->
             if (status == false) {
                 Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
                 hideLoading()
