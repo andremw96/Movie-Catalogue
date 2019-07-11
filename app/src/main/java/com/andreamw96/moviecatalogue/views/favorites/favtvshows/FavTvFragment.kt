@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.favorites.tvshows
+package com.andreamw96.moviecatalogue.views.favorites.favtvshows
 
 
 import android.content.Intent

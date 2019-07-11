@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.views.favorites.movies.FavMovieFragment
-import com.andreamw96.moviecatalogue.views.favorites.tvshows.FavTvFragment
+import com.andreamw96.moviecatalogue.views.favorites.favmovies.FavMovieFragment
+import com.andreamw96.moviecatalogue.views.favorites.favtvshows.FavTvFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 class FavoriteFragment : Fragment() {
