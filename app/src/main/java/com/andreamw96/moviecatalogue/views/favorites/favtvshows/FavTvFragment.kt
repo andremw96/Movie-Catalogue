@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
+import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
@@ -46,11 +47,14 @@ class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
             adapter = favAdapter
             favAdapter.notifyDataSetChanged()
         }
+
     }
 
     private val getFavTvs = Observer<List<Favorite>> { favItems ->
         if (favItems != null) {
             favAdapter.bindData(favItems)
+            runAnimation(rv_fav_tv)
+
             hideLoading()
         }
     }

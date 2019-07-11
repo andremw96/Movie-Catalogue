@@ -40,7 +40,7 @@ class FavoriteAdapter(private val context: Context?, private val mOnItemClickLis
 
             //img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
             //        .append(fav.backdropPath).toString())
-            
+
             img_movie.loadImage(fav.backdropPath)
             txt_movie_title.text = fav.title
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), fav.releaseDate)
