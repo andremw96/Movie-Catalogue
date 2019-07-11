@@ -3,13 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.favorites.FavMovieFragment">
+    tools:context=".views.favorites.movies.FavMovieFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
+    <ProgressBar
+        android:id="@+id/progressBarFavMovieFrag"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_fav_movie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="FAVORITE MOVIES" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

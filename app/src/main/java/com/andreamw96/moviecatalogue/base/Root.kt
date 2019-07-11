@@ -1,7 +1,7 @@
 package com.andreamw96.moviecatalogue.base
 
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.network.MovieApi
+import com.andreamw96.moviecatalogue.data.network.MovieApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

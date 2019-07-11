@@ -1,7 +1,7 @@
-package com.andreamw96.moviecatalogue.network
+package com.andreamw96.moviecatalogue.data.network
 
-import com.andreamw96.moviecatalogue.model.Movies
-import com.andreamw96.moviecatalogue.model.TvShows
+import com.andreamw96.moviecatalogue.data.model.Movies
+import com.andreamw96.moviecatalogue.data.model.TvShows
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

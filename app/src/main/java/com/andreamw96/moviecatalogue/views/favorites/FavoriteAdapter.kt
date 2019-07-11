@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.tvshows
+package com.andreamw96.moviecatalogue.views.favorites
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
 
-class TvShowsAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
+class FavoriteAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<FavoriteAdapter.CardViewViewHolder>() {
 
-    val listTvShows: ArrayList<TvResult> = arrayListOf()
+    val listFav: ArrayList<Favorite> = arrayListOf()
 
-    fun bindData(TvShows: List<TvResult>) {
-        listTvShows.clear()
-        listTvShows.addAll(TvShows)
+    fun bindData(fav: List<Favorite>) {
+        listFav.clear()
+        listFav.addAll(fav)
         notifyDataSetChanged()
     }
 
@@ -30,20 +30,20 @@ class TvShowsAdapter(private val context: Context?, private val mOnItemClickList
     }
 
     override fun onBindViewHolder(cardViewViewHolder: CardViewViewHolder, i: Int) {
-        cardViewViewHolder.bindItem(listTvShows[i])
+        cardViewViewHolder.bindItem(listFav[i])
     }
 
-    override fun getItemCount(): Int = listTvShows.size
+    override fun getItemCount(): Int = listFav.size
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-        fun bindItem(tvShow: TvResult) {
+        fun bindItem(fav: Favorite) {
 
             img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                    .append(tvShow.backdropPath).toString())
-            txt_movie_title.text = tvShow.name
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), tvShow.firstAirDate)
-            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), tvShow.voteAverage)
+                    .append(fav.backdropPath).toString())
+            txt_movie_title.text = fav.title
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), fav.releaseDate)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), fav.voteAverage)
 
             itemView.setOnClickListener(this)
         }
