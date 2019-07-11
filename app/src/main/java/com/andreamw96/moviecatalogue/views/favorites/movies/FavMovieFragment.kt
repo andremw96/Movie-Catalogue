@@ -32,6 +32,7 @@ class FavMovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        favoriteViewModel = FavoriteViewModel(activity?.application)
         favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
         favoriteViewModel.getFavorite(true).observe(this, getFavMovies)
 
