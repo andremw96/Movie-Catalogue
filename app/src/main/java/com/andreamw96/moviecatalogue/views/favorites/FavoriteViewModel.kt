@@ -3,18 +3,27 @@ package com.andreamw96.moviecatalogue.views.favorites
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import com.andreamw96.moviecatalogue.data.local.FavoriteDatabase
 import com.andreamw96.moviecatalogue.data.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.model.Favorite
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class FavoriteViewModel(application: Application?) : AndroidViewModel(application!!) {
+class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var favoriteRepository = FavoriteRepository(application!!)
+    private val favoriteRepository : FavoriteRepository
 
-    fun insertFav(favorite: Favorite) {
+    init {
+        val favDao = FavoriteDatabase.getInstanceFavDB(application, viewModelScope).favDao()
+        favoriteRepository = FavoriteRepository(favDao)
+    }
+
+    fun insertFav(favorite: Favorite) = viewModelScope.launch(Dispatchers.IO) {
         favoriteRepository.insert(favorite)
     }
 
-    fun deleteFav(idMovie: Int) {
+    fun deleteFav(idMovie: Int) = viewModelScope.launch(Dispatchers.IO)  {
         favoriteRepository.deleteFavorites(idMovie)
     }
 

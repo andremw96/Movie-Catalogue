@@ -1,47 +1,26 @@
 package com.andreamw96.moviecatalogue.data.local
 
-import android.app.Application
-import android.os.AsyncTask
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.data.model.Favorite
 
-class FavoriteRepository(application: Application) : FavoriteDao {
+class FavoriteRepository(private val favoriteDao : FavoriteDao) {
 
-    private var favoriteDao : FavoriteDao
-
-    init {
-        val database: FavoriteDatabase = FavoriteDatabase.getInstanceFavDB(
-                application.applicationContext
-        )!!
-
-        favoriteDao = database.favDao()
+    @WorkerThread
+    suspend fun insert(favorite: Favorite) {
+        favoriteDao.insert(favorite)
     }
 
-    override fun insert(favorite: Favorite) {
-        InsertFavAsync(favoriteDao).execute(favorite)
+    @WorkerThread
+    suspend fun deleteFavorites(idMovie: Int) {
+        favoriteDao.deleteFavorites(idMovie)
     }
 
-    override fun deleteFavorites(idMovie: Int) {
-        DeleteFavAsync(favoriteDao).execute(idMovie)
-    }
-
-    override fun isFavorite(idMovie: Int): Boolean {
+    fun isFavorite(idMovie: Int): Boolean {
         return favoriteDao.isFavorite(idMovie)
     }
 
-    override fun getFavorites(isMovie: Boolean): LiveData<List<Favorite>> {
+    fun getFavorites(isMovie: Boolean): LiveData<List<Favorite>> {
         return favoriteDao.getFavorites(isMovie)
-    }
-
-    private class InsertFavAsync(val favoriteDao: FavoriteDao) : AsyncTask<Favorite, Unit, Unit>() {
-        override fun doInBackground(vararg params: Favorite?) {
-            favoriteDao.insert(params[0]!!)
-        }
-    }
-
-    private class DeleteFavAsync(val favoriteDao: FavoriteDao) : AsyncTask<Int, Unit, Unit>() {
-        override fun doInBackground(vararg params: Int?) {
-            favoriteDao.deleteFavorites(params[0]!!)
-        }
     }
 }

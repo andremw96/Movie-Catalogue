@@ -9,7 +9,7 @@ import com.andreamw96.moviecatalogue.data.model.Favorite
 @Dao
 interface FavoriteDao {
     @Insert
-    fun insert(favorite: Favorite)
+    suspend fun insert(favorite: Favorite)
 
     @Query("SELECT * FROM favorites_table WHERE movieId = :idMovie")
     fun isFavorite(idMovie: Int) : Boolean
@@ -18,5 +18,5 @@ interface FavoriteDao {
     fun getFavorites(isMovie: Boolean) : LiveData<List<Favorite>>
 
     @Query("DELETE FROM favorites_table WHERE movieId = :idMovie")
-    fun deleteFavorites(idMovie: Int)
+    suspend fun deleteFavorites(idMovie: Int)
 }
