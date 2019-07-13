@@ -4,11 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.andreamw96.moviecatalogue.data.model.Favorite
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Database(entities = [Favorite::class], version = 1)
 abstract class FavoriteDatabase : RoomDatabase() {
@@ -19,7 +15,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE : FavoriteDatabase? = null
 
-        fun getInstanceFavDB(context: Context, scope: CoroutineScope) : FavoriteDatabase {
+        fun getInstanceFavDB(context: Context) : FavoriteDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -29,16 +25,13 @@ abstract class FavoriteDatabase : RoomDatabase() {
                         context.applicationContext,
                         FavoriteDatabase::class.java,
                         "favorite_database"
-                )
-                        .fallbackToDestructiveMigration()
-                        .addCallback(defaultData(scope))
-                        .build()
+                ).build()
                 INSTANCE = instance
                 return instance
             }
         }
 
-        private class defaultData(private val scope: CoroutineScope) : RoomDatabase.Callback() {
+        /*private class defaultData(private val scope: CoroutineScope) : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 INSTANCE?.let { database ->
@@ -53,6 +46,6 @@ abstract class FavoriteDatabase : RoomDatabase() {
             favoriteDao.insert(Favorite("1", true, "Avengers: Infinity War", "April 27, 2018", "https://image.tmdb.org/t/p/w185_and_h278_bestv2/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg", 83.0))
             favoriteDao.insert(Favorite("2", true, "Venom", "October 5, 2018", "https://image.tmdb.org/t/p/w185_and_h278_bestv2/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg", 66.0))
             favoriteDao.insert(Favorite("3", false, "Krypton", "March 21, 2018", "https://image.tmdb.org/t/p/w185_and_h278_bestv2/uiinjmSkka6JOrk4FsZmrjlNM26.jpg", 67.0))
-        }
+        }*/
     }
 }

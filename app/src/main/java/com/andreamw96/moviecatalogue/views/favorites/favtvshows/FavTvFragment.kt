@@ -17,7 +17,7 @@ import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
-import com.andreamw96.moviecatalogue.views.movies.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import kotlinx.android.synthetic.main.fragment_fav_tv.*
 
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.utils.loadImage
@@ -38,10 +39,10 @@ class FavoriteAdapter(private val context: Context?, private val mOnItemClickLis
 
         fun bindItem(fav: Favorite) {
 
-            //img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-            //        .append(fav.backdropPath).toString())
+            img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
+                    .append(fav.backdropPath).toString())
 
-            img_movie.loadImage(fav.backdropPath)
+            //img_movie.loadImage(fav.backdropPath)
             txt_movie_title.text = fav.title
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), fav.releaseDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), fav.voteAverage)

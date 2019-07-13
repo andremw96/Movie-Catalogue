@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.movies.list
 
 
 import android.content.Intent
@@ -15,6 +15,7 @@ import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_movie.*
 

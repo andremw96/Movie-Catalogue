@@ -1,11 +1,13 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.movies.detail
 
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
@@ -17,9 +19,13 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         const val INTENT_MOVIE = "intent_movie"
     }
 
+    private lateinit var detailMovieViewModel: DetailMovieViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
+
+        detailMovieViewModel = DetailMovieViewModel(application)
 
         showLoading()
 
@@ -38,6 +44,14 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         detail_date_movie.text = String.format("%s%s", getString(R.string.releaseDateString), movie.releaseDate)
 
         hideLoading()
+
+        fav_button_movie.setOnClickListener {
+            val favorite = Favorite(movie.id.toString(), true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage)
+
+            detailMovieViewModel.insertFav(favorite)
+
+            Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
