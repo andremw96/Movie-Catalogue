@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.tvshows
+package com.andreamw96.moviecatalogue.views.tvshows.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
