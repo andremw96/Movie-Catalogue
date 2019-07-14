@@ -23,8 +23,8 @@ class FavoriteFragment : Fragment() {
 
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
         //adding fragments
-        viewPagerAdapter.addFragment(FavMovieFragment(), "Movies")
-        viewPagerAdapter.addFragment(FavTvFragment(), "TV Shows")
+        viewPagerAdapter.addFragment(FavMovieFragment(), getString(R.string.movies))
+        viewPagerAdapter.addFragment(FavTvFragment(), getString(R.string.tv_shows))
         view_pager_fav.adapter = viewPagerAdapter
         tab_layout_fav.setupWithViewPager(view_pager_fav)
     }

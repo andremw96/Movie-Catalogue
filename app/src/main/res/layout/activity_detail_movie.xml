@@ -58,6 +58,7 @@
             android:id="@+id/fav_button_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:contentDescription="@string/buttonfav"
