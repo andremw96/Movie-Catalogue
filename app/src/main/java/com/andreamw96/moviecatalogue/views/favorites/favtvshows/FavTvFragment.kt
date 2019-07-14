@@ -18,6 +18,7 @@ import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import kotlinx.android.synthetic.main.fragment_fav_tv.*
 
 
@@ -61,7 +62,7 @@ class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, favAdapter.listFav[position])
+        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, favAdapter.listFav[position])
         startActivity(goToDetail)
     }
 

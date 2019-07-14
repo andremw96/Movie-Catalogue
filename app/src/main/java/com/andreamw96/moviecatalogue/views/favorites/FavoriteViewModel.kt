@@ -9,6 +9,7 @@ import com.andreamw96.moviecatalogue.data.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -27,8 +28,8 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
         favoriteRepository.deleteFavorites(idMovie)
     }
 
-    fun isFavorite(idMovie: Int) : Boolean {
-        return favoriteRepository.isFavorite(idMovie)
+    fun isFavorite(idMovie: Int) : Boolean = runBlocking {
+        favoriteRepository.isFavorite(idMovie).isNotEmpty()
     }
 
     fun getFavorite(isMovie: Boolean) : LiveData<List<Favorite>> {

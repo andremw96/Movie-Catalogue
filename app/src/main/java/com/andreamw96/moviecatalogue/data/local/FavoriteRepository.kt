@@ -16,7 +16,8 @@ class FavoriteRepository(private val favoriteDao : FavoriteDao) {
         favoriteDao.deleteFavorites(idMovie)
     }
 
-    fun isFavorite(idMovie: Int): Boolean {
+    @WorkerThread
+    suspend fun isFavorite(idMovie: Int): List<Favorite> {
         return favoriteDao.isFavorite(idMovie)
     }
 

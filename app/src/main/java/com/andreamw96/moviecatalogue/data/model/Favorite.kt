@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "favorites_table")
 data class Favorite (
-        var movieId : String,
+        var movieId : Int,
         var isMovie : Boolean,
         var title: String,
         var releaseDate: String,

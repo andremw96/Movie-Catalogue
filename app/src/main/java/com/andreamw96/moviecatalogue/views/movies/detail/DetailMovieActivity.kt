@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
@@ -27,13 +28,15 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        favoriteViewModel = FavoriteViewModel(application)
+        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
 
         showLoading()
 
-        favoriteState()
-
-        movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
+        //if (intent.getStringExtra(type) == "favorite") {
+        //    movie = intent.getParcelableExtra<Favorite>(INTENT_MOVIE)
+        //} else {
+            movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
+        //}
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -47,19 +50,21 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         detail_rating_movie.text = String.format("%s%s", getString(R.string.ratingString), movie.voteAverage)
         detail_date_movie.text = String.format("%s%s", getString(R.string.releaseDateString), movie.releaseDate)
 
+        favoriteState()
+
         hideLoading()
 
         fav_button_movie.setOnClickListener {
-            val favorite = Favorite(movie.id.toString(), true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage)
+            val favorite = Favorite(movie.id, true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage)
 
             if(favoriteViewModel.isFavorite(movie.id)) {
                 favoriteViewModel.deleteFav(movie.id)
 
-                Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
             } else {
                 favoriteViewModel.insertFav(favorite)
 
-                Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
             }
 
             favoriteState()

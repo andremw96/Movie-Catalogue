@@ -12,7 +12,7 @@ interface FavoriteDao {
     suspend fun insert(favorite: Favorite)
 
     @Query("SELECT * FROM favorites_table WHERE movieId = :idMovie")
-    fun isFavorite(idMovie: Int) : Boolean
+    suspend fun isFavorite(idMovie: Int) : List<Favorite>
 
     @Query("SELECT * FROM favorites_table WHERE isMovie = :isMovie")
     fun getFavorites(isMovie: Boolean) : LiveData<List<Favorite>>
