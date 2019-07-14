@@ -14,7 +14,7 @@ class TvShowRepository {
     private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
-    var status = MutableLiveData<Boolean?>()
+    private var status = MutableLiveData<Boolean?>()
 
     fun setTvShows() {
         mMoviesApi
@@ -34,7 +34,7 @@ class TvShowRepository {
         return listTvShows
     }
 
-    fun getStatusNetwork() : MutableLiveData<Boolean?> {
+    fun getStatusNetwork(): MutableLiveData<Boolean?> {
         return status
     }
 }

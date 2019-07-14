@@ -32,7 +32,7 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
 
         showLoading()
 
-        tvShow = intent.getParcelableExtra<TvResult>(INTENT_TV_SHOW)
+        tvShow = intent.getParcelableExtra(INTENT_TV_SHOW)
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -53,7 +53,7 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
         fav_button_tvshows.setOnClickListener {
             val favorite = Favorite(tvShow.id, false, tvShow.name, tvShow.firstAirDate, tvShow.backdropPath, tvShow.voteAverage, tvShow.overview)
 
-            if(favoriteViewModel.isFavorite(tvShow.id)) {
+            if (favoriteViewModel.isFavorite(tvShow.id)) {
                 favoriteViewModel.deleteFav(tvShow.id)
 
                 Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()

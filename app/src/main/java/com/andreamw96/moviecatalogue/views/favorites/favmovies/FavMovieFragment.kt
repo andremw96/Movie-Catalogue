@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.fragment_fav_movie.*
 
 class FavMovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
-    private lateinit var favoriteViewModel : FavoriteViewModel
-    private lateinit var favAdapter : FavoriteAdapter
+    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var favAdapter: FavoriteAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

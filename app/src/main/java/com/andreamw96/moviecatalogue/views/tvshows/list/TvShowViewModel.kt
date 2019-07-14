@@ -15,11 +15,11 @@ class TvShowViewModel : ViewModel() {
         tvShowRepository.setTvShows()
     }
 
-    fun getTvShows() : LiveData<List<TvResult>> {
+    fun getTvShows(): LiveData<List<TvResult>> {
         return tvShowRepository.getTvShows()
     }
 
-    fun getStatus() : MutableLiveData<Boolean?> {
+    fun getStatus(): MutableLiveData<Boolean?> {
         return tvShowRepository.getStatusNetwork()
     }
 }

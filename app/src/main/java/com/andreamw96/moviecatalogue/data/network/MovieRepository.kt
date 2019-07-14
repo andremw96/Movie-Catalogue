@@ -34,7 +34,7 @@ class MovieRepository {
         return listMovies
     }
 
-    fun getStatusNetwork() : MutableLiveData<Boolean?> {
+    fun getStatusNetwork(): MutableLiveData<Boolean?> {
         return status
     }
 }

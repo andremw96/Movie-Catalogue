@@ -12,10 +12,10 @@ interface FavoriteDao {
     suspend fun insert(favorite: Favorite)
 
     @Query("SELECT * FROM favorites_table WHERE movieId = :idMovie")
-    suspend fun isFavorite(idMovie: Int) : List<Favorite>
+    suspend fun isFavorite(idMovie: Int): List<Favorite>
 
     @Query("SELECT * FROM favorites_table WHERE isMovie = :isMovie")
-    fun getFavorites(isMovie: Boolean) : LiveData<List<Favorite>>
+    fun getFavorites(isMovie: Boolean): LiveData<List<Favorite>>
 
     @Query("DELETE FROM favorites_table WHERE movieId = :idMovie")
     suspend fun deleteFavorites(idMovie: Int)

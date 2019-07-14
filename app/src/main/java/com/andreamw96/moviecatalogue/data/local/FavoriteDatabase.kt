@@ -9,13 +9,13 @@ import com.andreamw96.moviecatalogue.data.model.Favorite
 @Database(entities = [Favorite::class], version = 1)
 abstract class FavoriteDatabase : RoomDatabase() {
 
-    abstract fun favDao() : FavoriteDao
+    abstract fun favDao(): FavoriteDao
 
     companion object {
         @Volatile
-        private var INSTANCE : FavoriteDatabase? = null
+        private var INSTANCE: FavoriteDatabase? = null
 
-        fun getInstanceFavDB(context: Context) : FavoriteDatabase {
+        fun getInstanceFavDB(context: Context): FavoriteDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance

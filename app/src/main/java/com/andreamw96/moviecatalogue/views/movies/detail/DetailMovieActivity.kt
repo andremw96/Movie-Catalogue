@@ -32,7 +32,7 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
 
         showLoading()
 
-        movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
+        movie = intent.getParcelableExtra(INTENT_MOVIE)
 
 
         if (supportActionBar != null) {
@@ -54,7 +54,7 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         fav_button_movie.setOnClickListener {
             val favorite = Favorite(movie.id, true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage, movie.overview)
 
-            if(favoriteViewModel.isFavorite(movie.id)) {
+            if (favoriteViewModel.isFavorite(movie.id)) {
                 favoriteViewModel.deleteFav(movie.id)
 
                 Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()

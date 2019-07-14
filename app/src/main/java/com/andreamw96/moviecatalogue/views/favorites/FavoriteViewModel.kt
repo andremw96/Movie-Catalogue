@@ -13,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val favoriteRepository : FavoriteRepository
+    private val favoriteRepository: FavoriteRepository
 
     init {
         val favDao = FavoriteDatabase.getInstanceFavDB(application).favDao()
@@ -24,15 +24,15 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
         favoriteRepository.insert(favorite)
     }
 
-    fun deleteFav(idMovie: Int) = viewModelScope.launch(Dispatchers.IO)  {
+    fun deleteFav(idMovie: Int) = viewModelScope.launch(Dispatchers.IO) {
         favoriteRepository.deleteFavorites(idMovie)
     }
 
-    fun isFavorite(idMovie: Int) : Boolean = runBlocking(Dispatchers.Default) {
+    fun isFavorite(idMovie: Int): Boolean = runBlocking(Dispatchers.Default) {
         favoriteRepository.isFavorite(idMovie).isNotEmpty()
     }
 
-    fun getFavorite(isMovie: Boolean) : LiveData<List<Favorite>> {
+    fun getFavorite(isMovie: Boolean): LiveData<List<Favorite>> {
         return favoriteRepository.getFavorites(isMovie)
     }
 }

@@ -15,11 +15,11 @@ class MovieViewModel : ViewModel() {
         movieRepository.setMovies()
     }
 
-    fun getMovies() : LiveData<List<MovieResult>> {
+    fun getMovies(): LiveData<List<MovieResult>> {
         return movieRepository.getMovies()
     }
 
-    fun getStatus() : MutableLiveData<Boolean?> {
+    fun getStatus(): MutableLiveData<Boolean?> {
         return movieRepository.getStatusNetwork()
     }
 
