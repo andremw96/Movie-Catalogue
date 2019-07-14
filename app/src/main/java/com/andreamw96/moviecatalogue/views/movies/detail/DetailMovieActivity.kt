@@ -11,6 +11,7 @@ import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
@@ -19,17 +20,20 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         const val INTENT_MOVIE = "intent_movie"
     }
 
-    private lateinit var detailMovieViewModel: DetailMovieViewModel
+    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var movie: MovieResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        detailMovieViewModel = DetailMovieViewModel(application)
+        favoriteViewModel = FavoriteViewModel(application)
 
         showLoading()
 
-        val movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
+        favoriteState()
+
+        movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -48,9 +52,17 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         fav_button_movie.setOnClickListener {
             val favorite = Favorite(movie.id.toString(), true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage)
 
-            detailMovieViewModel.insertFav(favorite)
+            if(favoriteViewModel.isFavorite(movie.id)) {
+                favoriteViewModel.deleteFav(movie.id)
 
-            Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_LONG).show()
+            } else {
+                favoriteViewModel.insertFav(favorite)
+
+                Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_LONG).show()
+            }
+
+            favoriteState()
         }
     }
 
@@ -68,5 +80,13 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarMovieDetail.visibility = View.GONE
+    }
+
+    private fun favoriteState() {
+        if (favoriteViewModel.isFavorite(movie.id)) {
+            fav_button_movie.setImageResource(R.drawable.ic_fav_added)
+        } else {
+            fav_button_movie.setImageResource(R.drawable.ic_fav)
+        }
     }
 }

@@ -19,6 +19,10 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
         favoriteRepository = FavoriteRepository(favDao)
     }
 
+    fun insertFav(favorite: Favorite) = viewModelScope.launch(Dispatchers.IO) {
+        favoriteRepository.insert(favorite)
+    }
+
     fun deleteFav(idMovie: Int) = viewModelScope.launch(Dispatchers.IO)  {
         favoriteRepository.deleteFavorites(idMovie)
     }
