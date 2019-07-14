@@ -13,7 +13,8 @@ data class Favorite (
         var title: String,
         var releaseDate: String,
         var backdropPath: String,
-        var voteAverage: Double
+        var voteAverage: Double,
+        var overview: String
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

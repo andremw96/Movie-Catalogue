@@ -32,11 +32,8 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
 
         showLoading()
 
-        //if (intent.getStringExtra(type) == "favorite") {
-        //    movie = intent.getParcelableExtra<Favorite>(INTENT_MOVIE)
-        //} else {
-            movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
-        //}
+        movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
+
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -55,7 +52,7 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         hideLoading()
 
         fav_button_movie.setOnClickListener {
-            val favorite = Favorite(movie.id, true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage)
+            val favorite = Favorite(movie.id, true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage, movie.overview)
 
             if(favoriteViewModel.isFavorite(movie.id)) {
                 favoriteViewModel.deleteFav(movie.id)

@@ -28,7 +28,7 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
         favoriteRepository.deleteFavorites(idMovie)
     }
 
-    fun isFavorite(idMovie: Int) : Boolean = runBlocking {
+    fun isFavorite(idMovie: Int) : Boolean = runBlocking(Dispatchers.Default) {
         favoriteRepository.isFavorite(idMovie).isNotEmpty()
     }
 

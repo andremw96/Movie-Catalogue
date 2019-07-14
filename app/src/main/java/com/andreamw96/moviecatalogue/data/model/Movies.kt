@@ -19,31 +19,31 @@ data class Movies(
 @Parcelize
 data class MovieResult(
         @SerializedName("adult")
-        val adult: Boolean,
+        var adult: Boolean = false,
         @SerializedName("backdrop_path")
-        val backdropPath: String,
+        var backdropPath: String = "",
         @SerializedName("genre_ids")
-        val genreIds: List<Int>,
+        var genreIds: List<Int> = emptyList(),
         @SerializedName("id")
-        val id: Int,
+        var id: Int = -1,
         @SerializedName("original_language")
-        val originalLanguage: String,
+        var originalLanguage: String = "",
         @SerializedName("original_title")
-        val originalTitle: String,
+        var originalTitle: String = "",
         @SerializedName("overview")
-        val overview: String,
+        var overview: String = "",
         @SerializedName("popularity")
-        val popularity: Double,
+        var popularity: Double = 0.0,
         @SerializedName("poster_path")
-        val posterPath: String,
+        var posterPath: String = "",
         @SerializedName("release_date")
-        val releaseDate: String,
+        var releaseDate: String = "",
         @SerializedName("title")
-        val title: String,
+        var title: String = "",
         @SerializedName("video")
-        val video: Boolean,
+        var video: Boolean = false,
         @SerializedName("vote_average")
-        val voteAverage: Double,
+        var voteAverage: Double = 0.0,
         @SerializedName("vote_count")
-        val voteCount: Int
+        var voteCount: Int = 0
 ) : Parcelable

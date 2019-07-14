@@ -51,7 +51,7 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
         hideLoading()
 
         fav_button_tvshows.setOnClickListener {
-            val favorite = Favorite(tvShow.id, false, tvShow.name, tvShow.firstAirDate, tvShow.backdropPath, tvShow.voteAverage)
+            val favorite = Favorite(tvShow.id, false, tvShow.name, tvShow.firstAirDate, tvShow.backdropPath, tvShow.voteAverage, tvShow.overview)
 
             if(favoriteViewModel.isFavorite(tvShow.id)) {
                 favoriteViewModel.deleteFav(tvShow.id)

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
+import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
@@ -58,8 +59,18 @@ class FavMovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     }
 
     override fun onItemClicked(position: Int) {
+        val movie = MovieResult()
+        movie.apply {
+            id = favAdapter.listFav[position].movieId
+            backdropPath = favAdapter.listFav[position].backdropPath
+            title = favAdapter.listFav[position].title
+            overview = favAdapter.listFav[position].overview
+            voteAverage = favAdapter.listFav[position].voteAverage
+            releaseDate = favAdapter.listFav[position].releaseDate
+        }
+
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, favAdapter.listFav[position])
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movie)
         startActivity(goToDetail)
     }
 

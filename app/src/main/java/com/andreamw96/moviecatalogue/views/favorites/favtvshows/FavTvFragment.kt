@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
+import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
-import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import kotlinx.android.synthetic.main.fragment_fav_tv.*
 
@@ -61,8 +61,18 @@ class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     }
 
     override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, favAdapter.listFav[position])
+        val tvShow = TvResult()
+        tvShow.apply {
+            id = favAdapter.listFav[position].movieId
+            backdropPath = favAdapter.listFav[position].backdropPath
+            name = favAdapter.listFav[position].title
+            firstAirDate = favAdapter.listFav[position].releaseDate
+            overview = favAdapter.listFav[position].overview
+            voteAverage = favAdapter.listFav[position].voteAverage
+        }
+
+        val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
+        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShow)
         startActivity(goToDetail)
     }
 
