@@ -60,6 +60,11 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         })
     }
 
+    override fun onStop() {
+        super.onStop()
+        tvShowMovieViewModel.clearRepo()
+    }
+
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
         goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])

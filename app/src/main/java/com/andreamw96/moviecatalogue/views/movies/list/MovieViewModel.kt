@@ -23,4 +23,8 @@ class MovieViewModel : ViewModel() {
         return movieRepository.getStatusNetwork()
     }
 
+    fun clearRepo() {
+        movieRepository.clearRepo()
+    }
+
 }

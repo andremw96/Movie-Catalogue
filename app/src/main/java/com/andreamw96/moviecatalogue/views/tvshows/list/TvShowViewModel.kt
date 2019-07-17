@@ -22,4 +22,8 @@ class TvShowViewModel : ViewModel() {
     fun getStatus(): MutableLiveData<Boolean?> {
         return tvShowRepository.getStatusNetwork()
     }
+
+    fun clearRepo() {
+        tvShowRepository.clearRepo()
+    }
 }

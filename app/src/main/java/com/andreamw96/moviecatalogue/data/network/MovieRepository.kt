@@ -7,6 +7,7 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.views.movies.list.MovieViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MovieRepository {
@@ -16,18 +17,20 @@ class MovieRepository {
     private val listMovies = MutableLiveData<List<MovieResult>>()
     private var status = MutableLiveData<Boolean?>()
 
+    private val mDisposable: CompositeDisposable = CompositeDisposable()
+
     fun setMovies() {
-        mMoviesApi
-                .getMovies(BuildConfig.API_KEY, "en-US")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listMovies.postValue(it.results)
-                    status.value = true
-                }, {
-                    Log.d(TAG, "error fetching movies")
-                    status.value = false
-                })
+        mDisposable.add(mMoviesApi
+            .getMovies(BuildConfig.API_KEY, "en-US")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                listMovies.postValue(it.results)
+                status.value = true
+            }, {
+                Log.d(TAG, "error fetching movies")
+                status.value = false
+            }))
     }
 
     fun getMovies(): LiveData<List<MovieResult>> {
@@ -36,5 +39,9 @@ class MovieRepository {
 
     fun getStatusNetwork(): MutableLiveData<Boolean?> {
         return status
+    }
+
+    fun clearRepo() {
+        mDisposable.dispose()
     }
 }
