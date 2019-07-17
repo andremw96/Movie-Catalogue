@@ -35,8 +35,10 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
         tvShow = intent.getParcelableExtra(INTENT_TV_SHOW)
 
         if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.title = tvShow.name
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                title = tvShow.name
+            }
         }
 
         detail_image_tvshow.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)

@@ -36,8 +36,10 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
 
 
         if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.title = movie.title
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                title = movie.title
+            }
         }
 
         detail_image_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
