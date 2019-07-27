@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface

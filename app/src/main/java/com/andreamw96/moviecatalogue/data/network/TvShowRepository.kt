@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TvShowRepository @Inject constructor(var mMoviesApi: MovieApi, val mDisposable: CompositeDisposable) {
+class TvShowRepository @Inject constructor(private val mMoviesApi: MovieApi, private val mDisposable: CompositeDisposable) {
 
     private val TAG = TvShowRepository::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()

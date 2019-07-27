@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.model.MovieResult
+import com.andreamw96.moviecatalogue.utils.logd
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieRepository @Inject constructor(val mMoviesApi : MovieApi, val mDisposable: CompositeDisposable) {
+class MovieRepository @Inject constructor(private val mMoviesApi : MovieApi, private val mDisposable: CompositeDisposable) {
 
     private val TAG = MovieRepository::class.java.simpleName
     private val listMovies = MutableLiveData<List<MovieResult>>()

@@ -1,7 +1,6 @@
 package com.andreamw96.moviecatalogue.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.andreamw96.moviecatalogue.ViewModelProvidersFactory
 import dagger.Binds
 import dagger.Module
 

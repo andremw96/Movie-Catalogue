@@ -8,7 +8,7 @@ import com.andreamw96.moviecatalogue.data.network.MovieRepository
 import javax.inject.Inject
 
 
-class MovieViewModel @Inject constructor(var movieRepository : MovieRepository) : ViewModel() {
+class MovieViewModel @Inject constructor(private val movieRepository : MovieRepository) : ViewModel() {
 
     fun setMovies() {
         movieRepository.setMovies()
@@ -21,7 +21,6 @@ class MovieViewModel @Inject constructor(var movieRepository : MovieRepository) 
     fun getStatus(): MutableLiveData<Boolean?> {
         return movieRepository.getStatusNetwork()
     }
-
 
     override fun onCleared() {
         super.onCleared()

@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue
+package com.andreamw96.moviecatalogue.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
