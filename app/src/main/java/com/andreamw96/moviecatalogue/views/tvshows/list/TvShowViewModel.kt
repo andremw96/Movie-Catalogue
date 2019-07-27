@@ -8,9 +8,7 @@ import com.andreamw96.moviecatalogue.data.network.TvShowRepository
 import javax.inject.Inject
 
 
-class TvShowViewModel @Inject constructor() : ViewModel() {
-
-    private var tvShowRepository = TvShowRepository()
+class TvShowViewModel @Inject constructor(var tvShowRepository : TvShowRepository) : ViewModel() {
 
     fun setTvShows() {
         tvShowRepository.setTvShows()

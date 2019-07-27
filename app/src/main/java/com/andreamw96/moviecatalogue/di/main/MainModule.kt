@@ -4,6 +4,7 @@ import com.andreamw96.moviecatalogue.data.network.MovieApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module
 class MainModule {

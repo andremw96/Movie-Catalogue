@@ -10,11 +10,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository {
-
-    @Inject
-    lateinit var mMoviesApi : MovieApi
+@Singleton
+class MovieRepository @Inject constructor(var mMoviesApi : MovieApi) {
 
     private val TAG = MovieViewModel::class.java.simpleName
     private val listMovies = MutableLiveData<List<MovieResult>>()

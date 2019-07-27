@@ -10,11 +10,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class TvShowRepository {
-
-    @Inject
-    lateinit var mMoviesApi: MovieApi
+@Singleton
+class TvShowRepository @Inject constructor(var mMoviesApi: MovieApi) {
 
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
