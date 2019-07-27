@@ -23,7 +23,9 @@ class TvShowViewModel : ViewModel() {
         return tvShowRepository.getStatusNetwork()
     }
 
-    fun clearRepo() {
+    override fun onCleared() {
+        super.onCleared()
         tvShowRepository.clearRepo()
     }
+
 }

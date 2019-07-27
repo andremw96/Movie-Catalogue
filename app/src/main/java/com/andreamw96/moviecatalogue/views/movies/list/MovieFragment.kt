@@ -62,11 +62,6 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         })
     }
 
-    override fun onStop() {
-        super.onStop()
-        movieViewModel.clearRepo()
-    }
-
     private val getMovies = Observer<List<MovieResult>> { movieItems ->
         if (movieItems != null) {
             movieAdapter.bindData(movieItems)

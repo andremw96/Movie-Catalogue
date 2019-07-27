@@ -53,10 +53,13 @@ dependencies {
     implementation "com.google.code.gson:gson:2.8.5"
 
     //retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.4.0"
+    implementation "com.squareup.retrofit2:retrofit:2.5.0"
     implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.4.0"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+
+    //reactive stream, convert observable to livedata
+    implementation "android.arch.lifecycle:reactivestreams:1.1.1"
 
     // Room components
     implementation "androidx.room:room-runtime:2.2.0-alpha01"
@@ -73,8 +76,20 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02"
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.0"
+
+    //dagger
+    implementation 'com.google.dagger:dagger:2.22'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt 'com.google.dagger:dagger-compiler:2.22'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.22"
+
+    //dagger android
+    implementation 'com.google.dagger:dagger-android:2.22'
+    implementation 'com.google.dagger:dagger-android-support:2.22'
+    kapt 'com.google.dagger:dagger-android-processor:2.22'
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.22"
 
     //test
     testImplementation 'junit:junit:4.12'

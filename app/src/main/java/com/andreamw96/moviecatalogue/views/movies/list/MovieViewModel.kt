@@ -23,8 +23,11 @@ class MovieViewModel : ViewModel() {
         return movieRepository.getStatusNetwork()
     }
 
-    fun clearRepo() {
+
+    override fun onCleared() {
+        super.onCleared()
         movieRepository.clearRepo()
     }
+
 
 }

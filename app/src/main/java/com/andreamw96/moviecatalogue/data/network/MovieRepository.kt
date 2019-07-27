@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers
 class MovieRepository {
 
     private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
+
     private val TAG = MovieViewModel::class.java.simpleName
     private val listMovies = MutableLiveData<List<MovieResult>>()
     private var status = MutableLiveData<Boolean?>()
