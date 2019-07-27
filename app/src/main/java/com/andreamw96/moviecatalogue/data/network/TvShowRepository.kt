@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.model.TvResult
-import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -13,13 +12,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TvShowRepository @Inject constructor(var mMoviesApi: MovieApi) {
+class TvShowRepository @Inject constructor(var mMoviesApi: MovieApi, val mDisposable: CompositeDisposable) {
 
-    private val TAG = TvShowViewModel::class.java.simpleName
+    private val TAG = TvShowRepository::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
     private var status = MutableLiveData<Boolean?>()
-
-    private val mDisposable: CompositeDisposable = CompositeDisposable()
 
     fun setTvShows() {
         mDisposable.add(mMoviesApi
