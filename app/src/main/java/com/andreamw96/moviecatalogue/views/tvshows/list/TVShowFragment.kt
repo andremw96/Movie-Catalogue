@@ -17,12 +17,13 @@ import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
 
     private lateinit var tvShowMovieViewModel: TvShowViewModel
     private lateinit var tvShowsAdapter: TvShowsAdapter

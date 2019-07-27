@@ -17,13 +17,14 @@ import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
 
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var movieAdapter: MovieAdapter
