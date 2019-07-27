@@ -4,6 +4,7 @@ import com.andreamw96.moviecatalogue.di.main.MainFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.main.MainModule
 import com.andreamw96.moviecatalogue.di.main.MainScope
 import com.andreamw96.moviecatalogue.views.MainActivity
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -18,4 +19,7 @@ abstract class ActivityBuilderModule{
             ]
     )
     abstract fun contributeMainActivity() : MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeDetailActivity() : DetailMovieActivity
 }

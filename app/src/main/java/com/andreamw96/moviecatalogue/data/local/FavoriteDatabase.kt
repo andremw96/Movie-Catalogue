@@ -1,8 +1,6 @@
 package com.andreamw96.moviecatalogue.data.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.andreamw96.moviecatalogue.data.model.Favorite
 
@@ -11,7 +9,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
 
     abstract fun favDao(): FavoriteDao
 
-    companion object {
+    /*companion object {
         @Volatile
         private var INSTANCE: FavoriteDatabase? = null
 
@@ -32,5 +30,5 @@ abstract class FavoriteDatabase : RoomDatabase() {
                 return instance
             }
         }
-    }
+    }*/
 }

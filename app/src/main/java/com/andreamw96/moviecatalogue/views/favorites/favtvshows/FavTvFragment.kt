@@ -6,25 +6,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_fav_tv.*
+import javax.inject.Inject
 
 
-class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class FavTvFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
 
     private lateinit var favoriteViewModel: FavoriteViewModel
+
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
+
     private lateinit var favAdapter: FavoriteAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +43,7 @@ class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         super.onViewCreated(view, savedInstanceState)
 
         showLoading()
-        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
+        favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
         favoriteViewModel.getFavorite(false).observe(this, getFavTvs)
 
         favAdapter = FavoriteAdapter(context, this)

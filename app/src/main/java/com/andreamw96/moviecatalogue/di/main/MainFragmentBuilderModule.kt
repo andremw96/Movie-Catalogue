@@ -1,5 +1,8 @@
 package com.andreamw96.moviecatalogue.di.main
 
+import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
+import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteScope
+import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteViewModelModule
 import com.andreamw96.moviecatalogue.di.main.movie.MovieModule
 import com.andreamw96.moviecatalogue.di.main.movie.MovieScope
 import com.andreamw96.moviecatalogue.di.main.movie.MovieViewModelModule
@@ -33,6 +36,12 @@ abstract class MainFragmentBuilderModule {
     )
     abstract fun contributeTvShowsFragment() : TVShowFragment
 
-    @ContributesAndroidInjector
+    @FavoriteScope
+    @ContributesAndroidInjector(
+            modules = [
+                FavoriteViewModelModule::class,
+                FavoriteModule::class
+            ]
+    )
     abstract fun contributeFavoriteFragment() : FavoriteFragment
 }
