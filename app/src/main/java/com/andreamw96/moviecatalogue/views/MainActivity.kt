@@ -5,16 +5,18 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val fragment: Fragment
@@ -48,6 +50,9 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
+    @Inject
+    lateinit var asdasdasdas : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             bottom_navigation.selectedItemId = R.id.navigation_movie
         }
+
+        Toast.makeText(this, asdasdasdas, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
