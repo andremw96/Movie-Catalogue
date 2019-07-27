@@ -1,6 +1,5 @@
 package com.andreamw96.moviecatalogue.data.network
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -14,7 +13,6 @@ import javax.inject.Singleton
 @Singleton
 class TvShowRepository @Inject constructor(private val mMoviesApi: MovieApi, private val mDisposable: CompositeDisposable) {
 
-    private val TAG = TvShowRepository::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
     private var status = MutableLiveData<Boolean?>()
 
@@ -27,7 +25,6 @@ class TvShowRepository @Inject constructor(private val mMoviesApi: MovieApi, pri
                 listTvShows.postValue(it.results)
                 status.value = true
             }, {
-                Log.d(TAG, "error fetching tv shows")
                 status.value = false
             }))
     }
