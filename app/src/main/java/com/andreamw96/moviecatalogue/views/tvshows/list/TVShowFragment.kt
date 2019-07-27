@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
@@ -19,6 +20,7 @@ import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_tvshow.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +28,10 @@ import kotlinx.android.synthetic.main.fragment_tvshow.*
 class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
 
     private lateinit var tvShowMovieViewModel: TvShowViewModel
+
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
+
     private lateinit var tvShowsAdapter: TvShowsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +43,7 @@ class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvShowMovieViewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
+        tvShowMovieViewModel = ViewModelProviders.of(this, providersFactory).get(TvShowViewModel::class.java)
         tvShowMovieViewModel.getTvShows().observe(this, getTvShows)
 
         tvShowsAdapter = TvShowsAdapter(activity, this)

@@ -9,10 +9,12 @@ import com.andreamw96.moviecatalogue.views.movies.list.MovieViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class MovieRepository {
 
-    private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
+    @Inject
+    lateinit var mMoviesApi : MovieApi
 
     private val TAG = MovieViewModel::class.java.simpleName
     private val listMovies = MutableLiveData<List<MovieResult>>()

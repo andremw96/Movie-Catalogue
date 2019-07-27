@@ -9,10 +9,13 @@ import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class TvShowRepository {
 
-    private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
+    @Inject
+    lateinit var mMoviesApi: MovieApi
+
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
     private var status = MutableLiveData<Boolean?>()

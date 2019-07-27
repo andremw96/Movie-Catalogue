@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.data.network.TvShowRepository
+import javax.inject.Inject
 
 
-class TvShowViewModel : ViewModel() {
+class TvShowViewModel @Inject constructor() : ViewModel() {
 
     private var tvShowRepository = TvShowRepository()
 

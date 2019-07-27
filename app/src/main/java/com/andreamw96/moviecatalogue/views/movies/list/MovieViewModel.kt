@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.network.MovieRepository
+import javax.inject.Inject
 
 
-class MovieViewModel : ViewModel() {
-
-    private var movieRepository = MovieRepository()
+class MovieViewModel @Inject constructor(var movieRepository : MovieRepository) : ViewModel() {
 
     fun setMovies() {
         movieRepository.setMovies()

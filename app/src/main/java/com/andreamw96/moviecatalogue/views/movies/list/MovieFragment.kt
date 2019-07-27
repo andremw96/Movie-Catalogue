@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
@@ -19,6 +20,7 @@ import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_movie.*
+import javax.inject.Inject
 
 
 /**
@@ -27,6 +29,10 @@ import kotlinx.android.synthetic.main.fragment_movie.*
 class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
 
     private lateinit var movieViewModel: MovieViewModel
+
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
+
     private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +44,7 @@ class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
+        movieViewModel = ViewModelProviders.of(this, providersFactory).get(MovieViewModel::class.java)
         movieViewModel.getMovies().observe(this, getMovies)
 
         movieAdapter = MovieAdapter(context, this)
