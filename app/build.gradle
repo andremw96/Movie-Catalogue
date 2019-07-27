@@ -28,6 +28,12 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    packagingOptions {
+
+        pickFirst("META-INF/atomicfu.kotlin_module")
+    }
+
 }
 
 dependencies {
