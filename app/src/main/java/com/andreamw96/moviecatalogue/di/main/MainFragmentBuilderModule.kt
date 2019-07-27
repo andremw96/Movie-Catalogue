@@ -10,6 +10,8 @@ import com.andreamw96.moviecatalogue.di.main.tvshows.TvShowsModule
 import com.andreamw96.moviecatalogue.di.main.tvshows.TvShowsScope
 import com.andreamw96.moviecatalogue.di.main.tvshows.TvShowsViewModelModule
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
+import com.andreamw96.moviecatalogue.views.favorites.favmovies.FavMovieFragment
+import com.andreamw96.moviecatalogue.views.favorites.favtvshows.FavTvFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import dagger.Module
@@ -37,11 +39,24 @@ abstract class MainFragmentBuilderModule {
     abstract fun contributeTvShowsFragment() : TVShowFragment
 
     @FavoriteScope
+    @ContributesAndroidInjector
+    abstract fun contributeFavoriteFragment() : FavoriteFragment
+
+    @FavoriteScope
     @ContributesAndroidInjector(
             modules = [
                 FavoriteViewModelModule::class,
                 FavoriteModule::class
             ]
     )
-    abstract fun contributeFavoriteFragment() : FavoriteFragment
+    abstract fun contributeFavoriteMovieFragment() : FavMovieFragment
+
+    @FavoriteScope
+    @ContributesAndroidInjector(
+            modules = [
+                FavoriteViewModelModule::class,
+                FavoriteModule::class
+            ]
+    )
+    abstract fun contributeFavoriteTvShowFragment() : FavTvFragment
 }

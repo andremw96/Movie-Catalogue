@@ -9,11 +9,13 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
+import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail_movie.*
+import javax.inject.Inject
 
 class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
 
@@ -22,13 +24,17 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
     }
 
     private lateinit var favoriteViewModel: FavoriteViewModel
+
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
+
     private lateinit var movie: MovieResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
+        favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
 
         showLoading()
 

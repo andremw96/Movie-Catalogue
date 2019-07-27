@@ -4,7 +4,9 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FavoriteRepository @Inject constructor(private val favoriteDao: FavoriteDao) {
 
     @WorkerThread
