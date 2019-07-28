@@ -46,8 +46,8 @@ class AppModule {
     fun provideRequestOptions() : RequestOptions {
         return RequestOptions()
                 .placeholder(R.drawable.white_background)
-                .fallback(R.drawable.white_background)
-                .error(R.drawable.white_background)
+                .fallback(R.drawable.noimage)
+                .error(R.drawable.noimage)
     }
 
     @Singleton
