@@ -1,13 +1,15 @@
 package com.andreamw96.moviecatalogue.di
 
+import com.andreamw96.moviecatalogue.di.detail.movie.DetailMovieScope
+import com.andreamw96.moviecatalogue.di.detail.movie.DetailMovieViewModelModule
+import com.andreamw96.moviecatalogue.di.detail.tvshows.DetailTvShowScope
+import com.andreamw96.moviecatalogue.di.detail.tvshows.DetailTvShowViewModelModule
 import com.andreamw96.moviecatalogue.di.main.MainFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.main.MainModule
 import com.andreamw96.moviecatalogue.di.main.MainScope
-import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
-import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteScope
-import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteViewModelModule
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -23,12 +25,19 @@ abstract class ActivityBuilderModule{
     )
     abstract fun contributeMainActivity() : MainActivity
 
-    @FavoriteScope
+    @DetailMovieScope
     @ContributesAndroidInjector(
             modules = [
-                FavoriteViewModelModule::class,
-                FavoriteModule::class
+                DetailMovieViewModelModule::class
             ]
     )
-    abstract fun contributeDetailActivity() : DetailMovieActivity
+    abstract fun contributeDetailMovieActivity() : DetailMovieActivity
+
+    @DetailTvShowScope
+    @ContributesAndroidInjector(
+            modules = [
+                DetailTvShowViewModelModule::class
+            ]
+    )
+    abstract fun contributeDetailTvShowActivity() : DetailTvShowActivity
 }

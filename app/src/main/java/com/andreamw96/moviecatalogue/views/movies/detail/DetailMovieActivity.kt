@@ -3,7 +3,6 @@ package com.andreamw96.moviecatalogue.views.movies.detail
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
@@ -12,7 +11,6 @@ import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
-import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import javax.inject.Inject
@@ -23,7 +21,7 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         const val INTENT_MOVIE = "intent_movie"
     }
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var detailMovieViewModel: DetailMovieViewModel
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
@@ -34,7 +32,7 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
+        detailMovieViewModel = ViewModelProviders.of(this, providersFactory).get(DetailMovieViewModel::class.java)
 
         showLoading()
 
@@ -62,7 +60,7 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         fav_button_movie.setOnClickListener {
             val favorite = Favorite(movie.id, true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage, movie.overview)
 
-            if (favoriteViewModel.isFavorite(movie.id)) {
+           /* if (favoriteViewModel.isFavorite(movie.id)) {
                 favoriteViewModel.deleteFav(movie.id)
 
                 Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
@@ -70,7 +68,7 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
                 favoriteViewModel.insertFav(favorite)
 
                 Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
-            }
+            }*/
 
             favoriteState()
         }
@@ -93,10 +91,10 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
     }
 
     private fun favoriteState() {
-        if (favoriteViewModel.isFavorite(movie.id)) {
+        /*if (favoriteViewModel.isFavorite(movie.id)) {
             fav_button_movie.setImageResource(R.drawable.ic_fav_added)
         } else {
             fav_button_movie.setImageResource(R.drawable.ic_fav)
-        }
+        }*/
     }
 }

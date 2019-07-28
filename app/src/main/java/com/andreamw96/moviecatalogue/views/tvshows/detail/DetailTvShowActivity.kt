@@ -3,32 +3,37 @@ package com.andreamw96.moviecatalogue.views.tvshows.detail
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
-import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
+import javax.inject.Inject
 
-class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
+class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
 
     companion object {
         const val INTENT_TV_SHOW = "intent_tv_show"
     }
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var detailTvShowViewModel: DetailTvShowViewModel
+
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
+
+
     private lateinit var tvShow: TvResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_tv_show)
 
-        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
+        detailTvShowViewModel = ViewModelProviders.of(this, providersFactory).get(DetailTvShowViewModel::class.java)
 
         showLoading()
 
@@ -55,7 +60,7 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
         fav_button_tvshows.setOnClickListener {
             val favorite = Favorite(tvShow.id, false, tvShow.name, tvShow.firstAirDate, tvShow.backdropPath, tvShow.voteAverage, tvShow.overview)
 
-            if (favoriteViewModel.isFavorite(tvShow.id)) {
+           /* if (favoriteViewModel.isFavorite(tvShow.id)) {
                 favoriteViewModel.deleteFav(tvShow.id)
 
                 Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
@@ -63,7 +68,7 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
                 favoriteViewModel.insertFav(favorite)
 
                 Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
-            }
+            }*/
 
             favoriteState()
         }
@@ -86,10 +91,10 @@ class DetailTvShowActivity : AppCompatActivity(), ProgressBarInterface {
     }
 
     private fun favoriteState() {
-        if (favoriteViewModel.isFavorite(tvShow.id)) {
+        /*if (favoriteViewModel.isFavorite(tvShow.id)) {
             fav_button_tvshows.setImageResource(R.drawable.ic_fav_added)
         } else {
             fav_button_tvshows.setImageResource(R.drawable.ic_fav)
-        }
+        }*/
     }
 }
