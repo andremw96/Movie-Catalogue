@@ -12,8 +12,9 @@ import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
+import javax.inject.Inject
 
-class MovieAdapter(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
+class MovieAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
 
     val listMovie: ArrayList<MovieResult> = arrayListOf()
 

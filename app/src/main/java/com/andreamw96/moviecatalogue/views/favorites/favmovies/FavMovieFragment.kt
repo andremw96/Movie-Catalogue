@@ -45,8 +45,6 @@ class FavMovieFragment : DaggerFragment(), ProgressBarInterface {
         favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
         favoriteViewModel.getFavorite(true).observe(this, getFavMovies)
 
-        favAdapter = FavoriteAdapter(context)
-
         initRecyclerView()
 
         rv_fav_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_fav_movie, object : RecyclerItemClickListener.OnItemClickListener {

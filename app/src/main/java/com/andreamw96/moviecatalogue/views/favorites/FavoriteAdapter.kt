@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
-import com.andreamw96.moviecatalogue.utils.loadImage
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
+import javax.inject.Inject
 
-class FavoriteAdapter(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<FavoriteAdapter.CardViewViewHolder>() {
+class FavoriteAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<FavoriteAdapter.CardViewViewHolder>() {
 
     val listFav: ArrayList<Favorite> = arrayListOf()
 
