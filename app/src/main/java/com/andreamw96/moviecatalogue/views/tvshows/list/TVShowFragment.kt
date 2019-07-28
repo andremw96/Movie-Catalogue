@@ -11,11 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
+import com.andreamw96.moviecatalogue.utils.logd
+import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -44,7 +46,6 @@ class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfa
         super.onViewCreated(view, savedInstanceState)
 
         tvShowMovieViewModel = ViewModelProviders.of(this, providersFactory).get(TvShowViewModel::class.java)
-        tvShowMovieViewModel.getTvShows().observe(this, getTvShows)
 
         tvShowsAdapter = TvShowsAdapter(activity, this)
         rv_tv_show.apply {
@@ -54,15 +55,32 @@ class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfa
             tvShowsAdapter.notifyDataSetChanged()
         }
 
-        showLoading()
-        tvShowMovieViewModel.setTvShows()
+        showTvShows()
+    }
 
-        tvShowMovieViewModel.getStatus().observe(this, Observer { status ->
-            if (status == false) {
-                Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_LONG).show()
-                hideLoading()
-            } else {
-                runAnimation(rv_tv_show)
+    private fun showTvShows() {
+        tvShowMovieViewModel.setTvShows().removeObservers(viewLifecycleOwner)
+        tvShowMovieViewModel.setTvShows().observe(viewLifecycleOwner, Observer {
+            if(it != null) {
+                when(it.status) {
+                    Resource.Status.LOADING -> {
+                        showLoading()
+                        logd("LOADING...")
+                    }
+                    Resource.Status.SUCCESS -> {
+                        logd("got the tvshows...")
+                        hideLoading()
+                        it.data?.let { it ->
+                            tvShowsAdapter.bindData(it)
+                        }
+                        runAnimation(rv_tv_show)
+                    }
+                    Resource.Status.ERROR -> {
+                        hideLoading()
+                        Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_SHORT).show()
+                        loge("ERROR ${it.message}")
+                    }
+                }
             }
         })
     }
@@ -71,13 +89,6 @@ class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfa
         val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
         goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
         startActivity(goToDetail)
-    }
-
-    private val getTvShows = Observer<List<TvResult>> { tvItems ->
-        if (tvItems != null) {
-            tvShowsAdapter.bindData(tvItems)
-            hideLoading()
-        }
     }
 
     override fun showLoading() {

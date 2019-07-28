@@ -13,5 +13,4 @@ class MovieModule {
     fun provideMovieRepository(mMoviesApi : MovieApi, mDisposable: CompositeDisposable) : MovieRepository {
         return MovieRepository(mMoviesApi, mDisposable)
     }
-
 }

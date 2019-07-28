@@ -11,11 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
+import com.andreamw96.moviecatalogue.utils.logd
+import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.runAnimation
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -45,7 +47,6 @@ class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfac
         super.onViewCreated(view, savedInstanceState)
 
         movieViewModel = ViewModelProviders.of(this, providersFactory).get(MovieViewModel::class.java)
-        movieViewModel.getMovies().observe(this, getMovies)
 
         movieAdapter = MovieAdapter(context, this)
 
@@ -56,24 +57,34 @@ class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfac
             movieAdapter.notifyDataSetChanged()
         }
 
-        showLoading()
-        movieViewModel.setMovies()
-
-        movieViewModel.getStatus().observe(this, Observer { status ->
-            if (status == false) {
-                Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
-                hideLoading()
-            } else {
-                runAnimation(rv_movie)
-            }
-        })
+        showMovie()
     }
 
-    private val getMovies = Observer<List<MovieResult>> { movieItems ->
-        if (movieItems != null) {
-            movieAdapter.bindData(movieItems)
-            hideLoading()
-        }
+    private fun showMovie() {
+        movieViewModel.setMovies().removeObservers(viewLifecycleOwner)
+        movieViewModel.setMovies().observe(viewLifecycleOwner, Observer {
+            if(it != null) {
+                when(it.status) {
+                    Resource.Status.LOADING -> {
+                        showLoading()
+                        logd("LOADING...")
+                    }
+                    Resource.Status.SUCCESS -> {
+                        logd("got the movies...")
+                        hideLoading()
+                        it.data?.let { it ->
+                            movieAdapter.bindData(it)
+                        }
+                        runAnimation(rv_movie)
+                    }
+                    Resource.Status.ERROR -> {
+                        hideLoading()
+                        Snackbar.make(fragment_movie, "Gagal memuat list tv shows", Snackbar.LENGTH_SHORT).show()
+                        loge("ERROR ${it.message}")
+                    }
+                }
+            }
+        })
     }
 
     override fun onItemClicked(position: Int) {
