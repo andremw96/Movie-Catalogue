@@ -11,25 +11,22 @@ import dagger.Provides
 @Module
 class FavoriteModule {
 
-    @FavoriteScope
     @Provides
     fun provideFavoriteDatabase(application: Application) : FavoriteDatabase {
         return Room.databaseBuilder(
                 application.applicationContext,
                 FavoriteDatabase::class.java,
                 "favorite_database"
-                )
+        )
                 .fallbackToDestructiveMigration()
                 .build()
     }
 
-    @FavoriteScope
     @Provides
     fun provideFavoriteDao(favoriteDatabase: FavoriteDatabase) : FavoriteDao {
         return favoriteDatabase.favDao()
     }
 
-    @FavoriteScope
     @Provides
     fun provideFavoriteRepository(favoriteDao: FavoriteDao) : FavoriteRepository {
         return FavoriteRepository(favoriteDao)

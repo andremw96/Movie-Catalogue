@@ -9,13 +9,11 @@ import retrofit2.Retrofit
 @Module
 class MainModule {
 
-    @MainScope
     @Provides
     fun provideMovieApi(retrofit: Retrofit) : MovieApi {
         return retrofit.create(MovieApi::class.java)
     }
 
-    @MainScope
     @Provides
     fun provideCompositeDisposable() : CompositeDisposable {
         return CompositeDisposable()

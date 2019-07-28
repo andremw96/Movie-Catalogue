@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.data.network.TvShowRepository
+import com.andreamw96.moviecatalogue.utils.logd
 import javax.inject.Inject
 
 
 class TvShowViewModel @Inject constructor(private val tvShowRepository : TvShowRepository) : ViewModel() {
 
     fun setTvShows() {
+        logd("$tvShowRepository")
         tvShowRepository.setTvShows()
     }
 

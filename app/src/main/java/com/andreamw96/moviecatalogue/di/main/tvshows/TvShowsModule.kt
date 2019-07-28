@@ -9,7 +9,6 @@ import io.reactivex.disposables.CompositeDisposable
 @Module
 class TvShowsModule {
 
-    @TvShowsScope
     @Provides
     fun provideTvShowRepository(mMoviesApi : MovieApi, mDisposable: CompositeDisposable) : TvShowRepository {
         return TvShowRepository(mMoviesApi, mDisposable)

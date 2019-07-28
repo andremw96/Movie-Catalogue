@@ -1,13 +1,10 @@
 package com.andreamw96.moviecatalogue.di.main
 
 import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
-import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteScope
 import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteViewModelModule
 import com.andreamw96.moviecatalogue.di.main.movie.MovieModule
-import com.andreamw96.moviecatalogue.di.main.movie.MovieScope
 import com.andreamw96.moviecatalogue.di.main.movie.MovieViewModelModule
 import com.andreamw96.moviecatalogue.di.main.tvshows.TvShowsModule
-import com.andreamw96.moviecatalogue.di.main.tvshows.TvShowsScope
 import com.andreamw96.moviecatalogue.di.main.tvshows.TvShowsViewModelModule
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.favorites.favmovies.FavMovieFragment
@@ -20,42 +17,41 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class MainFragmentBuilderModule {
 
-    @MovieScope
     @ContributesAndroidInjector(
-        modules = [
-            MovieViewModelModule::class,
-            MovieModule::class
-        ]
+            modules = [
+                MovieModule::class,
+                MovieViewModelModule::class
+            ]
     )
     abstract fun contributeMovieFragment() : MovieFragment
 
-    @TvShowsScope
+
     @ContributesAndroidInjector(
-        modules = [
-            TvShowsViewModelModule::class,
-            TvShowsModule::class
-        ]
+            modules = [
+                TvShowsModule::class,
+                TvShowsViewModelModule::class
+            ]
     )
     abstract fun contributeTvShowsFragment() : TVShowFragment
 
-    @FavoriteScope
+
     @ContributesAndroidInjector
     abstract fun contributeFavoriteFragment() : FavoriteFragment
 
-    @FavoriteScope
+
     @ContributesAndroidInjector(
             modules = [
-                FavoriteViewModelModule::class,
-                FavoriteModule::class
+                FavoriteModule::class,
+                FavoriteViewModelModule::class
             ]
     )
     abstract fun contributeFavoriteMovieFragment() : FavMovieFragment
 
-    @FavoriteScope
+
     @ContributesAndroidInjector(
             modules = [
-                FavoriteViewModelModule::class,
-                FavoriteModule::class
+                FavoriteModule::class,
+                FavoriteViewModelModule::class
             ]
     )
     abstract fun contributeFavoriteTvShowFragment() : FavTvFragment

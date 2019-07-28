@@ -37,7 +37,8 @@ class AppModule {
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .client(clientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
     }
 
     @Singleton

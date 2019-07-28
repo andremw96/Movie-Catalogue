@@ -9,7 +9,6 @@ import io.reactivex.disposables.CompositeDisposable
 @Module
 class MovieModule {
 
-    @MovieScope
     @Provides
     fun provideMovieRepository(mMoviesApi : MovieApi, mDisposable: CompositeDisposable) : MovieRepository {
         return MovieRepository(mMoviesApi, mDisposable)
