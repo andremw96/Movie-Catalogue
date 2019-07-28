@@ -12,8 +12,8 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
 import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
@@ -22,14 +22,15 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_fav_movie.*
 import javax.inject.Inject
 
-class FavMovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
+class FavMovieFragment : DaggerFragment(), ProgressBarInterface {
 
     private lateinit var favoriteViewModel: FavoriteViewModel
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
 
-    private lateinit var favAdapter: FavoriteAdapter
+    @Inject
+    lateinit var favAdapter: FavoriteAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -44,15 +45,40 @@ class FavMovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInter
         favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
         favoriteViewModel.getFavorite(true).observe(this, getFavMovies)
 
-        favAdapter = FavoriteAdapter(context, this)
+        favAdapter = FavoriteAdapter(context)
 
+        initRecyclerView()
+
+        rv_fav_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_fav_movie, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val movie = MovieResult()
+                movie.apply {
+                    id = favAdapter.listFav[position].movieId
+                    backdropPath = favAdapter.listFav[position].backdropPath
+                    title = favAdapter.listFav[position].title
+                    overview = favAdapter.listFav[position].overview
+                    voteAverage = favAdapter.listFav[position].voteAverage
+                    releaseDate = favAdapter.listFav[position].releaseDate
+                }
+
+                val goToDetail = Intent(activity, DetailMovieActivity::class.java)
+                goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movie)
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }))
+    }
+
+    private fun initRecyclerView() {
         rv_fav_movie.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = favAdapter
             favAdapter.notifyDataSetChanged()
         }
-
     }
 
     private val getFavMovies = Observer<List<Favorite>> { favItems ->
@@ -62,22 +88,6 @@ class FavMovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInter
 
             hideLoading()
         }
-    }
-
-    override fun onItemClicked(position: Int) {
-        val movie = MovieResult()
-        movie.apply {
-            id = favAdapter.listFav[position].movieId
-            backdropPath = favAdapter.listFav[position].backdropPath
-            title = favAdapter.listFav[position].title
-            overview = favAdapter.listFav[position].overview
-            voteAverage = favAdapter.listFav[position].voteAverage
-            releaseDate = favAdapter.listFav[position].releaseDate
-        }
-
-        val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movie)
-        startActivity(goToDetail)
     }
 
     override fun showLoading() {

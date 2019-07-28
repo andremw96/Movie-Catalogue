@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
@@ -27,14 +27,15 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
+class TVShowFragment : DaggerFragment(), ProgressBarInterface {
 
     private lateinit var tvShowMovieViewModel: TvShowViewModel
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
 
-    private lateinit var tvShowsAdapter: TvShowsAdapter
+    @Inject
+    lateinit var tvShowsAdapter: TvShowsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,15 +48,29 @@ class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfa
 
         tvShowMovieViewModel = ViewModelProviders.of(this, providersFactory).get(TvShowViewModel::class.java)
 
-        tvShowsAdapter = TvShowsAdapter(activity, this)
+        initRecyclerView()
+        showTvShows()
+
+        rv_tv_show.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_tv_show, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
+                goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }))
+    }
+
+    private fun initRecyclerView() {
         rv_tv_show.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = tvShowsAdapter
             tvShowsAdapter.notifyDataSetChanged()
         }
-
-        showTvShows()
     }
 
     private fun showTvShows() {
@@ -83,12 +98,6 @@ class TVShowFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfa
                 }
             }
         })
-    }
-
-    override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
-        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
-        startActivity(goToDetail)
     }
 
     override fun showLoading() {

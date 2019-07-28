@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import com.andreamw96.moviecatalogue.data.local.FavoriteDatabase
 import com.andreamw96.moviecatalogue.data.local.FavoriteRepository
+import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import dagger.Module
 import dagger.Provides
 
@@ -30,6 +31,11 @@ class FavoriteModule {
     @Provides
     fun provideFavoriteRepository(favoriteDao: FavoriteDao) : FavoriteRepository {
         return FavoriteRepository(favoriteDao)
+    }
+
+    @Provides
+    fun provideFavoriteAdapter(application: Application) : FavoriteAdapter {
+        return FavoriteAdapter(application.applicationContext)
     }
 
 }

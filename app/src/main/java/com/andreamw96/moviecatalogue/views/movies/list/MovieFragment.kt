@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
@@ -28,14 +28,15 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
+class MovieFragment : DaggerFragment(), ProgressBarInterface {
 
     private lateinit var movieViewModel: MovieViewModel
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
 
-    private lateinit var movieAdapter: MovieAdapter
+    @Inject
+    lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,16 +49,30 @@ class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfac
 
         movieViewModel = ViewModelProviders.of(this, providersFactory).get(MovieViewModel::class.java)
 
-        movieAdapter = MovieAdapter(context, this)
+        initRecyclerView()
+        showMovie()
 
+        rv_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_movie, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val goToDetail = Intent(activity, DetailMovieActivity::class.java)
+                goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position])
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        }))
+    }
+
+    private fun initRecyclerView() {
         rv_movie.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = movieAdapter
             movieAdapter.notifyDataSetChanged()
         }
-
-        showMovie()
     }
 
     private fun showMovie() {
@@ -85,12 +100,6 @@ class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterfac
                 }
             }
         })
-    }
-
-    override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position])
-        startActivity(goToDetail)
     }
 
     override fun showLoading() {

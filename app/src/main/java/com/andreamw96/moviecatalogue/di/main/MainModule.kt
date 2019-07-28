@@ -18,5 +18,4 @@ class MainModule {
     fun provideCompositeDisposable() : CompositeDisposable {
         return CompositeDisposable()
     }
-
 }
