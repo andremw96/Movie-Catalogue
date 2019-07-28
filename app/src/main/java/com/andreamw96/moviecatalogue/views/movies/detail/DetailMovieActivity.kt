@@ -93,6 +93,10 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         progressBarMovieDetail.visibility = View.GONE
     }
 
+    override fun somethingHappened(isSuccess: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun favoriteState() {
         /*if (favoriteViewModel.isFavorite(movie.id)) {
             fav_button_movie.setImageResource(R.drawable.ic_fav_added)

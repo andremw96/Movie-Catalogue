@@ -92,6 +92,10 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         progressBarTvShowDetail.visibility = View.GONE
     }
 
+    override fun somethingHappened(isSuccess: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun favoriteState() {
         /*if (favoriteViewModel.isFavorite(tvShow.id)) {
             fav_button_tvshows.setImageResource(R.drawable.ic_fav_added)
