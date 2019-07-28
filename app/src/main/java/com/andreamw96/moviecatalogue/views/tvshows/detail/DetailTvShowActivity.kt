@@ -9,8 +9,8 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
-import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.bumptech.glide.RequestManager
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 import javax.inject.Inject
@@ -26,6 +26,8 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
 
+    @Inject
+    lateinit var requestManager: RequestManager
 
     private lateinit var tvShow: TvResult
 
@@ -46,8 +48,8 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
             }
         }
 
-        detail_image_tvshow.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                .append(tvShow.backdropPath).toString())
+        requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(tvShow.backdropPath).toString())
+                .into(detail_image_tvshow)
         detail_title_tvshow.text = tvShow.name
         detail_description_tvshow.text = tvShow.overview
         detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), tvShow.voteAverage)
@@ -58,7 +60,7 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         hideLoading()
 
         fav_button_tvshows.setOnClickListener {
-            val favorite = Favorite(tvShow.id, false, tvShow.name, tvShow.firstAirDate, tvShow.backdropPath, tvShow.voteAverage, tvShow.overview)
+            val favorite = Favorite(tvShow.id, false, tvShow.name.toString(), tvShow.firstAirDate.toString(), tvShow.backdropPath.toString(), tvShow.voteAverage, tvShow.overview.toString())
 
            /* if (favoriteViewModel.isFavorite(tvShow.id)) {
                 favoriteViewModel.deleteFav(tvShow.id)

@@ -9,8 +9,8 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
-import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.bumptech.glide.RequestManager
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import javax.inject.Inject
@@ -25,6 +25,9 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
+
+    @Inject
+    lateinit var requestManager: RequestManager
 
     private lateinit var movie: MovieResult
 
@@ -46,8 +49,8 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
             }
         }
 
-        detail_image_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                .append(movie.backdropPath).toString())
+        requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
+                .into(detail_image_movie)
         detail_title_movie.text = movie.title
         detail_description_movie.text = movie.overview
         detail_rating_movie.text = String.format("%s%s", getString(R.string.ratingString), movie.voteAverage)
@@ -58,7 +61,7 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         hideLoading()
 
         fav_button_movie.setOnClickListener {
-            val favorite = Favorite(movie.id, true, movie.title, movie.releaseDate, movie.backdropPath, movie.voteAverage, movie.overview)
+            val favorite = Favorite(movie.id, true, movie.title.toString(), movie.releaseDate.toString(), movie.backdropPath.toString(), movie.voteAverage, movie.overview.toString())
 
            /* if (favoriteViewModel.isFavorite(movie.id)) {
                 favoriteViewModel.deleteFav(movie.id)

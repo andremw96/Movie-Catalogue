@@ -19,27 +19,27 @@ data class TvShows(
 @Parcelize
 data class TvResult(
         @SerializedName("backdrop_path")
-        var backdropPath: String = "",
+        var backdropPath: String? = null,
         @SerializedName("first_air_date")
-        var firstAirDate: String = "",
+        var firstAirDate: String? = null,
         @SerializedName("genre_ids")
         var genreIds: List<Int> = emptyList(),
         @SerializedName("id")
         var id: Int = -1,
         @SerializedName("name")
-        var name: String = "",
+        var name: String? = null,
         @SerializedName("origin_country")
         var originCountry: List<String> = emptyList(),
         @SerializedName("original_language")
-        var originalLanguage: String = "",
+        var originalLanguage: String? = null,
         @SerializedName("original_name")
-        var originalName: String = "",
+        var originalName: String? = null,
         @SerializedName("overview")
-        var overview: String = "",
+        var overview: String? = null,
         @SerializedName("popularity")
         var popularity: Double = 0.0,
         @SerializedName("poster_path")
-        var posterPath: String = "",
+        var posterPath: String? = null,
         @SerializedName("vote_average")
         var voteAverage: Double = 0.0,
         @SerializedName("vote_count")

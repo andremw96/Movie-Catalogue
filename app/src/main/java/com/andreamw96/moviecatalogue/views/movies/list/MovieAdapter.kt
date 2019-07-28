@@ -41,7 +41,6 @@ class MovieAdapter @Inject constructor(private val context: Context?, private va
 
             requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
                     .into(img_movie)
-
             txt_movie_title.text = movie.title
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
