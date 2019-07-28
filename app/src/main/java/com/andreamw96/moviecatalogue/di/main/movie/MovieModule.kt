@@ -4,6 +4,7 @@ import android.app.Application
 import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.data.network.MovieRepository
 import com.andreamw96.moviecatalogue.views.movies.list.MovieAdapter
+import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -17,7 +18,7 @@ class MovieModule {
     }
 
     @Provides
-    fun provideMovieAdapter(application: Application) : MovieAdapter {
-        return MovieAdapter(application.applicationContext)
+    fun provideMovieAdapter(application: Application, requestManager: RequestManager) : MovieAdapter {
+        return MovieAdapter(application.applicationContext, requestManager)
     }
 }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.TvResult
-import com.andreamw96.moviecatalogue.utils.loadImage
+import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
 
-class TvShowsAdapter(private val context: Context?) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
+class TvShowsAdapter(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
 
     val listTvShows: ArrayList<TvResult> = arrayListOf()
 
@@ -38,8 +38,8 @@ class TvShowsAdapter(private val context: Context?) : RecyclerView.Adapter<TvSho
 
         fun bindItem(tvShow: TvResult) {
 
-            img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                    .append(tvShow.backdropPath).toString())
+            requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(tvShow.backdropPath).toString())
+                    .into(img_movie)
             txt_movie_title.text = tvShow.name
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), tvShow.firstAirDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), tvShow.voteAverage)
