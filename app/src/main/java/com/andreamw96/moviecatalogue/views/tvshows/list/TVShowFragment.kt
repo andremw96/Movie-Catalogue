@@ -85,6 +85,7 @@ class TVShowFragment : DaggerFragment(), ProgressBarInterface {
                     Resource.Status.SUCCESS -> {
                         logd("got the tvshows...")
                         hideLoading()
+                        somethingHappened(true)
                         it.data?.let { it ->
                             tvShowsAdapter.bindData(it)
                         }
@@ -92,6 +93,7 @@ class TVShowFragment : DaggerFragment(), ProgressBarInterface {
                     }
                     Resource.Status.ERROR -> {
                         hideLoading()
+                        somethingHappened(false)
                         Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_SHORT).show()
                         loge("ERROR ${it.message}")
                     }
@@ -106,6 +108,16 @@ class TVShowFragment : DaggerFragment(), ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarTvFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if(isSuccess) {
+            rv_tv_show.visibility = View.VISIBLE
+            img_tvshow_data_notfound.visibility = View.GONE
+        } else {
+            rv_tv_show.visibility = View.GONE
+            img_tvshow_data_notfound.visibility = View.VISIBLE
+        }
     }
 
 }

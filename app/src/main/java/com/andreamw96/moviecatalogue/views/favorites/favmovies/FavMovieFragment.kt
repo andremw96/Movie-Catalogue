@@ -83,9 +83,12 @@ class FavMovieFragment : DaggerFragment(), ProgressBarInterface {
         if (favItems != null) {
             favAdapter.bindData(favItems)
             runAnimation(rv_fav_movie)
-
-            hideLoading()
+            somethingHappened(true)
+        } else {
+            somethingHappened(false)
         }
+
+        hideLoading()
     }
 
     override fun showLoading() {
@@ -94,5 +97,15 @@ class FavMovieFragment : DaggerFragment(), ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarFavMovieFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if(isSuccess) {
+            rv_fav_movie.visibility = View.VISIBLE
+            img_favmovie_data_notfound.visibility = View.GONE
+        } else {
+            rv_fav_movie.visibility = View.GONE
+            img_favmovie_data_notfound.visibility = View.VISIBLE
+        }
     }
 }

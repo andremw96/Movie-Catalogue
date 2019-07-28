@@ -87,6 +87,7 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
                     Resource.Status.SUCCESS -> {
                         logd("got the movies...")
                         hideLoading()
+                        somethingHappened(true)
                         it.data?.let { it ->
                             movieAdapter.bindData(it)
                         }
@@ -94,6 +95,7 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
                     }
                     Resource.Status.ERROR -> {
                         hideLoading()
+                        somethingHappened(false)
                         Snackbar.make(fragment_movie, "Gagal memuat list tv shows", Snackbar.LENGTH_SHORT).show()
                         loge("ERROR ${it.message}")
                     }
@@ -108,5 +110,15 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarMovieFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if(isSuccess) {
+            rv_movie.visibility = View.VISIBLE
+            img_movie_data_notfound.visibility = View.GONE
+        } else {
+            rv_movie.visibility = View.GONE
+            img_movie_data_notfound.visibility = View.VISIBLE
+        }
     }
 }

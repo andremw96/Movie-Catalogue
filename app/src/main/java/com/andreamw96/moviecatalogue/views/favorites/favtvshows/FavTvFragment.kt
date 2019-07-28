@@ -86,9 +86,12 @@ class FavTvFragment : DaggerFragment(), ProgressBarInterface {
         if (favItems != null) {
             favAdapter.bindData(favItems)
             runAnimation(rv_fav_tv)
-
-            hideLoading()
+            somethingHappened(true)
+        } else {
+            somethingHappened(false)
         }
+
+        hideLoading()
     }
 
     override fun showLoading() {
@@ -97,5 +100,15 @@ class FavTvFragment : DaggerFragment(), ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarFavTvFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if(isSuccess) {
+            rv_fav_tv.visibility = View.VISIBLE
+            img_favtv_data_notfound.visibility = View.GONE
+        } else {
+            rv_fav_tv.visibility = View.GONE
+            img_favtv_data_notfound.visibility = View.VISIBLE
+        }
     }
 }
