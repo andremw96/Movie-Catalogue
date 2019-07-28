@@ -45,6 +45,7 @@ class MovieAdapter @Inject constructor(private val context: Context?, private va
             txt_movie_title.text = movie.title
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
+            rating_bar.rating = movie.voteAverage.toFloat() / 2
         }
     }
 }

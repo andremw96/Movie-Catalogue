@@ -44,6 +44,7 @@ class TvShowsAdapter @Inject constructor(private val context: Context?, private 
             txt_movie_title.text = tvShow.name
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), tvShow.firstAirDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), tvShow.voteAverage)
+            rating_bar.rating = tvShow.voteAverage.toFloat() / 2
         }
     }
 }

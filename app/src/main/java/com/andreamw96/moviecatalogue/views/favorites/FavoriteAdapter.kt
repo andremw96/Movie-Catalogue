@@ -46,6 +46,7 @@ class FavoriteAdapter @Inject constructor(private val context: Context?, private
             txt_movie_title.text = fav.title
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), fav.releaseDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), fav.voteAverage)
+            rating_bar.rating = fav.voteAverage.toFloat() / 2
         }
     }
 }
