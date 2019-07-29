@@ -67,7 +67,6 @@ class FavTvFragment : DaggerFragment(), ProgressBarInterface {
             }
 
             override fun onItemLongClick(view: View?, position: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }))
 

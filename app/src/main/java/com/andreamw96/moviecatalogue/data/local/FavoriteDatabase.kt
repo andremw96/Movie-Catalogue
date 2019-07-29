@@ -9,26 +9,4 @@ abstract class FavoriteDatabase : RoomDatabase() {
 
     abstract fun favDao(): FavoriteDao
 
-    /*companion object {
-        @Volatile
-        private var INSTANCE: FavoriteDatabase? = null
-
-        fun getInstanceFavDB(context: Context): FavoriteDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(FavoriteDatabase::class) {
-                val instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        FavoriteDatabase::class.java,
-                        "favorite_database"
-                )
-                        .fallbackToDestructiveMigration()
-                        .build()
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }*/
 }
