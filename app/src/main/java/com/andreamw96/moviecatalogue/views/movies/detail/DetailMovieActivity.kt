@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.views.movies.detail
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
@@ -63,15 +64,15 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         fav_button_movie.setOnClickListener {
             val favorite = Favorite(movie.id, true, movie.title.toString(), movie.releaseDate.toString(), movie.backdropPath.toString(), movie.voteAverage, movie.overview.toString())
 
-           /* if (favoriteViewModel.isFavorite(movie.id)) {
-                favoriteViewModel.deleteFav(movie.id)
+            if (detailMovieViewModel.isFavorite(movie.id)) {
+                detailMovieViewModel.deleteFav(movie.id)
 
                 Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
             } else {
-                favoriteViewModel.insertFav(favorite)
+                detailMovieViewModel.insertFav(favorite)
 
                 Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
-            }*/
+            }
 
             favoriteState()
         }
@@ -98,10 +99,10 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
     }
 
     private fun favoriteState() {
-        /*if (favoriteViewModel.isFavorite(movie.id)) {
+        if (detailMovieViewModel.isFavorite(movie.id)) {
             fav_button_movie.setImageResource(R.drawable.ic_fav_added)
         } else {
             fav_button_movie.setImageResource(R.drawable.ic_fav)
-        }*/
+        }
     }
 }

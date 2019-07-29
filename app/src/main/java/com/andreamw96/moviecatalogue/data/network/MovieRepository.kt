@@ -8,11 +8,10 @@ import com.andreamw96.moviecatalogue.views.common.Resource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieRepository @Inject constructor(var mMoviesApi : MovieApi, private val mDisposable: CompositeDisposable) {
+class MovieRepository (var mMoviesApi : MovieApi, private val mDisposable: CompositeDisposable) {
 
     private var listMovies = MutableLiveData<Resource<List<MovieResult>>>()
 

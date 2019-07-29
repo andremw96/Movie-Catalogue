@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.views.tvshows.detail
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
@@ -62,15 +63,15 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
         fav_button_tvshows.setOnClickListener {
             val favorite = Favorite(tvShow.id, false, tvShow.name.toString(), tvShow.firstAirDate.toString(), tvShow.backdropPath.toString(), tvShow.voteAverage, tvShow.overview.toString())
 
-           /* if (favoriteViewModel.isFavorite(tvShow.id)) {
-                favoriteViewModel.deleteFav(tvShow.id)
+            if (detailTvShowViewModel.isFavorite(tvShow.id)) {
+                detailTvShowViewModel.deleteFav(tvShow.id)
 
                 Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
             } else {
-                favoriteViewModel.insertFav(favorite)
+                detailTvShowViewModel.insertFav(favorite)
 
                 Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
-            }*/
+            }
 
             favoriteState()
         }
@@ -97,10 +98,10 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
     }
 
     private fun favoriteState() {
-        /*if (favoriteViewModel.isFavorite(tvShow.id)) {
+        if (detailTvShowViewModel.isFavorite(tvShow.id)) {
             fav_button_tvshows.setImageResource(R.drawable.ic_fav_added)
         } else {
             fav_button_tvshows.setImageResource(R.drawable.ic_fav)
-        }*/
+        }
     }
 }

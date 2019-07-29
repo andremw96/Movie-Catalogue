@@ -12,9 +12,8 @@ import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
-import javax.inject.Inject
 
-class TvShowsAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
+class TvShowsAdapter(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
 
     val listTvShows: ArrayList<TvResult> = arrayListOf()
 

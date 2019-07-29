@@ -4,6 +4,7 @@ import com.andreamw96.moviecatalogue.di.detail.movie.DetailMovieViewModelModule
 import com.andreamw96.moviecatalogue.di.detail.tvshows.DetailTvShowViewModelModule
 import com.andreamw96.moviecatalogue.di.main.MainFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.main.MainModule
+import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
@@ -23,14 +24,16 @@ abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector(
             modules = [
-                DetailMovieViewModelModule::class
+                DetailMovieViewModelModule::class,
+                FavoriteModule::class
             ]
     )
     abstract fun contributeDetailMovieActivity(): DetailMovieActivity
 
     @ContributesAndroidInjector(
             modules = [
-                DetailTvShowViewModelModule::class
+                DetailTvShowViewModelModule::class,
+                FavoriteModule::class
             ]
     )
     abstract fun contributeDetailTvShowActivity(): DetailTvShowActivity

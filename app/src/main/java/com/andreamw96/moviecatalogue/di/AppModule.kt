@@ -1,8 +1,10 @@
 package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
+import androidx.room.Room
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.local.FavoriteDatabase
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
@@ -55,6 +57,18 @@ class AppModule {
     fun provideGlideInstance(application: Application, requestOptions: RequestOptions) : RequestManager {
         return Glide.with(application)
                 .setDefaultRequestOptions(requestOptions)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoriteDatabase(application: Application) : FavoriteDatabase {
+        return Room.databaseBuilder(
+                application.applicationContext,
+                FavoriteDatabase::class.java,
+                "favorite_database"
+        )
+                .fallbackToDestructiveMigration()
+                .build()
     }
 
 }
