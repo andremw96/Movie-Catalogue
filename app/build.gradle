@@ -97,6 +97,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-android-processor:2.22'
     annotationProcessor "com.google.dagger:dagger-android-processor:2.22"
 
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+
     //test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

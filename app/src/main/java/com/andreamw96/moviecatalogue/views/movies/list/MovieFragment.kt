@@ -21,6 +21,8 @@ import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_movie.*
 import javax.inject.Inject
 
@@ -70,7 +72,13 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
         rv_movie.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = movieAdapter
+            val alphaAdapter = AlphaInAnimationAdapter(movieAdapter)
+            adapter = ScaleInAnimationAdapter(alphaAdapter).apply {
+                // Change the durations.
+                setDuration(500)
+                // Disable the first scroll mode.
+                setFirstOnly(false)
+            }
             movieAdapter.notifyDataSetChanged()
         }
     }

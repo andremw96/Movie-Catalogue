@@ -21,6 +21,7 @@ import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 import javax.inject.Inject
 
@@ -67,7 +68,12 @@ class TVShowFragment : DaggerFragment(), ProgressBarInterface {
         rv_tv_show.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = tvShowsAdapter
+            adapter = SlideInBottomAnimationAdapter(tvShowsAdapter).apply {
+                // Change the durations.
+                setDuration(1000)
+                // Disable the first scroll mode.
+                setFirstOnly(false)
+            }
             tvShowsAdapter.notifyDataSetChanged()
         }
     }
