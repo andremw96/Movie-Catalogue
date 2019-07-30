@@ -2,6 +2,10 @@ package com.andreamw96.moviecatalogue.data.model
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.andreamw96.moviecatalogue.utils.MyTypeConverters
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -17,6 +21,8 @@ data class Movies(
 )
 
 @Parcelize
+@Entity(tableName = "movies_table")
+@TypeConverters(MyTypeConverters::class)
 data class MovieResult(
         @SerializedName("adult")
         var adult: Boolean = false,
@@ -46,4 +52,7 @@ data class MovieResult(
         var voteAverage: Double = 0.0,
         @SerializedName("vote_count")
         var voteCount: Int = 0
-) : Parcelable
+) : Parcelable {
+        @PrimaryKey(autoGenerate = true)
+        var autoid: Int = 0
+}

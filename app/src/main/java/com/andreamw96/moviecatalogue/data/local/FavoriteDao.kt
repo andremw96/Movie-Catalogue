@@ -8,6 +8,7 @@ import com.andreamw96.moviecatalogue.data.model.Favorite
 
 @Dao
 interface FavoriteDao {
+
     @Insert
     suspend fun insert(favorite: Favorite)
 

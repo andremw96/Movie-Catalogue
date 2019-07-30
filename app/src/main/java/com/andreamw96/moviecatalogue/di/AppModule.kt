@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.local.FavoriteDatabase
+import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
@@ -61,11 +61,11 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideFavoriteDatabase(application: Application) : FavoriteDatabase {
+    fun provideMovieCatalogueDatabase(application: Application) : MoviCatalogueDatabase {
         return Room.databaseBuilder(
                 application.applicationContext,
-                FavoriteDatabase::class.java,
-                "favorite_database"
+                MoviCatalogueDatabase::class.java,
+                "movie_catalogue_database"
         )
                 .fallbackToDestructiveMigration()
                 .build()

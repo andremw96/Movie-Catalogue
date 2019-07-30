@@ -2,6 +2,10 @@ package com.andreamw96.moviecatalogue.data.model
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.andreamw96.moviecatalogue.utils.MyTypeConverters
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -17,6 +21,8 @@ data class TvShows(
 )
 
 @Parcelize
+@Entity(tableName = "tv_shows_table")
+@TypeConverters(MyTypeConverters::class)
 data class TvResult(
         @SerializedName("backdrop_path")
         var backdropPath: String? = null,
@@ -44,4 +50,7 @@ data class TvResult(
         var voteAverage: Double = 0.0,
         @SerializedName("vote_count")
         var voteCount: Int = 0
-) : Parcelable
+) : Parcelable {
+        @PrimaryKey(autoGenerate = true)
+        var autoid: Int = 0
+}

@@ -1,9 +1,9 @@
 package com.andreamw96.moviecatalogue.di.main.favorite
 
 import android.app.Application
+import com.andreamw96.moviecatalogue.data.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.local.FavoriteDao
-import com.andreamw96.moviecatalogue.data.local.FavoriteDatabase
-import com.andreamw96.moviecatalogue.data.local.FavoriteRepository
+import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.bumptech.glide.RequestManager
 import dagger.Module
@@ -13,8 +13,8 @@ import dagger.Provides
 class FavoriteModule {
 
     @Provides
-    fun provideFavoriteDao(favoriteDatabase: FavoriteDatabase) : FavoriteDao {
-        return favoriteDatabase.favDao()
+    fun provideFavoriteDao(movieCatalogueDatabase: MoviCatalogueDatabase) : FavoriteDao {
+        return movieCatalogueDatabase.favDao()
     }
 
     @Provides

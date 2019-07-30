@@ -2,7 +2,7 @@ package com.andreamw96.moviecatalogue.views.tvshows.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andreamw96.moviecatalogue.data.local.FavoriteRepository
+import com.andreamw96.moviecatalogue.data.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

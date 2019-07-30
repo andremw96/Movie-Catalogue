@@ -1,9 +1,10 @@
-package com.andreamw96.moviecatalogue.data.network
+package com.andreamw96.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.views.common.Resource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
