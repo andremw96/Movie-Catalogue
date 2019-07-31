@@ -2,7 +2,9 @@ package com.andreamw96.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
+import com.andreamw96.moviecatalogue.data.local.MovieDao
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.views.common.Resource
@@ -12,7 +14,11 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Singleton
-class MovieRepository (var mMoviesApi : MovieApi, private val mDisposable: CompositeDisposable) {
+class MovieRepository (
+        private val mMoviesApi : MovieApi,
+        private val mDisposable: CompositeDisposable,
+        private val movieDao: MovieDao,
+        private val appExecutors: AppExecutors) {
 
     private var listMovies = MutableLiveData<Resource<List<MovieResult>>>()
 
