@@ -91,7 +91,7 @@ class TVShowFragment : DaggerFragment(), ProgressBarInterface {
                         logd("got the tvshows...")
                         hideLoading()
                         somethingHappened(true)
-                        it.data?.let { it ->
+                        it.data?.let {
                             tvShowsAdapter.bindData(it)
                         }
                         runAnimation(rv_tv_show)

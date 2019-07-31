@@ -96,7 +96,7 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
                         logd("got the movies...")
                         hideLoading()
                         somethingHappened(true)
-                        it.data?.let { it ->
+                        it.data?.let {
                             movieAdapter.bindData(it)
                         }
                         runAnimation(rv_movie)
