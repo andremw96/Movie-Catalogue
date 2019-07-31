@@ -6,18 +6,18 @@ import com.andreamw96.moviecatalogue.data.MovieRepository
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.andreamw96.moviecatalogue.data.local.MovieDao
 import com.andreamw96.moviecatalogue.data.network.MovieApi
+import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.views.movies.list.MovieAdapter
 import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
-import io.reactivex.disposables.CompositeDisposable
 
 @Module
 class MovieModule {
 
     @Provides
-    fun provideMovieRepository(mMoviesApi : MovieApi, mDisposable: CompositeDisposable, movieDao: MovieDao, appExecutors: AppExecutors) : MovieRepository {
-        return MovieRepository(mMoviesApi, mDisposable, movieDao, appExecutors)
+    fun provideMovieRepository(mMoviesApi : MovieApi, movieDao: MovieDao, appExecutors: AppExecutors, rateLimiter: RateLimiter) : MovieRepository {
+        return MovieRepository(mMoviesApi, movieDao, appExecutors, rateLimiter)
     }
 
     @Provides

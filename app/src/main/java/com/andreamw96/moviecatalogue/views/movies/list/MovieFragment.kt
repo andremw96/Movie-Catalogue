@@ -85,7 +85,7 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
 
     private fun showMovie() {
         movieViewModel.setMovies().removeObservers(viewLifecycleOwner)
-        movieViewModel.setMovies().observe(viewLifecycleOwner, Observer {
+        movieViewModel.setMovies().observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

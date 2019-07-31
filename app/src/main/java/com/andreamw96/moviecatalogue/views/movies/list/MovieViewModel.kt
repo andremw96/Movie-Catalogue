@@ -14,10 +14,4 @@ class MovieViewModel @Inject constructor(private val movieRepository : MovieRepo
         return movieRepository.setMovies()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        movieRepository.clearRepo()
-    }
-
-
 }

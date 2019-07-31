@@ -8,12 +8,12 @@ import androidx.room.Query
 import com.andreamw96.moviecatalogue.data.model.TvResult
 
 @Dao
-interface TvShowDao {
+abstract class TvShowDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(tvResult: TvResult)
+    abstract fun insert(tvResult: List<TvResult>)
 
     @Query("SELECT * FROM tv_shows_table")
-    fun getTVShowLocal(): LiveData<List<TvResult>>
+    abstract fun getTVShowLocal(): LiveData<List<TvResult>>
 
 }

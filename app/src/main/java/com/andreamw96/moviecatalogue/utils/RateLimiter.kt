@@ -1,26 +1,25 @@
 package com.andreamw96.moviecatalogue.utils
 
 import android.os.SystemClock
-import androidx.collection.ArrayMap
 import java.util.concurrent.TimeUnit
 
 /**
  * Utility class that decides whether we should fetch some data or not.
  */
-class RateLimiter<in KEY>(timeout: Int, timeUnit: TimeUnit) {
-    private val timestamps = ArrayMap<KEY, Long>()
+class RateLimiter(timeout: Int, timeUnit: TimeUnit) {
+    private var timestamps : Long = SystemClock.uptimeMillis()
     private val timeout = timeUnit.toMillis(timeout.toLong())
 
     @Synchronized
-    fun shouldFetch(key: KEY): Boolean {
-        val lastFetched = timestamps[key]
+    fun shouldFetch(): Boolean {
+        val lastFetched = timestamps
         val now = now()
         if (lastFetched == null) {
-            timestamps[key] = now
+            timestamps = now
             return true
         }
         if (now - lastFetched > timeout) {
-            timestamps[key] = now
+            timestamps = now
             return true
         }
         return false
@@ -29,7 +28,7 @@ class RateLimiter<in KEY>(timeout: Int, timeUnit: TimeUnit) {
     private fun now() = SystemClock.uptimeMillis()
 
     @Synchronized
-    fun reset(key: KEY) {
-        timestamps.remove(key)
+    fun reset() {
+        timestamps = now()
     }
 }

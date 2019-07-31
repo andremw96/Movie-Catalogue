@@ -14,9 +14,4 @@ class TvShowViewModel @Inject constructor(private val tvShowRepository : TvShowR
         return tvShowRepository.setTvShows()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        tvShowRepository.clearRepo()
-    }
-
 }

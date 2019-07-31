@@ -1,38 +1,46 @@
 package com.andreamw96.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
+import com.andreamw96.moviecatalogue.data.local.TvShowDao
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.data.model.TvShows
+import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.MovieApi
+import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.views.common.Resource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Singleton
-class TvShowRepository (private val mMoviesApi: MovieApi, private val mDisposable: CompositeDisposable) {
-
-    private val listTvShows = MutableLiveData<Resource<List<TvResult>>>()
+class TvShowRepository (
+        private val mMoviesApi: MovieApi,
+        private val tvShowDao: TvShowDao,
+        private val appExecutors: AppExecutors,
+        private val rateLimiter: RateLimiter
+) {
 
     fun setTvShows() : LiveData<Resource<List<TvResult>>> {
-        listTvShows.postValue(Resource.loading(null))
+        return object : NetworkBoundResource<List<TvResult>, TvShows>(appExecutors) {
+            override fun saveCallResult(item: TvShows) {
+                tvShowDao.insert(item.results)
+            }
 
-        mDisposable.add(mMoviesApi
-            .getTvShows(BuildConfig.API_KEY, "en-US")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                listTvShows.postValue(Resource.success(it.results))
-            }, {
-                listTvShows.postValue(Resource.error("Something went wrong", null))
-            }))
+            override fun shouldFetch(data: List<TvResult>?): Boolean {
+                return data == null || data.isEmpty() || rateLimiter.shouldFetch()
+            }
 
-        return listTvShows
-    }
+            override fun loadFromDb(): LiveData<List<TvResult>>  {
+                return tvShowDao.getTVShowLocal()
+            }
 
-    fun clearRepo() {
-        mDisposable.dispose()
+            override fun createCall(): LiveData<ApiResponse<TvShows>> {
+                return mMoviesApi.getTvShows(BuildConfig.API_KEY, "en-US")
+            }
+
+            override fun onFetchFailed() {
+                rateLimiter.reset()
+            }
+        }.asLiveData()
     }
 }

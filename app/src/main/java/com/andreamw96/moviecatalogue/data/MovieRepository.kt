@@ -1,7 +1,6 @@
 package com.andreamw96.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.local.MovieDao
@@ -11,21 +10,15 @@ import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.views.common.Resource
-import io.reactivex.disposables.CompositeDisposable
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Singleton
 class MovieRepository (
         private val mMoviesApi : MovieApi,
-        private val mDisposable: CompositeDisposable,
         private val movieDao: MovieDao,
-        private val appExecutors: AppExecutors
+        private val appExecutors: AppExecutors,
+        private val rateLimiter: RateLimiter
 ) {
-
-    //private var listMovies = MutableLiveData<Resource<List<MovieResult>>>()
-    private var listMovies : LiveData<ApiResponse<Movies>> = MutableLiveData()
-    private val rateLimiter = RateLimiter<String>(10, TimeUnit.MINUTES)
 
 
     fun setMovies() : LiveData<Resource<List<MovieResult>>> {
@@ -35,36 +28,20 @@ class MovieRepository (
             }
 
             override fun shouldFetch(data: List<MovieResult>?): Boolean {
-                return data == null || data.isEmpty()
+                return data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
-            override fun loadFromDb(): LiveData<List<MovieResult>> = movieDao.getMoviesLocal()
+            override fun loadFromDb(): LiveData<List<MovieResult>>  {
+                return movieDao.getMoviesLocal()
+            }
 
             override fun createCall(): LiveData<ApiResponse<Movies>> {
                 return mMoviesApi.getMovies(BuildConfig.API_KEY, "en-US")
             }
 
+            override fun onFetchFailed() {
+                rateLimiter.reset()
+            }
         }.asLiveData()
-    }
-
-
-    /*fun setMovies() : LiveData<Resource<List<MovieResult>>> {
-        listMovies.postValue(Resource.loading(null))
-
-        mDisposable.add(mMoviesApi
-                .getMovies(BuildConfig.API_KEY, "en-US")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listMovies.postValue(Resource.success(it.results))
-                }, {
-                    listMovies.postValue(Resource.error("Something went wrong", null))
-                }))
-
-        return listMovies
-    }*/
-
-    fun clearRepo() {
-        mDisposable.dispose()
     }
 }
