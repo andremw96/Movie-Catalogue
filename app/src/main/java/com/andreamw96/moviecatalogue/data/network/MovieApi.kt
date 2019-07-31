@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.data.network
 
+import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.data.model.Movies
 import com.andreamw96.moviecatalogue.data.model.TvShows
 import io.reactivex.Flowable
@@ -12,7 +13,7 @@ interface MovieApi {
     fun getMovies(
             @Query("api_key") apiKey: String,
             @Query("language") language: String
-    ): Flowable<Movies>
+    ): LiveData<ApiResponse<Movies>>
 
     @GET("discover/tv")
     fun getTvShows(

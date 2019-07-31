@@ -2,9 +2,11 @@ package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
 import androidx.room.Room
+import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
+import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
@@ -13,7 +15,6 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -39,7 +40,8 @@ class AppModule {
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .client(clientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .build()
     }
 
@@ -69,5 +71,11 @@ class AppModule {
         )
                 .fallbackToDestructiveMigration()
                 .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAppExecutors() : AppExecutors {
+        return AppExecutors()
     }
 }

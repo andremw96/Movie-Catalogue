@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.di.main.movie
 
 import android.app.Application
+import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.data.MovieRepository
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.andreamw96.moviecatalogue.data.local.MovieDao
@@ -15,8 +16,8 @@ import io.reactivex.disposables.CompositeDisposable
 class MovieModule {
 
     @Provides
-    fun provideMovieRepository(mMoviesApi : MovieApi, mDisposable: CompositeDisposable) : MovieRepository {
-        return MovieRepository(mMoviesApi, mDisposable)
+    fun provideMovieRepository(mMoviesApi : MovieApi, mDisposable: CompositeDisposable, movieDao: MovieDao, appExecutors: AppExecutors) : MovieRepository {
+        return MovieRepository(mMoviesApi, mDisposable, movieDao, appExecutors)
     }
 
     @Provides

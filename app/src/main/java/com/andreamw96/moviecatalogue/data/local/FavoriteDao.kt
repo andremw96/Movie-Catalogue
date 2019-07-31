@@ -3,13 +3,14 @@ package com.andreamw96.moviecatalogue.data.local
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.andreamw96.moviecatalogue.data.model.Favorite
 
 @Dao
 interface FavoriteDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favorite: Favorite)
 
     @Query("SELECT * FROM favorites_table WHERE movieId = :idMovie")
