@@ -6,7 +6,7 @@ import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.model.TvResult
 
-@Database(entities = [Favorite::class, MovieResult::class, TvResult::class], version = 3, exportSchema = false)
+@Database(entities = [Favorite::class, MovieResult::class, TvResult::class], version = 4, exportSchema = false)
 abstract class MoviCatalogueDatabase : RoomDatabase() {
 
     abstract fun favDao(): FavoriteDao

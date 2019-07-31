@@ -21,13 +21,13 @@ class TvShowsModule {
     }
 
     @Provides
-    fun provideTvShowsAdapter(application: Application, requestManager: RequestManager) : TvShowsAdapter {
-        return TvShowsAdapter(application.applicationContext, requestManager)
+    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : TvShowDao {
+        return movieCatalogueDatabase.tvShowDao()
     }
 
     @Provides
-    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : TvShowDao {
-        return movieCatalogueDatabase.tvShowDao()
+    fun provideTvShowsAdapter(application: Application, requestManager: RequestManager) : TvShowsAdapter {
+        return TvShowsAdapter(application.applicationContext, requestManager)
     }
 
 }

@@ -20,7 +20,6 @@ class MovieRepository (
         private val rateLimiter: RateLimiter
 ) {
 
-
     fun setMovies() : LiveData<Resource<List<MovieResult>>> {
         return object : NetworkBoundResource<List<MovieResult>, Movies>(appExecutors) {
             override fun saveCallResult(item: Movies) {

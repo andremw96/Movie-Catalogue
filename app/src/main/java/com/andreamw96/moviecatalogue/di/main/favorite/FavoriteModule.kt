@@ -13,13 +13,13 @@ import dagger.Provides
 class FavoriteModule {
 
     @Provides
-    fun provideFavoriteDao(movieCatalogueDatabase: MoviCatalogueDatabase) : FavoriteDao {
-        return movieCatalogueDatabase.favDao()
+    fun provideFavoriteRepository(favoriteDao: FavoriteDao) : FavoriteRepository {
+        return FavoriteRepository(favoriteDao)
     }
 
     @Provides
-    fun provideFavoriteRepository(favoriteDao: FavoriteDao) : FavoriteRepository {
-        return FavoriteRepository(favoriteDao)
+    fun provideFavoriteDao(movieCatalogueDatabase: MoviCatalogueDatabase) : FavoriteDao {
+        return movieCatalogueDatabase.favDao()
     }
 
     @Provides

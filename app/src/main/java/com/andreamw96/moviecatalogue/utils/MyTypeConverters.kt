@@ -8,7 +8,7 @@ object MyTypeConverters {
     @TypeConverter
     @JvmStatic
     fun stringToIntList(data: String?): List<Int>? {
-        return data?.let {
+        return data?.let { it ->
             it.split(",").map {
                 try {
                     it.toInt()
@@ -29,12 +29,12 @@ object MyTypeConverters {
     @TypeConverter
     @JvmStatic
     fun stringToStringList(data: String?): List<String>? {
-        return data?.let {
+        return data?.let { it ->
             it.split(",").map {
                 try {
-                    it.toString()
+                    it
                 } catch (ex: NumberFormatException) {
-                    loge("Cannot convert $it to number")
+                    loge("Cannot convert $it to string")
                     null
                 }
             }

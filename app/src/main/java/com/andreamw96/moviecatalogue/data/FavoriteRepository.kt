@@ -7,7 +7,7 @@ import com.andreamw96.moviecatalogue.data.model.Favorite
 import javax.inject.Singleton
 
 @Singleton
-class FavoriteRepository(private val favoriteDao: FavoriteDao) {
+class FavoriteRepository (private val favoriteDao: FavoriteDao) {
 
     @WorkerThread
     suspend fun insert(favorite: Favorite) {

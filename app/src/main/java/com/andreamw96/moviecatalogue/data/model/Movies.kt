@@ -29,7 +29,7 @@ data class MovieResult(
         @SerializedName("backdrop_path")
         var backdropPath: String? = null,
         @SerializedName("genre_ids")
-        var genreIds: List<Int>? = emptyList(),
+        var genreIds: List<Int> = emptyList(),
         @SerializedName("id")
         var id: Int = -1,
         @SerializedName("original_language")

@@ -21,12 +21,12 @@ class MovieModule {
     }
 
     @Provides
-    fun provideMovieAdapter(application: Application, requestManager: RequestManager) : MovieAdapter {
-        return MovieAdapter(application.applicationContext, requestManager)
+    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : MovieDao {
+        return movieCatalogueDatabase.movieDao()
     }
 
     @Provides
-    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : MovieDao {
-        return movieCatalogueDatabase.movieDao()
+    fun provideMovieAdapter(application: Application, requestManager: RequestManager) : MovieAdapter {
+        return MovieAdapter(application.applicationContext, requestManager)
     }
 }
