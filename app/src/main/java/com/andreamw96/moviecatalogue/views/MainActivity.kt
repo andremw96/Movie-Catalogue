@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
-import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
@@ -61,7 +60,7 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.setDisplayShowHomeEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -73,10 +72,12 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
 
-        // Associate searchable configuration with the SearchView
+        // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         (menu.findItem(R.id.search_m).actionView as SearchView).apply {
+            // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
         }
 
         return true
@@ -88,18 +89,8 @@ class MainActivity : DaggerAppCompatActivity() {
             val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
             startActivity(mIntent)
         } else if (item.itemId == R.id.search_m) {
-            return onSearchRequested()
+
         }
         return true
     }
-
-    override fun onSearchRequested(): Boolean {
-        val appData = Bundle().apply {
-            putString(SearchActivity.DISPLAYED_FRAGMENT, displayedFragment)
-        }
-        startSearch(null, false, appData, false)
-
-        return true
-    }
-
 }

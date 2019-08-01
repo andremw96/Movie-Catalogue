@@ -1,28 +1,23 @@
 package com.andreamw96.moviecatalogue.views.search
 
 import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.utils.logd
+import com.andreamw96.moviecatalogue.utils.showToast
 import kotlinx.android.synthetic.main.activity_search.*
 
 
 class SearchActivity : BaseActivity() {
 
-    companion object {
-        const val DISPLAYED_FRAGMENT = "status_Fragment"
-    }
-
-
     private lateinit var searchViewModel: SearchViewModel
-
-    private var displayedFragment : String? = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +25,42 @@ class SearchActivity : BaseActivity() {
 
         searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
 
-        displayedFragment = intent?.getBundleExtra(SearchManager.APP_DATA)?.getString(DISPLAYED_FRAGMENT)
-
         if (supportActionBar != null) {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
-                title = applicationContext.getString(R.string.search) + " " + displayedFragment
             }
         }
 
         handleIntent(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = (menu.findItem(R.id.search_menu).actionView as SearchView).apply {
+            // Assumes current activity is the searchable activity
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
+        }
+
+        searchView.queryHint = "Search"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                showToast(applicationContext, query)
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return true
+            }
+        })
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -59,7 +80,7 @@ class SearchActivity : BaseActivity() {
     private fun handleIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
-            logd(searchQuery)
+            showToast(applicationContext, searchQuery)
         }
     }
 
