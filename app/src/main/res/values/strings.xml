@@ -19,6 +19,8 @@
     <string name="success_delete_fav">Deleted from favorite</string>
     <string name="success_add_fav">Added to Favorite</string>
 
+    <string name="search">Search</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buttonfav">ButtonFav</string>

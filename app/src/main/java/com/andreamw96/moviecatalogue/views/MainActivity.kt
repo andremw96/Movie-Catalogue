@@ -1,10 +1,13 @@
 package com.andreamw96.moviecatalogue.views
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
@@ -61,7 +64,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        return true
     }
 
 
@@ -69,8 +73,10 @@ class MainActivity : DaggerAppCompatActivity() {
         if (item.itemId == R.id.action_change_settings) {
             val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
             startActivity(mIntent)
+        } else if (item.itemId == R.id.search_m) {
+            return super.onSearchRequested()
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
 }
