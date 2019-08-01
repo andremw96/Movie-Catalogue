@@ -13,6 +13,9 @@
     <string name="change_language_settings">Change Language Settings</string>
     <string name="favorites">Favorites</string>
 
+    <string name="failed_fetch_movies">Failed to fetch movies data</string>
+    <string name="failed_fetch_tv">Failed to fetch tv shows data</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buttonfav">ButtonFav</string>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
@@ -22,12 +23,9 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_fav_movie.*
 import javax.inject.Inject
 
-class FavMovieFragment : DaggerFragment(), ProgressBarInterface {
+class FavMovieFragment : BaseFragment() {
 
     private lateinit var favoriteViewModel: FavoriteViewModel
-
-    @Inject
-    lateinit var providersFactory: ViewModelProvidersFactory
 
     @Inject
     lateinit var favAdapter: FavoriteAdapter

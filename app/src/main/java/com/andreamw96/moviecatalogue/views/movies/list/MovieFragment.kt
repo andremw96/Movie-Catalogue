@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
@@ -30,12 +31,9 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : DaggerFragment(), ProgressBarInterface {
+class MovieFragment : BaseFragment() {
 
     private lateinit var movieViewModel: MovieViewModel
-
-    @Inject
-    lateinit var providersFactory: ViewModelProvidersFactory
 
     @Inject
     lateinit var movieAdapter: MovieAdapter
@@ -104,7 +102,7 @@ class MovieFragment : DaggerFragment(), ProgressBarInterface {
                     Resource.Status.ERROR -> {
                         hideLoading()
                         somethingHappened(false)
-                        Snackbar.make(fragment_movie, "Gagal memuat list tv shows", Snackbar.LENGTH_SHORT).show()
+                        showSnackbar(fragment_movie, context?.getString(R.string.failed_fetch_movies))
                         loge("ERROR ${it.message}")
                     }
                 }
