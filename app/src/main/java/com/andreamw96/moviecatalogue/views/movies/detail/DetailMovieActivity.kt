@@ -99,7 +99,10 @@ class DetailMovieActivity : BaseActivity() {
             fav_button_movie.playAnimation()
         } else {
             //fav_button_movie.setImageResource(R.drawable.ic_fav)
-            fav_button_movie.pauseAnimation()
+            fav_button_movie.apply {
+                progress = 0f
+                pauseAnimation()
+            }
         }
     }
 }
