@@ -16,9 +16,7 @@ data class Search(
         @SerializedName("total_pages")
         var totalPages: Int = 0,
         @SerializedName("total_results")
-        var totalResults: Int = 0,
-
-        var isMovie: Boolean
+        var totalResults: Int = 0
 )
 
 @Parcelize
@@ -52,7 +50,19 @@ data class SearchResult(
         @SerializedName("vote_average")
         var voteAverage: Double = 0.0,
         @SerializedName("vote_count")
-        var voteCount: Int = 0
+        var voteCount: Int = 0,
+
+
+        @SerializedName("first_air_date")
+        var firstAirDate: String? = null,
+        @SerializedName("id")
+        var name: String? = null,
+        @SerializedName("origin_country")
+        var originCountry: List<String> = emptyList(),
+        @SerializedName("original_language")
+        var originalName: String? = null,
+
+        var isMovie: Boolean
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var autoid: Int = 0

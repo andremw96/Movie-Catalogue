@@ -23,7 +23,6 @@ class SearchRepository (
     fun setSearchMovie(query: String) : LiveData<Resource<List<SearchResult>>> {
         return object : NetworkBoundResource<List<SearchResult>, Search>(appExecutors) {
             override fun saveCallResult(item: Search) {
-                item.isMovie = true
                 searchDao.insert(item.results)
             }
 
@@ -38,15 +37,12 @@ class SearchRepository (
             override fun createCall(): LiveData<ApiResponse<Search>> {
                 return mMoviesApi.getSearchMovies(BuildConfig.API_KEY, "en-US", query)
             }
-
-
         }.asLiveData()
     }
 
     fun setSearchTv(query: String) : LiveData<Resource<List<SearchResult>>> {
         return object : NetworkBoundResource<List<SearchResult>, Search>(appExecutors) {
             override fun saveCallResult(item: Search) {
-                item.isMovie = false
                 searchDao.insert(item.results)
             }
 
