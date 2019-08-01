@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.favorites
+package com.andreamw96.moviecatalogue.views
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

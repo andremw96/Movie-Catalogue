@@ -6,16 +6,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProviders
-import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.utils.showToast
+import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
+import javax.inject.Inject
 
 
-class SearchActivity : BaseActivity() {
+class SearchActivity : DaggerAppCompatActivity() {
+
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
 
     private lateinit var searchViewModel: SearchViewModel
 
@@ -30,6 +35,13 @@ class SearchActivity : BaseActivity() {
                 setDisplayHomeAsUpEnabled(true)
             }
         }
+
+        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+        //adding fragments
+        viewPagerAdapter.addFragment(SearchMovieFragment(), getString(R.string.movies))
+        viewPagerAdapter.addFragment(SearchTvFragment(), getString(R.string.tv_shows))
+        view_pager_search.adapter = viewPagerAdapter
+        tab_layout_search.setupWithViewPager(view_pager_search)
 
         handleIntent(intent)
     }
@@ -82,17 +94,5 @@ class SearchActivity : BaseActivity() {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
             showToast(applicationContext, searchQuery)
         }
-    }
-
-    override fun showLoading() {
-        progressBarSearch.visibility = View.VISIBLE
-    }
-
-    override fun hideLoading() {
-        progressBarSearch.visibility = View.GONE
-    }
-
-    override fun somethingHappened(isSuccess: Boolean) {
-
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
 import com.andreamw96.moviecatalogue.views.favorites.favmovies.FavMovieFragment
 import com.andreamw96.moviecatalogue.views.favorites.favtvshows.FavTvFragment
 import dagger.android.support.DaggerFragment
