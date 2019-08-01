@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
@@ -13,22 +14,17 @@ import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.bumptech.glide.RequestManager
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_detail_movie.*
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 import javax.inject.Inject
 
-class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
+class DetailTvShowActivity : BaseActivity() {
 
     companion object {
         const val INTENT_TV_SHOW = "intent_tv_show"
     }
 
     private lateinit var detailTvShowViewModel: DetailTvShowViewModel
-
-    @Inject
-    lateinit var providersFactory: ViewModelProvidersFactory
-
-    @Inject
-    lateinit var requestManager: RequestManager
 
     private lateinit var tvShow: TvResult
 
@@ -66,11 +62,11 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
             if (detailTvShowViewModel.isFavorite(tvShow.id)) {
                 detailTvShowViewModel.deleteFav(tvShow.id)
 
-                Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
+                showSnackbar(constraint_detail_tvshow, applicationContext.getString(R.string.success_delete_fav))
             } else {
                 detailTvShowViewModel.insertFav(favorite)
 
-                Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
+                showSnackbar(constraint_detail_tvshow, applicationContext.getString(R.string.success_add_fav))
             }
 
             favoriteState()
@@ -99,9 +95,11 @@ class DetailTvShowActivity : DaggerAppCompatActivity(), ProgressBarInterface {
 
     private fun favoriteState() {
         if (detailTvShowViewModel.isFavorite(tvShow.id)) {
-            fav_button_tvshows.setImageResource(R.drawable.ic_fav_added)
+            //fav_button_tvshows.setImageResource(R.drawable.ic_fav_added)
+            fav_button_tvshows.playAnimation()
         } else {
-            fav_button_tvshows.setImageResource(R.drawable.ic_fav)
+            //fav_button_tvshows.setImageResource(R.drawable.ic_fav)
+            fav_button_tvshows.pauseAnimation()
         }
     }
 }

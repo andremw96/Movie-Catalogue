@@ -8,6 +8,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_detail_tvshow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -39,7 +40,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/poster_infinity_war" />
 
-        <ImageButton
+       <!-- <ImageButton
             android:id="@+id/fav_button_tvshows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,6 +49,21 @@
             android:layout_marginRight="8dp"
             android:contentDescription="@string/buttonfav"
             android:src="@drawable/ic_fav"
+            app:layout_constraintEnd_toEndOf="@+id/detail_image_tvshow"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/detail_image_tvshow"
+            app:layout_constraintTop_toBottomOf="@+id/detail_image_tvshow" /> -->
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/fav_button_tvshows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="favorite.json"
+            app:lottie_loop="false"
+            app:lottie_speed="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintEnd_toEndOf="@+id/detail_image_tvshow"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/detail_image_tvshow"

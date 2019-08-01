@@ -17,6 +17,9 @@
     <string name="failed_fetch_movies">Gagal memuat daftar film</string>
     <string name="failed_fetch_tv">Gagal memuat daftar seri tv</string>
 
+    <string name="success_delete_fav">Berhasil dihapus dari favorite</string>
+    <string name="success_add_fav">Berhasil ditambahkan ke favorite</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

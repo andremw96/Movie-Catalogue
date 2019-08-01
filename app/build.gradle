@@ -99,7 +99,9 @@ dependencies {
     kapt 'com.google.dagger:dagger-android-processor:2.22'
     annotationProcessor "com.google.dagger:dagger-android-processor:2.22"
 
+    // animation
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+    implementation 'com.airbnb.android:lottie:3.0.0'
 
     //test
     testImplementation 'junit:junit:4.12'

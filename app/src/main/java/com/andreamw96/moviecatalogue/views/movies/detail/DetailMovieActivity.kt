@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
@@ -16,19 +17,13 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import javax.inject.Inject
 
-class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
+class DetailMovieActivity : BaseActivity() {
 
     companion object {
         const val INTENT_MOVIE = "intent_movie"
     }
 
     private lateinit var detailMovieViewModel: DetailMovieViewModel
-
-    @Inject
-    lateinit var providersFactory: ViewModelProvidersFactory
-
-    @Inject
-    lateinit var requestManager: RequestManager
 
     private lateinit var movie: MovieResult
 
@@ -67,11 +62,11 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
             if (detailMovieViewModel.isFavorite(movie.id)) {
                 detailMovieViewModel.deleteFav(movie.id)
 
-                Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
+                showSnackbar(constraint_detail_movie, applicationContext.getString(R.string.success_delete_fav))
             } else {
                 detailMovieViewModel.insertFav(favorite)
 
-                Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
+                showSnackbar(constraint_detail_movie, applicationContext.getString(R.string.success_add_fav))
             }
 
             favoriteState()
@@ -100,9 +95,11 @@ class DetailMovieActivity : DaggerAppCompatActivity(), ProgressBarInterface {
 
     private fun favoriteState() {
         if (detailMovieViewModel.isFavorite(movie.id)) {
-            fav_button_movie.setImageResource(R.drawable.ic_fav_added)
+            //fav_button_movie.setImageResource(R.drawable.ic_fav_added)
+            fav_button_movie.playAnimation()
         } else {
-            fav_button_movie.setImageResource(R.drawable.ic_fav)
+            //fav_button_movie.setImageResource(R.drawable.ic_fav)
+            fav_button_movie.pauseAnimation()
         }
     }
 }
