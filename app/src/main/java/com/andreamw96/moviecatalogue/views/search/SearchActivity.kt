@@ -22,7 +22,7 @@ class SearchActivity : BaseActivity() {
 
     private lateinit var searchViewModel: SearchViewModel
 
-    private val displayedFragment = ""
+    private var displayedFragment : String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class SearchActivity : BaseActivity() {
 
         searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
 
-        intent?.getBundleExtra(SearchManager.APP_DATA)?.getString(DISPLAYED_FRAGMENT)
+        displayedFragment = intent?.getBundleExtra(SearchManager.APP_DATA)?.getString(DISPLAYED_FRAGMENT)
 
         if (supportActionBar != null) {
             supportActionBar?.apply {
