@@ -27,7 +27,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         when (item.itemId) {
             R.id.navigation_movie -> {
-                displayedFragment = "Movies"
+                displayedFragment = applicationContext.getString(R.string.movies)
 
                 fragment = MovieFragment()
                 supportFragmentManager.beginTransaction()
@@ -36,7 +36,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_tv_shows -> {
-                displayedFragment = "Tv Shows"
+                displayedFragment = applicationContext.getString(R.string.tv_shows)
 
                 fragment = TVShowFragment()
                 supportFragmentManager.beginTransaction()
@@ -45,7 +45,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorites -> {
-                displayedFragment = "Favorites"
+                displayedFragment = applicationContext.getString(R.string.favorites)
 
                 fragment = FavoriteFragment()
                 supportFragmentManager.beginTransaction()
@@ -70,6 +70,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+
         return true
     }
 

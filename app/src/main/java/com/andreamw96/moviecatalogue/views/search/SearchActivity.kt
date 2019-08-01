@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.views.search
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.R
@@ -22,7 +23,22 @@ class SearchActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        if (supportActionBar != null) {
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+            }
+        }
+
         handleIntent(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onNewIntent(intent: Intent?) {
