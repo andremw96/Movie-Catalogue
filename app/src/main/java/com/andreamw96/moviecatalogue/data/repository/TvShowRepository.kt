@@ -1,8 +1,9 @@
-package com.andreamw96.moviecatalogue.data
+package com.andreamw96.moviecatalogue.data.repository
 
 import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
+import com.andreamw96.moviecatalogue.data.NetworkBoundResource
 import com.andreamw96.moviecatalogue.data.local.TvShowDao
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.data.model.TvShows

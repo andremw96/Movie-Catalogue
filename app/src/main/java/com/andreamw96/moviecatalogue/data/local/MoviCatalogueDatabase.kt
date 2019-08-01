@@ -9,7 +9,7 @@ import com.andreamw96.moviecatalogue.data.model.*
     MovieResult::class,
     TvResult::class,
     SearchMovieResult::class,
-    SearchTvResult::class], version = 7, exportSchema = false)
+    SearchTvResult::class], version = 1, exportSchema = false)
 abstract class MoviCatalogueDatabase : RoomDatabase() {
 
     abstract fun favDao(): FavoriteDao

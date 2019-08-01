@@ -6,6 +6,7 @@ import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
+import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.bumptech.glide.Glide
@@ -84,5 +85,10 @@ class AppModule {
     @Provides
     fun provideRateLimiter() : RateLimiter {
         return RateLimiter(10, TimeUnit.MINUTES)
+    }
+
+    @Provides
+    fun provideMovieApi(retrofit: Retrofit) : MovieApi {
+        return retrofit.create(MovieApi::class.java)
     }
 }

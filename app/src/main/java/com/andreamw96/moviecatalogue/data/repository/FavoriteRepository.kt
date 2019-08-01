@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.data
+package com.andreamw96.moviecatalogue.data.repository
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
