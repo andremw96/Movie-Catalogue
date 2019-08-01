@@ -3,19 +3,14 @@ package com.andreamw96.moviecatalogue.views.movies.detail
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
-import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
-import com.bumptech.glide.RequestManager
-import dagger.android.support.DaggerAppCompatActivity
+import com.andreamw96.moviecatalogue.utils.showSnackbar
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import javax.inject.Inject
 
 class DetailMovieActivity : BaseActivity() {
 

@@ -10,7 +10,6 @@ import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.logd
 import kotlinx.android.synthetic.main.activity_search.*
-import javax.inject.Inject
 
 
 class SearchActivity : BaseActivity() {
