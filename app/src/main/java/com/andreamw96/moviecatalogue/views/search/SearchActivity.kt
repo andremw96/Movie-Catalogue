@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.logd
 import kotlinx.android.synthetic.main.activity_search.*
+import javax.inject.Inject
 
 
 class SearchActivity : BaseActivity() {
@@ -17,16 +19,24 @@ class SearchActivity : BaseActivity() {
         const val DISPLAYED_FRAGMENT = "status_Fragment"
     }
 
+
     private lateinit var searchViewModel: SearchViewModel
+
+    private val displayedFragment = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
+
+        intent?.getBundleExtra(SearchManager.APP_DATA)?.getString(DISPLAYED_FRAGMENT)
+
         if (supportActionBar != null) {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
+                title = applicationContext.getString(R.string.search) + " " + displayedFragment
             }
         }
 
@@ -48,13 +58,9 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun handleIntent(intent: Intent?) {
-        val displayedFragment = intent?.getBundleExtra(SearchManager.APP_DATA)?.getString(DISPLAYED_FRAGMENT) ?: ""
-
         if (Intent.ACTION_SEARCH == intent?.action) {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
             logd(searchQuery)
-
-            supportActionBar?.title = applicationContext.getString(R.string.search) + " " + displayedFragment
         }
     }
 
