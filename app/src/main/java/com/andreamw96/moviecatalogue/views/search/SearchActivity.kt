@@ -6,10 +6,18 @@ import android.os.Bundle
 import android.view.View
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.utils.logd
 import kotlinx.android.synthetic.main.activity_search.*
 
 
 class SearchActivity : BaseActivity() {
+
+    companion object {
+        const val DISPLAYED_FRAGMENT = "status_Fragment"
+    }
+
+    private lateinit var searchViewModel: SearchViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +32,13 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun handleIntent(intent: Intent?) {
+        val displayedFragment = intent?.getBundleExtra(SearchManager.APP_DATA)?.getString(DISPLAYED_FRAGMENT) ?: ""
+
         if (Intent.ACTION_SEARCH == intent?.action) {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
+            logd(searchQuery)
+
+            supportActionBar?.title = applicationContext.getString(R.string.search) + " " + displayedFragment
         }
     }
 

@@ -5,8 +5,10 @@ import com.andreamw96.moviecatalogue.di.detail.tvshows.DetailTvShowViewModelModu
 import com.andreamw96.moviecatalogue.di.main.MainFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.main.MainModule
 import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
+import com.andreamw96.moviecatalogue.di.search.SearchViewModelModule
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -37,4 +39,11 @@ abstract class ActivityBuilderModule {
             ]
     )
     abstract fun contributeDetailTvShowActivity(): DetailTvShowActivity
+
+    @ContributesAndroidInjector(
+            modules = [
+                SearchViewModelModule::class
+            ]
+    )
+    abstract fun contributeSearchActivity(): SearchActivity
 }
