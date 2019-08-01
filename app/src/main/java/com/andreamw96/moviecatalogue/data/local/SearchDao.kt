@@ -5,15 +5,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.andreamw96.moviecatalogue.data.model.SearchResult
+import com.andreamw96.moviecatalogue.data.model.SearchMovieResult
+import com.andreamw96.moviecatalogue.data.model.SearchTvResult
 
 @Dao
 abstract class SearchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(search: List<SearchResult>)
+    abstract fun insertMovies(search: List<SearchMovieResult>)
 
-    @Query("SELECT * FROM search_table WHERE isMovie = :isMovie")
-    abstract fun getSearchDataLocal(isMovie: Boolean): LiveData<List<SearchResult>>
+    @Query("SELECT * FROM search_movies_table")
+    abstract fun getSearchMoviesLocal(): LiveData<List<SearchMovieResult>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertTv(search: List<SearchTvResult>)
+
+    @Query("SELECT * FROM search_tv_table")
+    abstract fun getSearchTvLocal(): LiveData<List<SearchTvResult>>
 
 }

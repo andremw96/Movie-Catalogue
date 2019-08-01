@@ -8,11 +8,11 @@ import com.andreamw96.moviecatalogue.utils.MyTypeConverters
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-data class Search(
+data class SearchMovie(
         @SerializedName("page")
         var page: Int = 0,
         @SerializedName("results")
-        var results: List<SearchResult> = emptyList(),
+        var results: List<SearchMovieResult> = emptyList(),
         @SerializedName("total_pages")
         var totalPages: Int = 0,
         @SerializedName("total_results")
@@ -20,9 +20,9 @@ data class Search(
 )
 
 @Parcelize
-@Entity(tableName = "search_table")
+@Entity(tableName = "search_movies_table")
 @TypeConverters(MyTypeConverters::class)
-data class SearchResult(
+data class SearchMovieResult(
         @SerializedName("adult")
         var adult: Boolean = false,
         @SerializedName("backdrop_path")
@@ -50,19 +50,7 @@ data class SearchResult(
         @SerializedName("vote_average")
         var voteAverage: Double = 0.0,
         @SerializedName("vote_count")
-        var voteCount: Int = 0,
-
-
-        @SerializedName("first_air_date")
-        var firstAirDate: String? = null,
-        @SerializedName("id")
-        var name: String? = null,
-        @SerializedName("origin_country")
-        var originCountry: List<String> = emptyList(),
-        @SerializedName("original_language")
-        var originalName: String? = null,
-
-        var isMovie: Boolean
+        var voteCount: Int = 0
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var autoid: Int = 0
