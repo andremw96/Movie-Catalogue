@@ -38,7 +38,6 @@ class SearchActivity : DaggerAppCompatActivity() {
         }
 
         setViewPager()
-        handleIntent(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +52,7 @@ class SearchActivity : DaggerAppCompatActivity() {
         }
 
         searchView.queryHint = "Search"
-        searchView.setQuery(queryFromMain, true)
+        searchView.setQuery(queryFromMain, false)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
