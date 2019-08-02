@@ -10,6 +10,7 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import com.andreamw96.moviecatalogue.data.model.Favorite
+import com.andreamw96.moviecatalogue.widget.BaseAppWidgetProvider
 import com.bumptech.glide.Glide
 
 class TvStackRemoteViewsFactory(private val context: Context,
@@ -56,7 +57,7 @@ class TvStackRemoteViewsFactory(private val context: Context,
         }
 
         val bundle = Bundle()
-        bundle.putString(FavoriteTvBannerWidget.EXTRA_ITEM, mWidgetItems[position].title)
+        bundle.putString(BaseAppWidgetProvider.EXTRA_ITEM, mWidgetItems[position].title)
         val fillInIntent = Intent()
         fillInIntent.putExtras(bundle)
 

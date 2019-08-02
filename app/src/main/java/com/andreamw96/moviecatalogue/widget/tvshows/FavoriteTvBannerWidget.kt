@@ -3,19 +3,18 @@ package com.andreamw96.moviecatalogue.widget.tvshows
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.SystemClock
 import android.widget.RemoteViews
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.utils.showToast
+import com.andreamw96.moviecatalogue.widget.BaseAppWidgetProvider
 
 /**
  * Implementation of App Widget functionality.
  */
-class FavoriteTvBannerWidget : AppWidgetProvider() {
+class FavoriteTvBannerWidget : BaseAppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
@@ -24,28 +23,7 @@ class FavoriteTvBannerWidget : AppWidgetProvider() {
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent?) {
-        super.onReceive(context, intent)
-        if(intent?.action != null) {
-            if(intent.action == TOAST_ACTION) {
-                val touchedView = intent.getStringExtra(EXTRA_ITEM)
-                showToast(context, touchedView)
-            }
-        }
-    }
-
-    override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
-
     companion object {
-
-        private const val TOAST_ACTION = "TOAST_ACTION"
-        const val EXTRA_ITEM : String = "EXTRA_ITEM"
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val intent = Intent(context, StackTvWidgetService::class.java)
