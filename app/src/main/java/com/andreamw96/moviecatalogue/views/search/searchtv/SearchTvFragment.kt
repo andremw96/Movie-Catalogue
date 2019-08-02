@@ -24,11 +24,6 @@ import javax.inject.Inject
 
 class SearchTvFragment : BaseFragment() {
 
-    companion object {
-        var QUERY : String = ""
-    }
-
-
     private lateinit var searchTvViewModel: SearchTvViewModel
 
     @Inject
@@ -46,7 +41,6 @@ class SearchTvFragment : BaseFragment() {
         searchTvViewModel = ViewModelProviders.of(this, providersFactory).get(SearchTvViewModel::class.java)
 
         initRecyclerView()
-        showSearchTv(QUERY)
     }
 
     fun showSearchTv(query: String) {

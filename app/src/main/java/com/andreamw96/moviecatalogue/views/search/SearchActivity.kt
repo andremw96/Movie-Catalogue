@@ -18,6 +18,15 @@ import com.andreamw96.moviecatalogue.R
 
 class SearchActivity : DaggerAppCompatActivity() {
 
+    companion object {
+        var QUERY : String = ""
+    }
+
+    private lateinit var searchView : SearchView
+
+    private var queryFromMain = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -37,17 +46,32 @@ class SearchActivity : DaggerAppCompatActivity() {
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = (menu.findItem(R.id.search_menu).actionView as SearchView).apply {
+        searchView = (menu.findItem(R.id.search_menu).actionView as SearchView).apply {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
         }
 
         searchView.queryHint = "Search"
+        searchView.setQuery(queryFromMain, true)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                startSearching(query)
+
+                val pagerAdapter = view_pager_search.adapter
+                if (pagerAdapter != null) {
+                    for (i in 0 until pagerAdapter.count) {
+
+                        val viewPagerFragment = view_pager_search.adapter?.instantiateItem(view_pager_search, i) as Fragment
+                        if (viewPagerFragment.isAdded) {
+                            if (viewPagerFragment is SearchMovieFragment) {
+                                viewPagerFragment.showSearchMovie(query)
+                            } else if (viewPagerFragment is SearchTvFragment) {
+                                viewPagerFragment.showSearchTv(query)
+                            }
+                        }
+                    }
+                }
 
                 return false
             }
@@ -59,24 +83,6 @@ class SearchActivity : DaggerAppCompatActivity() {
         })
 
         return true
-    }
-
-    private fun startSearching(query: String) {
-        val pagerAdapter = view_pager_search.adapter
-        if (pagerAdapter != null) {
-            for (i in 0 until pagerAdapter.count) {
-
-                val viewPagerFragment = view_pager_search.adapter?.instantiateItem(view_pager_search, i) as Fragment
-                if (viewPagerFragment.isAdded) {
-
-                    if (viewPagerFragment is SearchMovieFragment) {
-                        viewPagerFragment.showSearchMovie(query)
-                    } else if (viewPagerFragment is SearchTvFragment) {
-                        viewPagerFragment.showSearchTv(query)
-                    }
-                }
-            }
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -95,9 +101,7 @@ class SearchActivity : DaggerAppCompatActivity() {
 
     private fun handleIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
-            val query = intent.getStringExtra(SearchManager.QUERY)
-
-            //startSearching(query)
+            queryFromMain = intent.getStringExtra(SearchManager.QUERY)
         }
     }
 

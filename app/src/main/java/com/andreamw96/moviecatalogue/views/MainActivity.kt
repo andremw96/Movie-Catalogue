@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
+import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
@@ -19,14 +20,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
 
-    private var displayedFragment = ""
+    private lateinit var searchView : SearchView
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val fragment: Fragment
 
         when (item.itemId) {
             R.id.navigation_movie -> {
-                displayedFragment = applicationContext.getString(R.string.movies)
 
                 fragment = MovieFragment()
                 supportFragmentManager.beginTransaction()
@@ -35,7 +35,6 @@ class MainActivity : DaggerAppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_tv_shows -> {
-                displayedFragment = applicationContext.getString(R.string.tv_shows)
 
                 fragment = TVShowFragment()
                 supportFragmentManager.beginTransaction()
@@ -44,7 +43,6 @@ class MainActivity : DaggerAppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorites -> {
-                displayedFragment = applicationContext.getString(R.string.favorites)
 
                 fragment = FavoriteFragment()
                 supportFragmentManager.beginTransaction()
@@ -74,7 +72,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search_m).actionView as SearchView).apply {
+        searchView = (menu.findItem(R.id.search_m).actionView as SearchView).apply {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
@@ -89,8 +87,17 @@ class MainActivity : DaggerAppCompatActivity() {
             val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
             startActivity(mIntent)
         } else if (item.itemId == R.id.search_m) {
-
+            return onSearchRequested()
         }
+        return true
+    }
+
+    override fun onSearchRequested(): Boolean {
+        val appData = Bundle().apply {
+            putString(SearchActivity.QUERY, "${searchView.query}")
+        }
+        startSearch(null, false, appData, false)
+
         return true
     }
 }

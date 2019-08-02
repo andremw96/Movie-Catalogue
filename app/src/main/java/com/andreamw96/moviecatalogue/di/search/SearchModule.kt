@@ -19,8 +19,8 @@ import dagger.Provides
 class SearchModule {
     
     @Provides
-    fun provideSearchRepository(mMoviesApi : MovieApi, searchDao: SearchDao, appExecutors: AppExecutors, rateLimiter: RateLimiter) : SearchRepository {
-        return SearchRepository(mMoviesApi, searchDao, appExecutors, rateLimiter)
+    fun provideSearchRepository(mMoviesApi : MovieApi, searchDao: SearchDao, appExecutors: AppExecutors) : SearchRepository {
+        return SearchRepository(mMoviesApi, searchDao, appExecutors)
     }
 
     @Provides

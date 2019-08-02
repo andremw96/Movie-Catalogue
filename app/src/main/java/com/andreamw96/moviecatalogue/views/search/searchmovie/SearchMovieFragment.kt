@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +24,6 @@ import javax.inject.Inject
 
 class SearchMovieFragment : BaseFragment() {
 
-    companion object {
-        var QUERY : String = ""
-    }
 
     private lateinit var searchMovieViewModel: SearchMovieViewModel
 
@@ -44,7 +42,7 @@ class SearchMovieFragment : BaseFragment() {
         searchMovieViewModel = ViewModelProviders.of(this, providersFactory).get(SearchMovieViewModel::class.java)
 
         initRecyclerView()
-        showSearchMovie(QUERY)
+       // showSearchMovie(QUERY)
 
     }
 
