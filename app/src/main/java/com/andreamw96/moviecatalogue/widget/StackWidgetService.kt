@@ -3,10 +3,8 @@ package com.andreamw96.moviecatalogue.widget
 import android.content.Intent
 import android.widget.RemoteViewsService
 import com.andreamw96.moviecatalogue.data.local.FavoriteDao
-import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.bumptech.glide.RequestManager
 import dagger.android.AndroidInjection
-import dagger.android.DaggerService
 import javax.inject.Inject
 
 class StackWidgetService : RemoteViewsService() {

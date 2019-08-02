@@ -2,11 +2,8 @@ package com.andreamw96.moviecatalogue.widget
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -14,7 +11,6 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.target.AppWidgetTarget
 
 class StackRemoteViewsFactory(private val context: Context,
                               private val favoriteDao: FavoriteDao,
@@ -27,6 +23,10 @@ class StackRemoteViewsFactory(private val context: Context,
     }
 
     override fun onDataSetChanged() {
+        if(mWidgetItems.size != 0) {
+            mWidgetItems.clear()
+        }
+
         val identityToken = Binder.clearCallingIdentity()
 
         for (i in 0 until favoriteDao.getBanner(true).size) {

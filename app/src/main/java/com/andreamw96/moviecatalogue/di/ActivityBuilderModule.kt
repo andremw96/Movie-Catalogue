@@ -10,7 +10,6 @@ import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
-import com.andreamw96.moviecatalogue.widget.StackWidgetService
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
