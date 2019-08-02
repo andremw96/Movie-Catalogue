@@ -12,6 +12,8 @@ import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
+import com.andreamw96.moviecatalogue.utils.runAnimation
+import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.list.MovieAdapter
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
@@ -24,7 +26,7 @@ class SearchMovieFragment : BaseFragment() {
     private lateinit var searchMovieViewModel: SearchMovieViewModel
 
     @Inject
-    lateinit var movieAdapter: MovieAdapter
+    lateinit var searchMovieAdapter: SearchMovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,15 +50,22 @@ class SearchMovieFragment : BaseFragment() {
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {
+                        showLoading()
                         logd("LOADING...")
                     }
                     Resource.Status.SUCCESS -> {
                         logd("got the search movies...")
+                        hideLoading()
+                        somethingHappened(true)
                         it.data?.let {
-                            logd("$it")
+                            searchMovieAdapter.bindData(it)
                         }
+                        runAnimation(rv_search_movie)
                     }
                     Resource.Status.ERROR -> {
+                        hideLoading()
+                        somethingHappened(false)
+                        showSnackbar(fragment_search_movie, context?.getString(R.string.failed_fetch_movies))
                         loge("ERROR ${it.message}")
                     }
                 }
@@ -68,27 +77,33 @@ class SearchMovieFragment : BaseFragment() {
         rv_search_movie.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            val alphaAdapter = AlphaInAnimationAdapter(movieAdapter)
+            val alphaAdapter = AlphaInAnimationAdapter(searchMovieAdapter)
             adapter = ScaleInAnimationAdapter(alphaAdapter).apply {
                 // Change the durations.
                 setDuration(500)
                 // Disable the first scroll mode.
                 setFirstOnly(false)
             }
-            movieAdapter.notifyDataSetChanged()
+            searchMovieAdapter.notifyDataSetChanged()
         }
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBarSearchMovie.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBarSearchMovie.visibility = View.GONE
     }
 
     override fun somethingHappened(isSuccess: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(isSuccess) {
+            rv_search_movie.visibility = View.VISIBLE
+            img_search_movie_data_notfound.visibility = View.GONE
+        } else {
+            rv_search_movie.visibility = View.GONE
+            img_search_movie_data_notfound.visibility = View.VISIBLE
+        }
     }
 
 }

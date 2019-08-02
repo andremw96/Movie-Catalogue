@@ -12,6 +12,8 @@ import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
+import com.andreamw96.moviecatalogue.utils.runAnimation
+import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowsAdapter
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
@@ -25,7 +27,7 @@ class SearchTvFragment : BaseFragment() {
     private lateinit var searchTvViewModel: SearchTvViewModel
 
     @Inject
-    lateinit var tvShowsAdapter: TvShowsAdapter
+    lateinit var searchTvAdapter: SearchTvAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,15 +50,22 @@ class SearchTvFragment : BaseFragment() {
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {
+                        showLoading()
                         logd("LOADING...")
                     }
                     Resource.Status.SUCCESS -> {
                         logd("got the search tv...")
+                        hideLoading()
+                        somethingHappened(true)
                         it.data?.let {
-                            logd("$it")
+                            searchTvAdapter.bindData(it)
                         }
+                        runAnimation(rv_search_tv)
                     }
                     Resource.Status.ERROR -> {
+                        hideLoading()
+                        somethingHappened(false)
+                        showSnackbar(fragment_search_tv, context?.getString(R.string.failed_fetch_movies))
                         loge("ERROR ${it.message}")
                     }
                 }
@@ -68,27 +77,33 @@ class SearchTvFragment : BaseFragment() {
         rv_search_tv.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            val alphaAdapter = AlphaInAnimationAdapter(tvShowsAdapter)
+            val alphaAdapter = AlphaInAnimationAdapter(searchTvAdapter)
             adapter = ScaleInAnimationAdapter(alphaAdapter).apply {
                 // Change the durations.
                 setDuration(500)
                 // Disable the first scroll mode.
                 setFirstOnly(false)
             }
-            tvShowsAdapter.notifyDataSetChanged()
+            searchTvAdapter.notifyDataSetChanged()
         }
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBarSearchTv.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBarSearchTv.visibility = View.GONE
     }
 
     override fun somethingHappened(isSuccess: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(isSuccess) {
+            rv_search_tv.visibility = View.VISIBLE
+            img_search_tv_data_notfound.visibility = View.GONE
+        } else {
+            rv_search_tv.visibility = View.GONE
+            img_search_tv_data_notfound.visibility = View.VISIBLE
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies.list
+package com.andreamw96.moviecatalogue.views.search.searchtv
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,19 +9,20 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.model.SearchMovieResult
+import com.andreamw96.moviecatalogue.data.model.SearchTvResult
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
 import javax.inject.Inject
 
-class MovieAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
+class SearchTvAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<SearchTvAdapter.CardViewViewHolder>() {
 
-    val listMovie: ArrayList<MovieResult> = arrayListOf()
+    val listtTvShows: ArrayList<SearchTvResult> = arrayListOf()
 
-    fun bindData(movies: List<MovieResult>) {
-        listMovie.clear()
-        listMovie.addAll(movies)
+    fun bindData(movies: List<SearchTvResult>) {
+        listtTvShows.clear()
+        listtTvShows.addAll(movies)
         notifyDataSetChanged()
     }
 
@@ -31,21 +32,21 @@ class MovieAdapter @Inject constructor(private val context: Context?, private va
     }
 
     override fun onBindViewHolder(cardViewViewHolder: CardViewViewHolder, i: Int) {
-        cardViewViewHolder.bindItem(listMovie[i])
+        cardViewViewHolder.bindItem(listtTvShows[i])
     }
 
-    override fun getItemCount(): Int = listMovie.size
+    override fun getItemCount(): Int = listtTvShows.size
 
     inner class CardViewViewHolder internal constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bindItem(movie: MovieResult) {
+        fun bindItem(tvShows: SearchTvResult) {
 
-            requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
+            requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(tvShows.backdropPath).toString())
                     .into(img_movie)
-            txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
-            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
-            rating_bar.rating = movie.voteAverage.toFloat() / 2
+            txt_movie_title.text = tvShows.name
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), tvShows.firstAirDate)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), tvShows.voteAverage)
+            rating_bar.rating = tvShows.voteAverage.toFloat() / 2
         }
     }
 }
