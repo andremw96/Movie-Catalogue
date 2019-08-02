@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue
 
+import android.content.Context
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.bumptech.glide.RequestManager
@@ -13,5 +14,8 @@ abstract class BaseActivity : DaggerAppCompatActivity(), ProgressBarInterface {
 
     @Inject
     lateinit var requestManager: RequestManager
+
+    @Inject
+    lateinit var context: Context
 
 }

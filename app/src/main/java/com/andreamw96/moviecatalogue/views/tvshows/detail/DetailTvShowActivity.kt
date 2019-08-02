@@ -93,16 +93,16 @@ class DetailTvShowActivity : BaseActivity() {
 
     private fun favoriteState() {
         if (detailTvShowViewModel.isFavorite(tvShow.id)) {
-            //fav_button_tvshows.setImageResource(R.drawable.ic_fav_added)
             fav_button_tvshows.playAnimation()
         } else {
-            //fav_button_tvshows.setImageResource(R.drawable.ic_fav)
-            fav_button_tvshows.pauseAnimation()
+            fav_button_tvshows.apply {
+                progress = 0f
+                pauseAnimation()
+            }
         }
     }
 
     private fun updateWidget() {
-        val context = applicationContext
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val thisWidget = ComponentName(context, FavoriteTvBannerWidget::class.java)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)

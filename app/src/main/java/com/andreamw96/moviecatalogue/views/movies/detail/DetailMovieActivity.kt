@@ -95,10 +95,8 @@ class DetailMovieActivity : BaseActivity() {
 
     private fun favoriteState() {
         if (detailMovieViewModel.isFavorite(movie.id)) {
-            //fav_button_movie.setImageResource(R.drawable.ic_fav_added)
             fav_button_movie.playAnimation()
         } else {
-            //fav_button_movie.setImageResource(R.drawable.ic_fav)
             fav_button_movie.apply {
                 progress = 0f
                 pauseAnimation()
@@ -107,7 +105,6 @@ class DetailMovieActivity : BaseActivity() {
     }
 
     private fun updateWidget() {
-        val context = applicationContext
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val thisWidget = ComponentName(context, FavoriteMovieBannerWidget::class.java)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)

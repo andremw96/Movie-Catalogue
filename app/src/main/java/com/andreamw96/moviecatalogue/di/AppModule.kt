@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -25,6 +26,12 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    @Singleton
+    @Provides
+    fun provideContext(application: Application) : Context {
+        return application.applicationContext
+    }
 
     @Singleton
     @Provides
