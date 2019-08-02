@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.views.search.searchmovie
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +11,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.utils.logd
-import com.andreamw96.moviecatalogue.utils.loge
-import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.utils.showSnackbar
+import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_search_movie.*
 import javax.inject.Inject
 
 class SearchMovieFragment : BaseFragment() {
-
 
     private lateinit var searchMovieViewModel: SearchMovieViewModel
 
@@ -40,6 +38,19 @@ class SearchMovieFragment : BaseFragment() {
         searchMovieViewModel = ViewModelProviders.of(this, providersFactory).get(SearchMovieViewModel::class.java)
 
         initRecyclerView()
+
+        rv_search_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_movie, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val goToDetail = Intent(activity, DetailMovieActivity::class.java)
+                goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, searchMovieAdapter.listMovie[position])
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+
+            }
+
+        }))
     }
 
     fun showSearchMovie(query: String) {

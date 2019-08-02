@@ -16,6 +16,8 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 
 
+
+
 class SearchActivity : DaggerAppCompatActivity() {
 
     companion object {
@@ -50,14 +52,12 @@ class SearchActivity : DaggerAppCompatActivity() {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
+            queryHint = "Search"
+            setQuery(queryFromMain, true)
         }
-
-        searchView.queryHint = "Search"
-        searchView.setQuery(queryFromMain, false)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-
                 val pagerAdapter = view_pager_search.adapter
                 if (pagerAdapter != null) {
                     for (i in 0 until pagerAdapter.count) {
@@ -73,12 +73,14 @@ class SearchActivity : DaggerAppCompatActivity() {
                     }
                 }
 
-                return false
+                searchView.clearFocus()
+
+                return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
 
-                return false
+                return true
             }
         })
 
@@ -102,7 +104,24 @@ class SearchActivity : DaggerAppCompatActivity() {
     private fun handleIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
             queryFromMain = intent.getStringExtra(SearchManager.QUERY)
+            doMySearch(queryFromMain)
         }
+    }
+
+    private fun doMySearch(queryFromMain: String) {
+        val movieFrag = supportFragmentManager.findFragmentByTag(getFragmentTag(view_pager_search.id, 0))
+        if (movieFrag is SearchMovieFragment) {
+            movieFrag.showSearchMovie(queryFromMain)
+        }
+
+        val tvFrag = supportFragmentManager.findFragmentByTag(getFragmentTag(view_pager_search.id, 1))
+        if (tvFrag is SearchTvFragment) {
+            tvFrag.showSearchTv(queryFromMain)
+        }
+    }
+
+    private fun getFragmentTag(viewId: Int, id: Long): String {
+        return "android:switcher:$viewId:$id"
     }
 
     private fun setViewPager() {

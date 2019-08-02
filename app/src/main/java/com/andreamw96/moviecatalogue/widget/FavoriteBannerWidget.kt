@@ -30,8 +30,8 @@ class FavoriteBannerWidget : AppWidgetProvider() {
         super.onReceive(context, intent)
         if(intent?.action != null) {
             if(intent.action == TOAST_ACTION) {
-                val viewIndex = intent.getStringExtra(EXTRA_ITEM)
-                showToast(context, "Touched view: $viewIndex")
+                val touchedView = intent.getStringExtra(EXTRA_ITEM)
+                showToast(context, touchedView)
             }
         }
     }

@@ -76,6 +76,7 @@ class MainActivity : DaggerAppCompatActivity() {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
+            clearFocus()
         }
 
         return true
