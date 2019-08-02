@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.widget
+package com.andreamw96.moviecatalogue.widget.movie
 
 import android.content.Intent
 import android.widget.RemoteViewsService
@@ -6,7 +6,7 @@ import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
-class StackWidgetService : RemoteViewsService() {
+class StackMovieWidgetService : RemoteViewsService() {
 
     @Inject
     lateinit var favoriteDao: FavoriteDao
@@ -17,6 +17,6 @@ class StackWidgetService : RemoteViewsService() {
     }
 
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
-        return StackRemoteViewsFactory(this, favoriteDao)
+        return MovieStackRemoteViewsFactory(this, favoriteDao)
     }
 }

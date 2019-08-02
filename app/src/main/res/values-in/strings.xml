@@ -6,7 +6,6 @@
     <string name="ratingString">Skor : \t</string>
     <string name="releaseDateString">Tanggal Rilis : \t</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="movies">Film</string>
     <string name="tv_shows">Seri TV</string>
     <string name="poster_film">Poster Film</string>
@@ -22,14 +21,16 @@
 
     <string name="search">Cari</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buttonfav">ButtonFav</string>
 
     <string name="ok">OK</string>
 
-    <string name="appwidget_text">Film Favorite Anda</string>
-    <string name="add_widget">Add widget</string>
+    <string name="movie_widget_text">Film Favorite Anda</string>
+    <string name="tv_widget_text">Seri Tv Favorite Anda</string>
     <string name="empty_banner">Tidak ada data</string>
+
+    <string name="fav_movie_banner">Film Favorite</string>
+    <string name="fav_tv_banner">Seri Tv Favorite</string>
 
 </resources>

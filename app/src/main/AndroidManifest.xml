@@ -12,19 +12,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".widget.StackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS">
-        </service>
 
-        <receiver android:name=".widget.FavoriteBannerWidget">
+        <service
+            android:exported="true"
+            android:enabled="true"
+            android:name=".widget.movie.StackMovieWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+
+        <service
+            android:exported="true"
+            android:enabled="true"
+            android:name=".widget.tvshows.StackTvWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+
+        <receiver
+            android:name=".widget.movie.FavoriteMovieBannerWidget"
+            android:label="@string/fav_movie_banner">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/favorite_banner_widget_info" />
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widget.tvshows.FavoriteTvBannerWidget"
+            android:label="@string/fav_tv_banner">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
         </receiver>
 
         <activity android:name=".views.tvshows.detail.DetailTvShowActivity" />

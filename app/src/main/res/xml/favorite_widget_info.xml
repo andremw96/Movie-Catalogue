@@ -4,7 +4,7 @@
     android:initialLayout="@layout/favorite_banner_widget"
     android:minWidth="300dp"
     android:minHeight="150dp"
-    android:previewImage="@drawable/favoritebannerwidget"
+    android:previewImage="@drawable/favorite_banner_widget"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"></appwidget-provider>

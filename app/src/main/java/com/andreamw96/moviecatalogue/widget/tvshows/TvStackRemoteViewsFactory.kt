@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.widget
+package com.andreamw96.moviecatalogue.widget.tvshows
 
 import android.content.Context
 import android.content.Intent
@@ -12,8 +12,8 @@ import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.bumptech.glide.Glide
 
-class StackRemoteViewsFactory(private val context: Context,
-                              private val favoriteDao: FavoriteDao) : RemoteViewsService.RemoteViewsFactory {
+class TvStackRemoteViewsFactory(private val context: Context,
+                                private val favoriteDao: FavoriteDao) : RemoteViewsService.RemoteViewsFactory {
 
     private val mWidgetItems: MutableList<Favorite> = mutableListOf()
 
@@ -28,8 +28,8 @@ class StackRemoteViewsFactory(private val context: Context,
 
         val identityToken = Binder.clearCallingIdentity()
 
-        for (i in 0 until favoriteDao.getBanner(true).size) {
-            mWidgetItems.add(favoriteDao.getBanner(true)[i])
+        for (i in 0 until favoriteDao.getBanner(false).size) {
+            mWidgetItems.add(favoriteDao.getBanner(false)[i])
         }
 
         Binder.restoreCallingIdentity(identityToken)
@@ -56,7 +56,7 @@ class StackRemoteViewsFactory(private val context: Context,
         }
 
         val bundle = Bundle()
-        bundle.putString(FavoriteBannerWidget.EXTRA_ITEM, mWidgetItems[position].title)
+        bundle.putString(FavoriteTvBannerWidget.EXTRA_ITEM, mWidgetItems[position].title)
         val fillInIntent = Intent()
         fillInIntent.putExtras(bundle)
 

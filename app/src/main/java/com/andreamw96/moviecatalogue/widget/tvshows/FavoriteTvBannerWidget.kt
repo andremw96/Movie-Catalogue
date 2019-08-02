@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.widget
+package com.andreamw96.moviecatalogue.widget.tvshows
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -9,15 +9,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.SystemClock
 import android.widget.RemoteViews
-
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.showToast
-
 
 /**
  * Implementation of App Widget functionality.
  */
-class FavoriteBannerWidget : AppWidgetProvider() {
+class FavoriteTvBannerWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
@@ -50,11 +48,11 @@ class FavoriteBannerWidget : AppWidgetProvider() {
         const val EXTRA_ITEM : String = "EXTRA_ITEM"
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-            val intent = Intent(context, StackWidgetService::class.java)
+            val intent = Intent(context, StackTvWidgetService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
-            val pending = PendingIntent.getService(context, 0, intent, 0)
+            val pending = PendingIntent.getService(context, 1, intent, 0)
             val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarm.cancel(pending)
             val interval : Long = 1000*60
@@ -63,17 +61,19 @@ class FavoriteBannerWidget : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.favorite_banner_widget)
             views.setRemoteAdapter(R.id.stack_view, intent)
             views.setEmptyView(R.id.stack_view, R.id.empty_view)
+            views.setTextViewText(R.id.banner_text, context.getString(R.string.tv_widget_text))
 
-            val toastIntent = Intent(context, FavoriteBannerWidget::class.java)
+            val toastIntent = Intent(context, FavoriteTvBannerWidget::class.java)
             toastIntent.action = TOAST_ACTION
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
-            val toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val toastPendingIntent = PendingIntent.getBroadcast(context, 1, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             views.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
+
         }
     }
 }

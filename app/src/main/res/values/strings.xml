@@ -5,7 +5,6 @@
     <string name="ratingString">Rating : \t</string>
     <string name="releaseDateString">Release Date :\t</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="movies">Movies</string>
     <string name="tv_shows">TV Shows</string>
     <string name="poster_film">Poster Film</string>
@@ -21,15 +20,17 @@
 
     <string name="search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="buttonfav">ButtonFav</string>
 
     <string name="ok">OK</string>
 
-    <string name="appwidget_text">Your Favorite Movie</string>
-    <string name="add_widget">Add widget</string>
+    <string name="movie_widget_text">Your Favorite Movie</string>
+    <string name="tv_widget_text">Your Favorite Tv Shows</string>
     <string name="empty_banner">No Data</string>
+
+    <string name="fav_movie_banner">Favorite Movie</string>
+    <string name="fav_tv_banner">Favorite TV</string>
 
 </resources>
