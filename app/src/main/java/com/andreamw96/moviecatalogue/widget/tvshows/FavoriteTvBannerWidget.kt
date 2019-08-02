@@ -1,12 +1,10 @@
 package com.andreamw96.moviecatalogue.widget.tvshows
 
-import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.SystemClock
 import android.widget.RemoteViews
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.widget.BaseAppWidgetProvider
@@ -30,12 +28,6 @@ class FavoriteTvBannerWidget : BaseAppWidgetProvider() {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
-            val pending = PendingIntent.getService(context, 1, intent, 0)
-            val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarm.cancel(pending)
-            val interval : Long = 1000*60
-            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pending)
-
             val views = RemoteViews(context.packageName, R.layout.favorite_banner_widget)
             views.setRemoteAdapter(R.id.stack_view, intent)
             views.setEmptyView(R.id.stack_view, R.id.empty_view)
@@ -46,12 +38,11 @@ class FavoriteTvBannerWidget : BaseAppWidgetProvider() {
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
-            val toastPendingIntent = PendingIntent.getBroadcast(context, 1, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             views.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
-
         }
     }
 }

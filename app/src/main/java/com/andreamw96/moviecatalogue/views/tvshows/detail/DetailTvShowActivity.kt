@@ -1,5 +1,7 @@
 package com.andreamw96.moviecatalogue.views.tvshows.detail
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +12,7 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.utils.showSnackbar
+import com.andreamw96.moviecatalogue.widget.tvshows.FavoriteTvBannerWidget
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 
 class DetailTvShowActivity : BaseActivity() {
@@ -64,6 +67,7 @@ class DetailTvShowActivity : BaseActivity() {
             }
 
             favoriteState()
+            updateWidget()
         }
     }
 
@@ -95,5 +99,13 @@ class DetailTvShowActivity : BaseActivity() {
             //fav_button_tvshows.setImageResource(R.drawable.ic_fav)
             fav_button_tvshows.pauseAnimation()
         }
+    }
+
+    private fun updateWidget() {
+        val context = applicationContext
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val thisWidget = ComponentName(context, FavoriteTvBannerWidget::class.java)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
     }
 }

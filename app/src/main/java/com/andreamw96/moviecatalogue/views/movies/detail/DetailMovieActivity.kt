@@ -1,5 +1,7 @@
 package com.andreamw96.moviecatalogue.views.movies.detail
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,7 +12,9 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.showSnackbar
+import com.andreamw96.moviecatalogue.widget.movie.FavoriteMovieBannerWidget
 import kotlinx.android.synthetic.main.activity_detail_movie.*
+
 
 class DetailMovieActivity : BaseActivity() {
 
@@ -65,6 +69,7 @@ class DetailMovieActivity : BaseActivity() {
             }
 
             favoriteState()
+            updateWidget()
         }
     }
 
@@ -99,5 +104,13 @@ class DetailMovieActivity : BaseActivity() {
                 pauseAnimation()
             }
         }
+    }
+
+    private fun updateWidget() {
+        val context = applicationContext
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val thisWidget = ComponentName(context, FavoriteMovieBannerWidget::class.java)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
     }
 }

@@ -1,12 +1,10 @@
 package com.andreamw96.moviecatalogue.widget.movie
 
-import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.SystemClock
 import android.widget.RemoteViews
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.widget.BaseAppWidgetProvider
@@ -30,12 +28,6 @@ class FavoriteMovieBannerWidget : BaseAppWidgetProvider() {
             val intent = Intent(context, StackMovieWidgetService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-
-            val pending = PendingIntent.getService(context, 0, intent, 0)
-            val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarm.cancel(pending)
-            val interval : Long = 1000*60
-            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pending)
 
             val views = RemoteViews(context.packageName, R.layout.favorite_banner_widget)
             views.setRemoteAdapter(R.id.stack_view, intent)
