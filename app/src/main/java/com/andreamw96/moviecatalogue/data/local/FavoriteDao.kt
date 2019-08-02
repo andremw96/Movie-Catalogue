@@ -19,7 +19,7 @@ interface FavoriteDao {
     @Query("SELECT * FROM favorites_table WHERE isMovie = :isMovie")
     fun getFavorites(isMovie: Boolean): LiveData<List<Favorite>>
 
-    @Query("SELECT backdropPath FROM favorites_table WHERE isMovie = :isMovie")
+    @Query("SELECT * FROM favorites_table WHERE isMovie = :isMovie")
     fun getBanner(isMovie: Boolean): List<Favorite>
 
     @Query("DELETE FROM favorites_table WHERE movieId = :idMovie")

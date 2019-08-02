@@ -26,6 +26,8 @@
 
     <string name="buttonfav">ButtonFav</string>
 
+    <string name="ok">OK</string>
+
     <string name="appwidget_text">Your Favorite Movie</string>
     <string name="add_widget">Add widget</string>
     <string name="empty_banner">No Data</string>

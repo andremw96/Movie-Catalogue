@@ -1,13 +1,28 @@
 package com.andreamw96.moviecatalogue.widget
 
-import android.app.Service
 import android.content.Intent
-import android.os.IBinder
 import android.widget.RemoteViewsService
+import com.andreamw96.moviecatalogue.data.local.FavoriteDao
+import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
+import com.bumptech.glide.RequestManager
+import dagger.android.AndroidInjection
+import dagger.android.DaggerService
+import javax.inject.Inject
 
 class StackWidgetService : RemoteViewsService() {
 
+    @Inject
+    lateinit var favoriteDao: FavoriteDao
+
+    @Inject
+    lateinit var requestManager: RequestManager
+
+    override fun onCreate() {
+        AndroidInjection.inject(this)
+        super.onCreate()
+    }
+
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
-        return StackRemoteViewsFactory(this)
+        return StackRemoteViewsFactory(this, favoriteDao, requestManager)
     }
 }

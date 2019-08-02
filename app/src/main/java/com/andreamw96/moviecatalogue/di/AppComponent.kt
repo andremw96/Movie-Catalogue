@@ -2,6 +2,7 @@ package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
 import com.andreamw96.moviecatalogue.BaseApplication
+import com.andreamw96.moviecatalogue.di.service.ServiceBuilderModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -14,6 +15,7 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBuilderModule::class,
+        ServiceBuilderModule::class,
         AppModule::class,
         ViewModelFactoryModule::class
     ]
