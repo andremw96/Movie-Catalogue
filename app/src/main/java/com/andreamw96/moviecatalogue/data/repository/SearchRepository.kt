@@ -30,7 +30,7 @@ class SearchRepository (
             }
 
             override fun shouldFetch(data: List<SearchMovieResult>?): Boolean {
-                return data == null || data.isEmpty() || rateLimiter.shouldFetch()
+                return true //data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
             override fun loadFromDb(): LiveData<List<SearchMovieResult>> {
@@ -50,7 +50,7 @@ class SearchRepository (
             }
 
             override fun shouldFetch(data: List<SearchTvResult>?): Boolean {
-                return data == null || data.isEmpty() || rateLimiter.shouldFetch()
+                return true  //data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
             override fun loadFromDb(): LiveData<List<SearchTvResult>> {

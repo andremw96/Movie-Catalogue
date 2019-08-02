@@ -24,6 +24,11 @@ import javax.inject.Inject
 
 class SearchTvFragment : BaseFragment() {
 
+    companion object {
+        var QUERY : String = ""
+    }
+
+
     private lateinit var searchTvViewModel: SearchTvViewModel
 
     @Inject
@@ -41,12 +46,12 @@ class SearchTvFragment : BaseFragment() {
         searchTvViewModel = ViewModelProviders.of(this, providersFactory).get(SearchTvViewModel::class.java)
 
         initRecyclerView()
-        showSearchTv()
+        showSearchTv(QUERY)
     }
 
-    private fun showSearchTv() {
-        searchTvViewModel.setSearchTv().removeObservers(this)
-        searchTvViewModel.setSearchTv().observe(this, Observer { it ->
+    fun showSearchTv(query: String) {
+        searchTvViewModel.setSearchTv(query).removeObservers(this)
+        searchTvViewModel.setSearchTv(query).observe(this, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

@@ -23,6 +23,10 @@ import javax.inject.Inject
 
 class SearchMovieFragment : BaseFragment() {
 
+    companion object {
+        var QUERY : String = ""
+    }
+
     private lateinit var searchMovieViewModel: SearchMovieViewModel
 
     @Inject
@@ -40,13 +44,13 @@ class SearchMovieFragment : BaseFragment() {
         searchMovieViewModel = ViewModelProviders.of(this, providersFactory).get(SearchMovieViewModel::class.java)
 
         initRecyclerView()
-        showSearchMovie()
+        showSearchMovie(QUERY)
 
     }
 
-    private fun showSearchMovie() {
-        searchMovieViewModel.setSearchMovies().removeObservers(this)
-        searchMovieViewModel.setSearchMovies().observe(this, Observer { it ->
+    fun showSearchMovie(query: String) {
+        searchMovieViewModel.setSearchMovies(query).removeObservers(this)
+        searchMovieViewModel.setSearchMovies(query).observe(this, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

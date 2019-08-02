@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class SearchMovieViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
 
-    fun setSearchMovies() : LiveData<Resource<List<SearchMovieResult>>> {
-        return searchRepository.setSearchMovie("Avenger")
+    fun setSearchMovies(query: String) : LiveData<Resource<List<SearchMovieResult>>> {
+        return searchRepository.setSearchMovie(query)
     }
 
 }

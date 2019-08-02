@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class SearchTvViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
 
-    fun setSearchTv() : LiveData<Resource<List<SearchTvResult>>> {
-        return searchRepository.setSearchTv("Avenger")
+    fun setSearchTv(query: String) : LiveData<Resource<List<SearchTvResult>>> {
+        return searchRepository.setSearchTv(query)
     }
 
 }

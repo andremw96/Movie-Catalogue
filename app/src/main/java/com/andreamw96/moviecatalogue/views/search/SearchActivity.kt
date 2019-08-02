@@ -7,34 +7,20 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
-import com.andreamw96.moviecatalogue.utils.logd
-import com.andreamw96.moviecatalogue.utils.loge
-import com.andreamw96.moviecatalogue.utils.showToast
 import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
-import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieFragment
 import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
-import javax.inject.Inject
+import androidx.fragment.app.Fragment
+import com.andreamw96.moviecatalogue.R
 
 
 class SearchActivity : DaggerAppCompatActivity() {
 
-    //@Inject
-    //lateinit var providersFactory: ViewModelProvidersFactory
-
-    //private lateinit var searchViewModel: SearchViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
-       // searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
 
         if (supportActionBar != null) {
             supportActionBar?.apply {
@@ -60,19 +46,37 @@ class SearchActivity : DaggerAppCompatActivity() {
         searchView.queryHint = "Search"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                showToast(applicationContext, query)
+            override fun onQueryTextSubmit(query: String): Boolean {
+                startSearching(query)
 
-                return true
+                return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override fun onQueryTextChange(newText: String): Boolean {
 
-                return true
+                return false
             }
         })
 
         return true
+    }
+
+    private fun startSearching(query: String) {
+        val pagerAdapter = view_pager_search.adapter
+        if (pagerAdapter != null) {
+            for (i in 0 until pagerAdapter.count) {
+
+                val viewPagerFragment = view_pager_search.adapter?.instantiateItem(view_pager_search, i) as Fragment
+                if (viewPagerFragment.isAdded) {
+
+                    if (viewPagerFragment is SearchMovieFragment) {
+                        viewPagerFragment.showSearchMovie(query)
+                    } else if (viewPagerFragment is SearchTvFragment) {
+                        viewPagerFragment.showSearchTv(query)
+                    }
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -91,8 +95,9 @@ class SearchActivity : DaggerAppCompatActivity() {
 
     private fun handleIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
-            val searchQuery = intent.getStringExtra(SearchManager.QUERY)
-            showToast(applicationContext, searchQuery)
+            val query = intent.getStringExtra(SearchManager.QUERY)
+
+            //startSearching(query)
         }
     }
 
@@ -105,3 +110,4 @@ class SearchActivity : DaggerAppCompatActivity() {
         tab_layout_search.setupWithViewPager(view_pager_search)
     }
 }
+
