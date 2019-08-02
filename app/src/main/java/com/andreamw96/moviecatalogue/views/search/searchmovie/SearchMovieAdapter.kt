@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
 import javax.inject.Inject
 
-class SearchMovieAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<SearchMovieAdapter.CardViewViewHolder>() {
+class SearchMovieAdapter(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<SearchMovieAdapter.CardViewViewHolder>() {
 
     val listMovie: ArrayList<SearchMovieResult> = arrayListOf()
 

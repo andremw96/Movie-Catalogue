@@ -8,6 +8,8 @@ import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.data.repository.SearchRepository
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.views.movies.list.MovieAdapter
+import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieAdapter
+import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvAdapter
 import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowsAdapter
 import com.bumptech.glide.RequestManager
 import dagger.Module
@@ -24,5 +26,15 @@ class SearchModule {
     @Provides
     fun provideSearchDao(movieCatalogueDatabase: MoviCatalogueDatabase) : SearchDao {
         return movieCatalogueDatabase.searchDao()
+    }
+
+    @Provides
+    fun provideSearchMovieAdapter(application: Application, requestManager: RequestManager) : SearchMovieAdapter {
+        return SearchMovieAdapter(application.applicationContext, requestManager)
+    }
+
+    @Provides
+    fun provideSearchTvShowsAdapter(application: Application, requestManager: RequestManager) : SearchTvAdapter {
+        return SearchTvAdapter(application.applicationContext, requestManager)
     }
 }

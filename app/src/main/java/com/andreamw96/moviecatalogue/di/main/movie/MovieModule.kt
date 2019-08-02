@@ -24,4 +24,9 @@ class MovieModule {
     fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : MovieDao {
         return movieCatalogueDatabase.movieDao()
     }
+
+    @Provides
+    fun provideMovieAdapter(application: Application, requestManager: RequestManager) : MovieAdapter {
+        return MovieAdapter(application.applicationContext, requestManager)
+    }
 }

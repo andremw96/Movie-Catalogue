@@ -25,4 +25,9 @@ class TvShowsModule {
         return movieCatalogueDatabase.tvShowDao()
     }
 
+    @Provides
+    fun provideTvShowsAdapter(application: Application, requestManager: RequestManager) : TvShowsAdapter {
+        return TvShowsAdapter(application.applicationContext, requestManager)
+    }
+
 }
