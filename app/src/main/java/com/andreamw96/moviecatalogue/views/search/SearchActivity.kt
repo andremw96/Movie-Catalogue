@@ -38,6 +38,7 @@ class SearchActivity : DaggerAppCompatActivity() {
         }
 
         setViewPager()
+        handleIntent(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
