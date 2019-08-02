@@ -3,7 +3,6 @@ package com.andreamw96.moviecatalogue.di
 import com.andreamw96.moviecatalogue.di.detail.movie.DetailMovieViewModelModule
 import com.andreamw96.moviecatalogue.di.detail.tvshows.DetailTvShowViewModelModule
 import com.andreamw96.moviecatalogue.di.main.MainFragmentBuilderModule
-import com.andreamw96.moviecatalogue.di.main.MainModule
 import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
 import com.andreamw96.moviecatalogue.di.search.SearchFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.search.SearchModule
@@ -19,8 +18,7 @@ abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector(
             modules = [
-                MainFragmentBuilderModule::class,
-                MainModule::class
+                MainFragmentBuilderModule::class
             ]
     )
     abstract fun contributeMainActivity(): MainActivity

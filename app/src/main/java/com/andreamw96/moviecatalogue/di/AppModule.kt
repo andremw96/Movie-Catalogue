@@ -14,6 +14,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -90,5 +91,10 @@ class AppModule {
     @Provides
     fun provideMovieApi(retrofit: Retrofit) : MovieApi {
         return retrofit.create(MovieApi::class.java)
+    }
+
+    @Provides
+    fun provideCompositeDisposable() : CompositeDisposable {
+        return CompositeDisposable()
     }
 }

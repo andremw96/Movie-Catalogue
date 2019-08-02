@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
 import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieFragment
 import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
-import androidx.fragment.app.Fragment
-import com.andreamw96.moviecatalogue.R
 
 
 class SearchActivity : DaggerAppCompatActivity() {

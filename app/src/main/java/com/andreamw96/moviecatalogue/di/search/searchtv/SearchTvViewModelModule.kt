@@ -2,7 +2,6 @@ package com.andreamw96.moviecatalogue.di.search.searchtv
 
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.di.ViewModelKey
-import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieViewModel
 import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvViewModel
 import dagger.Binds
 import dagger.Module

@@ -8,18 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.data.model.SearchMovieResult
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
-import javax.inject.Inject
+
 
 class SearchMovieAdapter(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<SearchMovieAdapter.CardViewViewHolder>() {
 
-    val listMovie: ArrayList<SearchMovieResult> = arrayListOf()
+    val listMovie: ArrayList<MovieResult> = arrayListOf()
 
-    fun bindData(movies: List<SearchMovieResult>) {
+    fun bindData(movies: List<MovieResult>) {
         listMovie.clear()
         listMovie.addAll(movies)
         notifyDataSetChanged()
@@ -38,7 +37,7 @@ class SearchMovieAdapter(private val context: Context?, private val requestManag
 
     inner class CardViewViewHolder internal constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bindItem(movie: SearchMovieResult) {
+        fun bindItem(movie: MovieResult) {
 
             requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
                     .into(img_movie)
