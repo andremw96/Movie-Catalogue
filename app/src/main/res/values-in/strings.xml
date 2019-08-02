@@ -25,4 +25,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buttonfav">ButtonFav</string>
+
+    <string name="appwidget_text">Film Favorite Anda</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_banner">Tidak ada data</string>
+
 </resources>
