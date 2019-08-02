@@ -16,6 +16,8 @@ import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.showToast
 import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
 import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieFragment
+import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
@@ -23,26 +25,22 @@ import javax.inject.Inject
 
 class SearchActivity : DaggerAppCompatActivity() {
 
-    @Inject
-    lateinit var providersFactory: ViewModelProvidersFactory
+    //@Inject
+    //lateinit var providersFactory: ViewModelProvidersFactory
 
-    private lateinit var searchViewModel: SearchViewModel
+    //private lateinit var searchViewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
+       // searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
 
         if (supportActionBar != null) {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
             }
         }
-
-        showSearchMovie()
-        showSearchTv()
-
 
         setViewPager()
         handleIntent(intent)
@@ -96,50 +94,6 @@ class SearchActivity : DaggerAppCompatActivity() {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
             showToast(applicationContext, searchQuery)
         }
-    }
-
-    private fun showSearchMovie() {
-        searchViewModel.setSearchMovies().removeObservers(this)
-        searchViewModel.setSearchMovies().observe(this, Observer { it ->
-            if(it != null) {
-                when(it.status) {
-                    Resource.Status.LOADING -> {
-                        logd("LOADING...")
-                    }
-                    Resource.Status.SUCCESS -> {
-                        logd("got the search movies...")
-                        it.data?.let {
-                            logd("$it")
-                        }
-                    }
-                    Resource.Status.ERROR -> {
-                        loge("ERROR ${it.message}")
-                    }
-                }
-            }
-        })
-    }
-
-    private fun showSearchTv() {
-        searchViewModel.setSearchTv().removeObservers(this)
-        searchViewModel.setSearchTv().observe(this, Observer { it ->
-            if(it != null) {
-                when(it.status) {
-                    Resource.Status.LOADING -> {
-                        logd("LOADING...")
-                    }
-                    Resource.Status.SUCCESS -> {
-                        logd("got the search tv...")
-                        it.data?.let {
-                            logd("$it")
-                        }
-                    }
-                    Resource.Status.ERROR -> {
-                        loge("ERROR ${it.message}")
-                    }
-                }
-            }
-        })
     }
 
     private fun setViewPager() {

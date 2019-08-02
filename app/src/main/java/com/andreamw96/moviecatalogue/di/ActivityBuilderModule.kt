@@ -7,7 +7,6 @@ import com.andreamw96.moviecatalogue.di.main.MainModule
 import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
 import com.andreamw96.moviecatalogue.di.search.SearchFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.search.SearchModule
-import com.andreamw96.moviecatalogue.di.search.SearchViewModelModule
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
@@ -45,7 +44,6 @@ abstract class ActivityBuilderModule {
     @ContributesAndroidInjector(
             modules = [
                 SearchFragmentBuilderModule::class,
-                SearchViewModelModule::class,
                 SearchModule::class
             ]
     )
