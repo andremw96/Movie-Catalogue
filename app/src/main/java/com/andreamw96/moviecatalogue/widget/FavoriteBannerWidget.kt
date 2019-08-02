@@ -1,11 +1,13 @@
 package com.andreamw96.moviecatalogue.widget
 
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.SystemClock
 import android.widget.RemoteViews
 
 import com.andreamw96.moviecatalogue.R
@@ -28,7 +30,7 @@ class FavoriteBannerWidget : AppWidgetProvider() {
         super.onReceive(context, intent)
         if(intent?.action != null) {
             if(intent.action == TOAST_ACTION) {
-                val viewIndex = intent.getIntExtra(EXTRA_ITEM, 0)
+                val viewIndex = intent.getStringExtra(EXTRA_ITEM)
                 showToast(context, "Touched view: $viewIndex")
             }
         }
@@ -45,12 +47,18 @@ class FavoriteBannerWidget : AppWidgetProvider() {
     companion object {
 
         private const val TOAST_ACTION = "TOAST_ACTION"
-        const val EXTRA_ITEM = "EXTRA_ITEM"
+        const val EXTRA_ITEM : String = "EXTRA_ITEM"
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val intent = Intent(context, StackWidgetService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+
+            val pending = PendingIntent.getService(context, 0, intent, 0)
+            val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarm.cancel(pending)
+            val interval : Long = 1000*60
+            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pending)
 
             val views = RemoteViews(context.packageName, R.layout.favorite_banner_widget)
             views.setRemoteAdapter(R.id.stack_view, intent)

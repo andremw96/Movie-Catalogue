@@ -9,14 +9,13 @@ import android.widget.RemoteViewsService
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.FavoriteDao
+import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
 
 class StackRemoteViewsFactory(private val context: Context,
-                              private val favoriteDao: FavoriteDao,
-                              private val requestManager: RequestManager) : RemoteViewsService.RemoteViewsFactory {
+                              private val favoriteDao: FavoriteDao) : RemoteViewsService.RemoteViewsFactory {
 
-    private val mWidgetItems: MutableList<String> = mutableListOf()
+    private val mWidgetItems: MutableList<Favorite> = mutableListOf()
 
     override fun onCreate() {
 
@@ -30,7 +29,7 @@ class StackRemoteViewsFactory(private val context: Context,
         val identityToken = Binder.clearCallingIdentity()
 
         for (i in 0 until favoriteDao.getBanner(true).size) {
-            mWidgetItems.add(favoriteDao.getBanner(true)[i].backdropPath)
+            mWidgetItems.add(favoriteDao.getBanner(true)[i])
         }
 
         Binder.restoreCallingIdentity(identityToken)
@@ -48,7 +47,7 @@ class StackRemoteViewsFactory(private val context: Context,
         try {
             val bitmap = Glide.with(context)
                     .asBitmap()
-                    .load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(mWidgetItems[position]).toString())
+                    .load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(mWidgetItems[position].backdropPath).toString())
                     .submit(512, 512)
                     .get()
             rv.setImageViewBitmap(R.id.imageView_widget, bitmap)
@@ -57,7 +56,7 @@ class StackRemoteViewsFactory(private val context: Context,
         }
 
         val bundle = Bundle()
-        bundle.putInt(FavoriteBannerWidget.EXTRA_ITEM, position)
+        bundle.putString(FavoriteBannerWidget.EXTRA_ITEM, mWidgetItems[position].title)
         val fillInIntent = Intent()
         fillInIntent.putExtras(bundle)
 
