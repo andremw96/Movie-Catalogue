@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.data.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -16,6 +17,7 @@ data class Favorite(
         var voteAverage: Double,
         var overview: String
 ) : Parcelable {
+    @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 }

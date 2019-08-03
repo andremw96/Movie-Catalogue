@@ -19,6 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
+
+
 class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var searchView : SearchView
@@ -59,7 +61,7 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+       // supportActionBar?.setDisplayShowTitleEnabled(false)
 
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -75,6 +77,7 @@ class MainActivity : DaggerAppCompatActivity() {
         searchView = (menu.findItem(R.id.search_m).actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setIconifiedByDefault(false)
+            clearFocus()
         }
 
         return true

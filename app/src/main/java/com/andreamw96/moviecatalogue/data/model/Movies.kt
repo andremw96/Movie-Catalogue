@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.andreamw96.moviecatalogue.utils.MyTypeConverters
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 data class Movies(
@@ -53,6 +54,7 @@ data class MovieResult(
         @SerializedName("vote_count")
         var voteCount: Int = 0
 ) : Parcelable {
+        @IgnoredOnParcel
         @PrimaryKey(autoGenerate = true)
         var autoid: Int = 0
 }

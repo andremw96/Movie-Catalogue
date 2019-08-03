@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         buildConfigField 'String', 'API_KEY', '"52b1fef17cd428dc289311a98ecfd8b0"'
         buildConfigField 'String', 'API_BASE_URL', '"https://api.themoviedb.org/3/"'
@@ -101,7 +102,11 @@ dependencies {
 
     // animation
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
-    implementation 'com.airbnb.android:lottie:3.0.0'
+    implementation 'com.airbnb.android:lottie:3.0.7'
+
+    // work manager
+    implementation "androidx.work:work-runtime-ktx:2.1.0"
+    implementation 'com.android.support:multidex:1.0.3'
 
     //test
     testImplementation 'junit:junit:4.12'
