@@ -10,7 +10,8 @@
     <string name="tv_shows">Seri TV</string>
     <string name="poster_film">Poster Film</string>
 
-    <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
+    <string name="change_language_settings">Ubah Bahasa</string>
+    <string name="change_settings_app">Pengaturan</string>
     <string name="favorites">Favorit</string>
 
     <string name="failed_fetch_movies">Gagal memuat daftar film</string>

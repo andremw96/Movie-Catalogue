@@ -9,7 +9,9 @@
     <string name="tv_shows">TV Shows</string>
     <string name="poster_film">Poster Film</string>
 
-    <string name="change_language_settings">Change Language Settings</string>
+    <string name="change_language_settings">Change Language</string>
+    <string name="change_settings_app">Settings</string>
+
     <string name="favorites">Favorites</string>
 
     <string name="failed_fetch_movies">Failed to fetch movies data</string>
@@ -32,5 +34,7 @@
 
     <string name="fav_movie_banner">Favorite Movie</string>
     <string name="fav_tv_banner">Favorite TV</string>
+    <string name="enable_daily_reminder">Enable Daily Reminder</string>
+    <string name="today_release_reminder">Today Release Reminder</string>
 
 </resources>

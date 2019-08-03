@@ -13,6 +13,7 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
+import com.andreamw96.moviecatalogue.views.settings.SettingsActivity
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
@@ -76,23 +77,30 @@ class MainActivity : DaggerAppCompatActivity() {
             setIconifiedByDefault(false)
         }
 
-        searchView.setOnCloseListener{
-            searchView.clearFocus()
-            true
-        }
-
         return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_change_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
-        } else if (item.itemId == R.id.search_m) {
-            return onSearchRequested()
+        when(item.itemId) {
+            R.id.action_change_settings -> {
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+                return true
+            }
+
+            R.id.search_m -> {
+                return onSearchRequested()
+            }
+
+            R.id.action_settings_app -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+
+                return true
+            }
+
+            else -> return true
         }
-        return true
     }
 
     override fun onSearchRequested(): Boolean {
