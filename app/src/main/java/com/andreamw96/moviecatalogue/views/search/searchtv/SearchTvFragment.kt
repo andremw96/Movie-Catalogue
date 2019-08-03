@@ -53,8 +53,9 @@ class SearchTvFragment : BaseFragment() {
     }
 
     fun showSearchTv(query: String) {
-        searchTvViewModel.setSearchTv(query).removeObservers(this)
-        searchTvViewModel.setSearchTv(query).observe(this, Observer { it ->
+        searchTvViewModel.setQuery(query)
+        searchTvViewModel.searchTvs.removeObservers(this)
+        searchTvViewModel.searchTvs.observe(this, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

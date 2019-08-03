@@ -41,7 +41,6 @@ class TVShowFragment : BaseFragment() {
         tvShowMovieViewModel = ViewModelProviders.of(this, providersFactory).get(TvShowViewModel::class.java)
 
         initRecyclerView()
-        showTvShows()
 
         rv_tv_show.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_tv_show, object : RecyclerItemClickListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
@@ -53,6 +52,8 @@ class TVShowFragment : BaseFragment() {
             override fun onItemLongClick(view: View?, position: Int) {
             }
         }))
+
+        showTvShows()
     }
 
     private fun initRecyclerView() {
@@ -64,14 +65,14 @@ class TVShowFragment : BaseFragment() {
                 setDuration(1000)
                 // Disable the first scroll mode.
                 setFirstOnly(false)
+                notifyDataSetChanged()
             }
-            tvShowsAdapter.notifyDataSetChanged()
         }
     }
 
     private fun showTvShows() {
-        tvShowMovieViewModel.setTvShows().removeObservers(viewLifecycleOwner)
-        tvShowMovieViewModel.setTvShows().observe(viewLifecycleOwner, Observer {
+        tvShowMovieViewModel.tvShows.removeObservers(viewLifecycleOwner)
+        tvShowMovieViewModel.tvShows.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

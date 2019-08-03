@@ -14,6 +14,10 @@ class RateLimiter(timeout: Int, timeUnit: TimeUnit) {
     fun shouldFetch(): Boolean {
         val lastFetched = timestamps
         val now = now()
+        if (lastFetched == null) {
+            timestamps = now
+            return true
+        }
         if (now - lastFetched > timeout) {
             timestamps = now
             return true

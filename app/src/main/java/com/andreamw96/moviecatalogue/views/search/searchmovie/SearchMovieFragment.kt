@@ -54,8 +54,9 @@ class SearchMovieFragment : BaseFragment() {
     }
 
     fun showSearchMovie(query: String) {
-        searchMovieViewModel.setSearchMovies(query).removeObservers(this)
-        searchMovieViewModel.setSearchMovies(query).observe(this, Observer { it ->
+        searchMovieViewModel.setQuery(query)
+        searchMovieViewModel.searchMovies.removeObservers(this)
+        searchMovieViewModel.searchMovies.observe(this, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

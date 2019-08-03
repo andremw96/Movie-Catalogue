@@ -43,7 +43,6 @@ class MovieFragment : BaseFragment() {
         movieViewModel = ViewModelProviders.of(this, providersFactory).get(MovieViewModel::class.java)
 
         initRecyclerView()
-        showMovie()
 
         rv_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_movie, object : RecyclerItemClickListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
@@ -57,6 +56,8 @@ class MovieFragment : BaseFragment() {
             }
 
         }))
+
+        showMovie()
     }
 
     private fun initRecyclerView() {
@@ -69,14 +70,14 @@ class MovieFragment : BaseFragment() {
                 setDuration(500)
                 // Disable the first scroll mode.
                 setFirstOnly(false)
+                notifyDataSetChanged()
             }
-            movieAdapter.notifyDataSetChanged()
         }
     }
 
     private fun showMovie() {
-        movieViewModel.setMovies().removeObservers(viewLifecycleOwner)
-        movieViewModel.setMovies().observe(viewLifecycleOwner, Observer { it ->
+        movieViewModel.movies.removeObservers(viewLifecycleOwner)
+        movieViewModel.movies.observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

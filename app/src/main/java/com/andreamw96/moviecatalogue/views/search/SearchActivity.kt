@@ -108,12 +108,12 @@ class SearchActivity : DaggerAppCompatActivity() {
 
     private fun doMySearch(queryFromMain: String) {
         val movieFrag = supportFragmentManager.findFragmentByTag(getFragmentTag(view_pager_search.id, 0))
-        if (movieFrag is SearchMovieFragment) {
+        if (movieFrag != null && movieFrag is SearchMovieFragment) {
             movieFrag.showSearchMovie(queryFromMain)
         }
 
         val tvFrag = supportFragmentManager.findFragmentByTag(getFragmentTag(view_pager_search.id, 1))
-        if (tvFrag is SearchTvFragment) {
+        if (tvFrag != null && tvFrag is SearchTvFragment) {
             tvFrag.showSearchTv(queryFromMain)
         }
     }

@@ -135,6 +135,4 @@ class SettingsActivity : DaggerAppCompatActivity() {
         WorkManager.getInstance(this).cancelAllWorkByTag(tagDailyReminderWorker)
     }
 
-
-
 }

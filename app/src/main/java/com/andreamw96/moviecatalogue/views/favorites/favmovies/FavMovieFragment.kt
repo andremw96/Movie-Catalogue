@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
 import com.andreamw96.moviecatalogue.utils.runAnimation
@@ -38,7 +37,7 @@ class FavMovieFragment : BaseFragment() {
 
         showLoading()
         favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
-        favoriteViewModel.getFavorite(true).observe(this, getFavMovies)
+        favoriteViewModel.setIsMovie(true)
 
         initRecyclerView()
 
@@ -62,6 +61,23 @@ class FavMovieFragment : BaseFragment() {
             override fun onItemLongClick(view: View?, position: Int) {
             }
         }))
+
+        setFavorites()
+    }
+
+    private fun setFavorites() {
+        favoriteViewModel.favorites.removeObservers(viewLifecycleOwner)
+        favoriteViewModel.favorites.observe(viewLifecycleOwner, Observer { favItems ->
+            if (favItems != null) {
+                favAdapter.bindData(favItems)
+                runAnimation(rv_fav_movie)
+                somethingHappened(true)
+            } else {
+                somethingHappened(false)
+            }
+
+            hideLoading()
+        })
     }
 
     private fun initRecyclerView() {
@@ -71,18 +87,6 @@ class FavMovieFragment : BaseFragment() {
             adapter = favAdapter
             favAdapter.notifyDataSetChanged()
         }
-    }
-
-    private val getFavMovies = Observer<List<Favorite>> { favItems ->
-        if (favItems != null) {
-            favAdapter.bindData(favItems)
-            runAnimation(rv_fav_movie)
-            somethingHappened(true)
-        } else {
-            somethingHappened(false)
-        }
-
-        hideLoading()
     }
 
     override fun showLoading() {

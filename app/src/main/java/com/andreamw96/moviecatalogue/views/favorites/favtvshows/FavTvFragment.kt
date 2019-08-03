@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
 import com.andreamw96.moviecatalogue.utils.runAnimation
@@ -40,7 +39,7 @@ class FavTvFragment : BaseFragment() {
 
         showLoading()
         favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
-        favoriteViewModel.getFavorite(false).observe(this, getFavTvs)
+        favoriteViewModel.setIsMovie(false)
 
         initRecyclerView()
 
@@ -65,6 +64,22 @@ class FavTvFragment : BaseFragment() {
             }
         }))
 
+        setFavorites()
+    }
+
+    private fun setFavorites() {
+        favoriteViewModel.favorites.removeObservers(viewLifecycleOwner)
+        favoriteViewModel.favorites.observe(this, Observer { favItems ->
+            if (favItems != null) {
+                favAdapter.bindData(favItems)
+                runAnimation(rv_fav_tv)
+                somethingHappened(true)
+            } else {
+                somethingHappened(false)
+            }
+
+            hideLoading()
+        })
     }
 
     private fun initRecyclerView() {
@@ -74,18 +89,6 @@ class FavTvFragment : BaseFragment() {
             adapter = favAdapter
             favAdapter.notifyDataSetChanged()
         }
-    }
-
-    private val getFavTvs = Observer<List<Favorite>> { favItems ->
-        if (favItems != null) {
-            favAdapter.bindData(favItems)
-            runAnimation(rv_fav_tv)
-            somethingHappened(true)
-        } else {
-            somethingHappened(false)
-        }
-
-        hideLoading()
     }
 
     override fun showLoading() {
