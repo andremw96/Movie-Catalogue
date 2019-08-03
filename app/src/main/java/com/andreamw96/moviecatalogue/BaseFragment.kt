@@ -10,4 +10,6 @@ abstract class BaseFragment : DaggerFragment(), ProgressBarInterface {
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
 
+
+
 }

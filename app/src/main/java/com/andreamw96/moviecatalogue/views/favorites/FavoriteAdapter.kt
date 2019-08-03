@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
+import com.andreamw96.moviecatalogue.utils.dateFormatter
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
@@ -43,7 +44,7 @@ class FavoriteAdapter(private val context: Context?, private val requestManager:
                     .into(img_movie)
 
             txt_movie_title.text = fav.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), fav.releaseDate)
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), dateFormatter(fav.releaseDate))
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), fav.voteAverage)
             rating_bar.rating = fav.voteAverage.toFloat() / 2
         }

@@ -11,6 +11,7 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.utils.dateFormatter
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.widget.tvshows.FavoriteTvBannerWidget
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
@@ -47,7 +48,7 @@ class DetailTvShowActivity : BaseActivity() {
         detail_title_tvshow.text = tvShow.name
         detail_description_tvshow.text = tvShow.overview
         detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), tvShow.voteAverage)
-        detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), tvShow.firstAirDate)
+        detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), dateFormatter(tvShow.firstAirDate))
 
         favoriteState()
 

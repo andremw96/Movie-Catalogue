@@ -11,6 +11,7 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.MovieResult
+import com.andreamw96.moviecatalogue.utils.dateFormatter
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.widget.movie.FavoriteMovieBannerWidget
 import kotlinx.android.synthetic.main.activity_detail_movie.*
@@ -49,7 +50,7 @@ class DetailMovieActivity : BaseActivity() {
         detail_title_movie.text = movie.title
         detail_description_movie.text = movie.overview
         detail_rating_movie.text = String.format("%s%s", getString(R.string.ratingString), movie.voteAverage)
-        detail_date_movie.text = String.format("%s%s", getString(R.string.releaseDateString), movie.releaseDate)
+        detail_date_movie.text = String.format("%s%s", getString(R.string.releaseDateString), dateFormatter(movie.releaseDate))
 
         favoriteState()
 

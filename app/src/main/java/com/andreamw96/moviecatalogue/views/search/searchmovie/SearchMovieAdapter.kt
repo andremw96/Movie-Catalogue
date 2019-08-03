@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.MovieResult
+import com.andreamw96.moviecatalogue.utils.dateFormatter
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
@@ -42,7 +43,7 @@ class SearchMovieAdapter(private val context: Context?, private val requestManag
             requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
                     .into(img_movie)
             txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), dateFormatter(movie.releaseDate))
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
             rating_bar.rating = movie.voteAverage.toFloat() / 2
         }

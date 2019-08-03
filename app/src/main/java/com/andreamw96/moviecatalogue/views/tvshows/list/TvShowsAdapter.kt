@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.utils.dateFormatter
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
@@ -42,7 +43,7 @@ class TvShowsAdapter @Inject constructor(private val context: Context?, private 
             requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(tvShow.backdropPath).toString())
                     .into(img_movie)
             txt_movie_title.text = tvShow.name
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), tvShow.firstAirDate)
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), dateFormatter(tvShow.firstAirDate))
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), tvShow.voteAverage)
             rating_bar.rating = tvShow.voteAverage.toFloat() / 2
         }
