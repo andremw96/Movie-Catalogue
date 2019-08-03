@@ -9,6 +9,7 @@ import com.andreamw96.moviecatalogue.di.search.SearchModule
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
+import com.andreamw96.moviecatalogue.views.settings.SettingsActivity
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -46,4 +47,7 @@ abstract class ActivityBuilderModule {
             ]
     )
     abstract fun contributeSearchActivity(): SearchActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeSettingsActivity(): SettingsActivity
 }

@@ -2,13 +2,16 @@ package com.andreamw96.moviecatalogue.views.settings
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.sharedpreference.AppSettingPreference
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
+import javax.inject.Inject
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : DaggerAppCompatActivity() {
 
-    private var flag = 0
+    @Inject
+    lateinit var appSettingPreference: AppSettingPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +24,15 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
+        stateDailyReminder()
+        stateTodayReleaseReminder()
+
         lav_toggle_daily_reminder.setOnClickListener {
-            changeState()
+            setDailyReminder()
+        }
+
+        lav_toggle_today_release_reminder.setOnClickListener {
+            setTodayReleaseReminder()
         }
     }
 
@@ -34,19 +44,63 @@ class SettingsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun changeState() {
-        flag = if (flag == 0) {
+    private fun setDailyReminder() {
+        if (!appSettingPreference.getPrefsDailyReminder()) {
+            lav_toggle_daily_reminder.apply {
+                setMinAndMaxProgress(0f, 0.43f)
+                playAnimation()
+                appSettingPreference.setPrefsDailyReminder(true)
+            }
+        } else {
+            lav_toggle_daily_reminder.apply {
+                setMinAndMaxProgress(0.5f, 1f)
+                playAnimation()
+                appSettingPreference.setPrefsDailyReminder(false)
+            }
+        }
+    }
+
+    private fun stateDailyReminder() {
+        if (appSettingPreference.getPrefsDailyReminder()) {
             lav_toggle_daily_reminder.apply {
                 setMinAndMaxProgress(0f, 0.43f)
                 playAnimation()
             }
-            1
         } else {
             lav_toggle_daily_reminder.apply {
                 setMinAndMaxProgress(0.5f, 1f)
                 playAnimation()
             }
-            0
+        }
+    }
+
+    private fun stateTodayReleaseReminder() {
+        if (appSettingPreference.getPrefsTodayReleaseReminder()) {
+            lav_toggle_today_release_reminder.apply {
+                setMinAndMaxProgress(0f, 0.43f)
+                playAnimation()
+            }
+        } else {
+            lav_toggle_today_release_reminder.apply {
+                setMinAndMaxProgress(0.5f, 1f)
+                playAnimation()
+            }
+        }
+    }
+
+    private fun setTodayReleaseReminder() {
+        if (!appSettingPreference.getPrefsTodayReleaseReminder()) {
+            lav_toggle_today_release_reminder.apply {
+                setMinAndMaxProgress(0f, 0.43f)
+                playAnimation()
+                appSettingPreference.setPrefsTodayReleaseReminder(true)
+            }
+        } else {
+            lav_toggle_today_release_reminder.apply {
+                setMinAndMaxProgress(0.5f, 1f)
+                playAnimation()
+                appSettingPreference.setPrefsTodayReleaseReminder(false)
+            }
         }
     }
 

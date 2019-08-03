@@ -8,6 +8,7 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.andreamw96.moviecatalogue.data.network.MovieApi
+import com.andreamw96.moviecatalogue.data.sharedpreference.AppSettingPreference
 import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.bumptech.glide.Glide
@@ -94,6 +95,12 @@ class AppModule {
     @Provides
     fun provideRateLimiter() : RateLimiter {
         return RateLimiter(10, TimeUnit.MINUTES)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAppSettingPreference(context: Context) : AppSettingPreference {
+        return AppSettingPreference(context)
     }
 
     @Provides
