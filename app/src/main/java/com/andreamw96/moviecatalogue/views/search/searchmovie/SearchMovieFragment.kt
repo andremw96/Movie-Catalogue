@@ -6,20 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_search_movie.*
 import javax.inject.Inject
 
-class SearchMovieFragment : BaseFragment() {
+
+
+class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataListener {
 
     private lateinit var searchMovieViewModel: SearchMovieViewModel
 
@@ -37,6 +42,9 @@ class SearchMovieFragment : BaseFragment() {
 
         searchMovieViewModel = ViewModelProviders.of(this, providersFactory).get(SearchMovieViewModel::class.java)
 
+        val mActivity = activity as SearchActivity
+        mActivity.setMovieSearchDataListener(this)
+
         initRecyclerView()
 
         rv_search_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_movie, object : RecyclerItemClickListener.OnItemClickListener {
@@ -53,10 +61,9 @@ class SearchMovieFragment : BaseFragment() {
         }))
     }
 
-    fun showSearchMovie(query: String) {
-        searchMovieViewModel.setQuery(query)
-        searchMovieViewModel.searchMovies.removeObservers(this)
-        searchMovieViewModel.searchMovies.observe(this, Observer { it ->
+    override fun onDataMovieSearchReceived(data: LiveData<Resource<List<MovieResult>>>) {
+        data.removeObservers(viewLifecycleOwner)
+        data.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {
@@ -93,8 +100,8 @@ class SearchMovieFragment : BaseFragment() {
                 setDuration(500)
                 // Disable the first scroll mode.
                 setFirstOnly(false)
+                notifyDataSetChanged()
             }
-            searchMovieAdapter.notifyDataSetChanged()
         }
     }
 

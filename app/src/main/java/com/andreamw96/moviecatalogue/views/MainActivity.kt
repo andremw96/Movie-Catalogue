@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.views
 
 import android.app.SearchManager
+import android.app.SearchManager.QUERY
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,13 +13,11 @@ import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
-import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.settings.SettingsActivity
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -89,7 +88,7 @@ class MainActivity : DaggerAppCompatActivity() {
             R.id.action_change_settings -> {
                 val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(mIntent)
-                return true
+                return false
             }
 
             R.id.search_m -> {
@@ -99,16 +98,16 @@ class MainActivity : DaggerAppCompatActivity() {
             R.id.action_settings_app -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
 
-                return true
+                return false
             }
 
-            else -> return true
+            else -> return false
         }
     }
 
     override fun onSearchRequested(): Boolean {
         val appData = Bundle().apply {
-            putString(SearchActivity.QUERY, "${searchView.query}")
+            putString(QUERY, "${searchView.query}")
         }
         startSearch(null, false, appData, false)
 

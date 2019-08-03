@@ -6,13 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
@@ -20,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_search_tv.*
 import javax.inject.Inject
 
 
-class SearchTvFragment : BaseFragment() {
+class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
 
     private lateinit var searchTvViewModel: SearchTvViewModel
 
@@ -38,6 +41,9 @@ class SearchTvFragment : BaseFragment() {
 
         searchTvViewModel = ViewModelProviders.of(this, providersFactory).get(SearchTvViewModel::class.java)
 
+        val mActivity = activity as SearchActivity
+        mActivity.setTvSearchDataListener(this)
+
         initRecyclerView()
 
         rv_search_tv.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_tv, object : RecyclerItemClickListener.OnItemClickListener {
@@ -52,10 +58,9 @@ class SearchTvFragment : BaseFragment() {
         }))
     }
 
-    fun showSearchTv(query: String) {
-        searchTvViewModel.setQuery(query)
-        searchTvViewModel.searchTvs.removeObservers(this)
-        searchTvViewModel.searchTvs.observe(this, Observer { it ->
+    override fun onDataTvSearchReceived(data: LiveData<Resource<List<TvResult>>>) {
+        data.removeObservers(viewLifecycleOwner)
+        data.observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {
@@ -92,8 +97,8 @@ class SearchTvFragment : BaseFragment() {
                 setDuration(500)
                 // Disable the first scroll mode.
                 setFirstOnly(false)
+                notifyDataSetChanged()
             }
-            searchTvAdapter.notifyDataSetChanged()
         }
     }
 
