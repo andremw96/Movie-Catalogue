@@ -20,10 +20,14 @@ fun showToast(context: Context, text: String?) {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun toGMTFormat(date: String?): Date {
-    val formatter = SimpleDateFormat("yyyy-MM-dd")
-    formatter.timeZone = TimeZone.getTimeZone("UTC")
-    return formatter.parse(date)
+fun toGMTFormat(date: String?): Date? {
+    return if (date != "") {
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        formatter.parse(date)
+    } else {
+        null
+    }
 }
 
 @SuppressLint("SimpleDateFormat")
@@ -32,5 +36,9 @@ fun dateToSimpleString(date: Date?): String = with(date ?: Date()) {
 }
 
 fun dateFormatter(date: String?) : String {
-    return dateToSimpleString(toGMTFormat(date))
+    return if (date != null) {
+        dateToSimpleString(toGMTFormat(date))
+    } else {
+        ""
+    }
 }

@@ -70,13 +70,15 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
 
-        // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = (menu.findItem(R.id.search_m).actionView as SearchView).apply {
-            // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
-            clearFocus()
+            setIconifiedByDefault(false)
+        }
+
+        searchView.setOnCloseListener{
+            searchView.clearFocus()
+            true
         }
 
         return true

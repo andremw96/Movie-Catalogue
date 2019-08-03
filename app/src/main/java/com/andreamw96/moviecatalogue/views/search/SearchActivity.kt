@@ -36,6 +36,7 @@ class SearchActivity : DaggerAppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
+                setDisplayShowTitleEnabled(false)
             }
         }
 
@@ -46,13 +47,10 @@ class SearchActivity : DaggerAppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
 
-        // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = (menu.findItem(R.id.search_menu).actionView as SearchView).apply {
-            // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
-            queryHint = "Search"
+            setIconifiedByDefault(false)
             setQuery(queryFromMain, true)
         }
 
