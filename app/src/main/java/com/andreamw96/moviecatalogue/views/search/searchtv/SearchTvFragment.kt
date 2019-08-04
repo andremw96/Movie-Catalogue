@@ -6,16 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
+import com.andreamw96.moviecatalogue.views.search.SearchViewModel
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
@@ -25,7 +24,7 @@ import javax.inject.Inject
 
 class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
 
-    private lateinit var searchTvViewModel: SearchTvViewModel
+    private lateinit var searchViewModel: SearchViewModel
 
     @Inject
     lateinit var searchTvAdapter: SearchTvAdapter
@@ -39,7 +38,7 @@ class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchTvViewModel = ViewModelProviders.of(this, providersFactory).get(SearchTvViewModel::class.java)
+        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
 
         val mActivity = activity as SearchActivity
         mActivity.setTvSearchDataListener(this)
@@ -58,9 +57,11 @@ class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
         }))
     }
 
-    override fun onDataTvSearchReceived(data: LiveData<Resource<List<TvResult>>>) {
-        data.removeObservers(viewLifecycleOwner)
-        data.observe(viewLifecycleOwner, Observer { it ->
+    private fun showSearchTvs(query: String) {
+        searchViewModel.setQuery(query)
+
+        searchViewModel.getSearchTvs.removeObservers(viewLifecycleOwner)
+        searchViewModel.getSearchTvs.observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {
@@ -85,6 +86,10 @@ class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
                 }
             }
         })
+    }
+
+    override fun onDataTvSearchReceived(query: String) {
+        showSearchTvs(query)
     }
 
     private fun initRecyclerView() {

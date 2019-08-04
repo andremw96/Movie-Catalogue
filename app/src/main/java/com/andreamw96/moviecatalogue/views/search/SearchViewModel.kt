@@ -10,12 +10,12 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 
     private val _query = MutableLiveData<String>()
 
-    val searchMovies = Transformations.
+    val getSearchMovies = Transformations.
             switchMap(_query) { query ->
                 searchRepository.setSearchMovie(query)
             }
 
-    val searchTvs = Transformations.
+    val getSearchTvs = Transformations.
             switchMap(_query) { query ->
                 searchRepository.setSearchTv(query)
             }
@@ -26,6 +26,22 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
         _query.value = query
     }
+
+    /*private lateinit var listSearchMovies : LiveData<Resource<List<MovieResult>>>
+    private lateinit var listSearchTvs : LiveData<Resource<List<TvResult>>>
+
+    fun setSearchMovies(query: String) {
+        listSearchMovies = searchRepository.setSearchMovie(query)
+    }
+
+    fun getSearchMovies() : LiveData<Resource<List<MovieResult>>> = listSearchMovies
+
+    fun setSearchTvs(query: String) {
+        listSearchTvs = searchRepository.setSearchTv(query)
+    }
+
+    fun getSearchTvs() : LiveData<Resource<List<TvResult>>> = listSearchTvs*/
+
 
     override fun onCleared() {
         super.onCleared()

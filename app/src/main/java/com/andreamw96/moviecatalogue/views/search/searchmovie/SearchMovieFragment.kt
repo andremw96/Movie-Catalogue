@@ -6,17 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
+import com.andreamw96.moviecatalogue.views.search.SearchViewModel
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_search_movie.*
@@ -26,7 +25,8 @@ import javax.inject.Inject
 
 class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataListener {
 
-    private lateinit var searchMovieViewModel: SearchMovieViewModel
+    //private lateinit var searchMovieViewModel: SearchMovieViewModel
+    private lateinit var searchViewModel: SearchViewModel
 
     @Inject
     lateinit var searchMovieAdapter: SearchMovieAdapter
@@ -40,13 +40,14 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchMovieViewModel = ViewModelProviders.of(this, providersFactory).get(SearchMovieViewModel::class.java)
+        searchViewModel = ViewModelProviders.of(activity!!, providersFactory).get(SearchViewModel::class.java)
 
         val mActivity = activity as SearchActivity
         mActivity.setMovieSearchDataListener(this)
 
         initRecyclerView()
 
+        // region rv_search onitemclicklistener
         rv_search_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_movie, object : RecyclerItemClickListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val goToDetail = Intent(activity, DetailMovieActivity::class.java)
@@ -59,11 +60,17 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
             }
 
         }))
+        // endregion rv_search onitemclicklistener
     }
 
-    override fun onDataMovieSearchReceived(data: LiveData<Resource<List<MovieResult>>>) {
-        data.removeObservers(viewLifecycleOwner)
-        data.observe(viewLifecycleOwner, Observer {
+    override fun onDataMovieSearchReceived(query: String) {
+        showSearchMovie(query)
+    }
+
+    private fun showSearchMovie(query: String) {
+        searchViewModel.setQuery(query)
+        searchViewModel.getSearchMovies.removeObservers(viewLifecycleOwner)
+        searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {
@@ -88,6 +95,7 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
                 }
             }
         })
+
     }
 
     private fun initRecyclerView() {
@@ -105,6 +113,7 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
         }
     }
 
+    // region ProgressBar Interface
     override fun showLoading() {
         progressBarSearchMovie.visibility = View.VISIBLE
     }
@@ -122,5 +131,6 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
             img_search_movie_data_notfound.visibility = View.VISIBLE
         }
     }
+    // endregion ProgressBar Interface
 
 }

@@ -10,6 +10,9 @@ import javax.inject.Inject
 
 class MovieViewModel @Inject constructor(movieRepository : MovieRepository) : ViewModel() {
 
-    val movies : LiveData<Resource<List<MovieResult>>> = movieRepository.setMovies()
+
+    private val listMovies = movieRepository.setMovies()
+
+    fun getMovies() : LiveData<Resource<List<MovieResult>>> = listMovies
 
 }

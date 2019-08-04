@@ -8,20 +8,15 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.data.model.TvResult
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
-import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieFragment
 import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
-
 
 
 class SearchActivity : DaggerAppCompatActivity() {
@@ -49,7 +44,6 @@ class SearchActivity : DaggerAppCompatActivity() {
         }
 
         setViewPager()
-        handleIntent(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,9 +65,9 @@ class SearchActivity : DaggerAppCompatActivity() {
                         val viewPagerFragment = view_pager_search.adapter?.instantiateItem(view_pager_search, i) as Fragment
                         if (viewPagerFragment.isAdded) {
                             if (viewPagerFragment is SearchMovieFragment) {
-                                mMovieSearchDataListener?.onDataMovieSearchReceived(showSearchMovie(query))
+                                mMovieSearchDataListener?.onDataMovieSearchReceived(query)
                             } else if (viewPagerFragment is SearchTvFragment) {
-                                mTvSearchDataListener?.onDataTvSearchReceived(showSearchTv(query))
+                                mTvSearchDataListener?.onDataTvSearchReceived(query)
                             }
                         }
                     }
@@ -112,25 +106,12 @@ class SearchActivity : DaggerAppCompatActivity() {
     private fun handleIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
             queryFromMain = intent.getStringExtra(SearchManager.QUERY).also {
-                mMovieSearchDataListener?.onDataMovieSearchReceived(showSearchMovie(it))
-                mTvSearchDataListener?.onDataTvSearchReceived(showSearchTv(it))
+                mMovieSearchDataListener?.onDataMovieSearchReceived(it)
+                mTvSearchDataListener?.onDataTvSearchReceived(it)
             }
         }
     }
 
-    private fun showSearchMovie(query: String): LiveData<Resource<List<MovieResult>>> {
-        searchViewModel.setQuery(query)
-        searchViewModel.searchMovies.removeObservers(this)
-
-        return searchViewModel.searchMovies
-    }
-
-    private fun showSearchTv(query: String): LiveData<Resource<List<TvResult>>> {
-        searchViewModel.setQuery(query)
-        searchViewModel.searchTvs.removeObservers(this)
-
-        return searchViewModel.searchTvs
-    }
 
     // region setViewPager
     private fun setViewPager() {
@@ -147,7 +128,7 @@ class SearchActivity : DaggerAppCompatActivity() {
     private var mMovieSearchDataListener: OnMovieSearchDataListener? = null
 
     interface OnMovieSearchDataListener {
-        fun onDataMovieSearchReceived(data: LiveData<Resource<List<MovieResult>>>)
+        fun onDataMovieSearchReceived(query: String)
     }
 
     fun setMovieSearchDataListener(listener: OnMovieSearchDataListener) {
@@ -157,7 +138,7 @@ class SearchActivity : DaggerAppCompatActivity() {
     private var mTvSearchDataListener: OnTvSearchDataListener? = null
 
     interface OnTvSearchDataListener {
-        fun onDataTvSearchReceived(data: LiveData<Resource<List<TvResult>>>)
+        fun onDataTvSearchReceived(query: String)
     }
 
     fun setTvSearchDataListener(listener: OnTvSearchDataListener) {
