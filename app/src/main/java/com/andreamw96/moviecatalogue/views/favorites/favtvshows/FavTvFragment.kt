@@ -69,7 +69,7 @@ class FavTvFragment : BaseFragment() {
 
     private fun setFavorites() {
         favoriteViewModel.favorites.removeObservers(viewLifecycleOwner)
-        favoriteViewModel.favorites.observe(this, Observer { favItems ->
+        favoriteViewModel.favorites.observe(viewLifecycleOwner, Observer { favItems ->
             if (favItems != null) {
                 favAdapter.bindData(favItems)
                 runAnimation(rv_fav_tv)

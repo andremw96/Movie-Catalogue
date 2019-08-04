@@ -40,7 +40,7 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchViewModel = ViewModelProviders.of(activity!!, providersFactory).get(SearchViewModel::class.java)
+        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
 
         val mActivity = activity as SearchActivity
         mActivity.setMovieSearchDataListener(this)
@@ -70,7 +70,7 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
     private fun showSearchMovie(query: String) {
         searchViewModel.setQuery(query)
         searchViewModel.getSearchMovies.removeObservers(viewLifecycleOwner)
-        searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer {
+        searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {
                 when(it.status) {
                     Resource.Status.LOADING -> {

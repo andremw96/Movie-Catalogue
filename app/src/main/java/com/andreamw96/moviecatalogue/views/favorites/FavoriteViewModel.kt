@@ -9,8 +9,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(private val favoriteRepository: FavoriteRepository) : ViewModel() {
 
     private val _isMovie = MutableLiveData<Boolean>()
-    /*val isMovie: LiveData<Boolean>
-        get() = _isMovie*/
+
 
     val favorites = Transformations.
             switchMap(_isMovie) {isMovie ->

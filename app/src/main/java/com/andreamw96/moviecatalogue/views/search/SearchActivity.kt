@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
@@ -44,6 +43,7 @@ class SearchActivity : DaggerAppCompatActivity() {
         }
 
         setViewPager()
+        handleIntent(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,20 +58,8 @@ class SearchActivity : DaggerAppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                val pagerAdapter = view_pager_search.adapter
-                if (pagerAdapter != null) {
-                    for (i in 0 until pagerAdapter.count) {
-
-                        val viewPagerFragment = view_pager_search.adapter?.instantiateItem(view_pager_search, i) as Fragment
-                        if (viewPagerFragment.isAdded) {
-                            if (viewPagerFragment is SearchMovieFragment) {
-                                mMovieSearchDataListener?.onDataMovieSearchReceived(query)
-                            } else if (viewPagerFragment is SearchTvFragment) {
-                                mTvSearchDataListener?.onDataTvSearchReceived(query)
-                            }
-                        }
-                    }
-                }
+                mMovieSearchDataListener?.onDataMovieSearchReceived(query)
+                mTvSearchDataListener?.onDataTvSearchReceived(query)
 
                 searchView.clearFocus()
 
@@ -105,10 +93,21 @@ class SearchActivity : DaggerAppCompatActivity() {
 
     private fun handleIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
-            queryFromMain = intent.getStringExtra(SearchManager.QUERY).also {
-                mMovieSearchDataListener?.onDataMovieSearchReceived(it)
-                mTvSearchDataListener?.onDataTvSearchReceived(it)
+            queryFromMain = if (intent.getStringExtra(SearchManager.QUERY) != null) {
+                intent.getStringExtra(SearchManager.QUERY).also {
+                    mMovieSearchDataListener?.onDataMovieSearchReceived(it)
+                    mTvSearchDataListener?.onDataTvSearchReceived(it)
+                    clearIntent(intent)
+                }
+            } else {
+                searchViewModel.query.value.toString()
             }
+        }
+    }
+
+    private fun clearIntent(intent: Intent?) {
+        if (Intent.ACTION_SEARCH == intent?.action) {
+            intent.removeExtra(SearchManager.QUERY)
         }
     }
 
