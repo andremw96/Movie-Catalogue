@@ -11,6 +11,7 @@ import androidx.work.WorkManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.service.DailyReminderWorker
 import com.andreamw96.moviecatalogue.utils.calculateFlex
+import com.andreamw96.moviecatalogue.utils.logd
 import java.util.concurrent.TimeUnit
 
 class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -28,6 +29,10 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
 
         init()
         setSummaries()
+
+        activity?.let {
+            logd("${WorkManager.getInstance(it).getWorkInfosByTag(tagDailyReminderWorker)}")
+        }
     }
 
     override fun onResume() {
@@ -75,6 +80,11 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
                 flexTime, TimeUnit.MILLISECONDS)
                 .addTag(tagDailyReminderWorker)
                 .build()
+
+       /* val oneTimeReminderWorker = OneTimeWorkRequest.Builder(DailyReminderWorker::class.java)
+                .setInitialDelay(5, TimeUnit.SECONDS)
+                .addTag(tagDailyReminderWorker)
+                .build()*/
 
         activity?.let {
             WorkManager.getInstance(it).enqueueUniquePeriodicWork(tagDailyReminderWorker, ExistingPeriodicWorkPolicy.REPLACE, dailyReminderWorker)

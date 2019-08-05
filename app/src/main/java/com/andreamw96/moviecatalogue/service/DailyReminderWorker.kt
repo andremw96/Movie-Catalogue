@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_DAILY_ID
+import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.sendNotification
 import com.andreamw96.moviecatalogue.views.MainActivity
@@ -26,9 +27,9 @@ class DailyReminderWorker(context: Context, params: WorkerParameters) : Worker(c
                     NOTIFICATION_DAILY_ID,
                     "Daily Reminder",
                     "Ayo cek film terbaru di aplikasi movie catalogue",
-                    "",
                     notifyPendingIntent)
 
+            logd("Scheduled work")
             Result.success()
         } catch (throwable: Throwable) {
             loge("${throwable.printStackTrace()}")

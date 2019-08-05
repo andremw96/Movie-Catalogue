@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.utils
 
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -52,9 +53,9 @@ fun dateFormatter(date: String?): String {
     }
 }
 
-fun sendNotification(context: Context, NOTIFICATION_ID: Int, title: String, content: String, subtext: String, pendingIntent: PendingIntent) {
+fun sendNotification(context: Context, NOTIFICATION_ID: Int, title: String, content: String, pendingIntent: PendingIntent) {
 
-    val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+    val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     val mBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentIntent(pendingIntent)
@@ -62,18 +63,18 @@ fun sendNotification(context: Context, NOTIFICATION_ID: Int, title: String, cont
             .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_notification))
             .setContentTitle(title)
             .setContentText(content)
-            .setSubText(subtext)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setChannelId(CHANNEL_ID)
             .setAutoCancel(true)
+            .build()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-        mBuilder.setChannelId(CHANNEL_ID)
-        mNotificationManager?.createNotificationChannel(channel)
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+        mNotificationManager.createNotificationChannel(channel)
     }
 
-    val notification = mBuilder.build()
-
-    mNotificationManager?.notify(NOTIFICATION_ID, notification)
+    mNotificationManager.notify(NOTIFICATION_ID, mBuilder)
 }
 
 fun calculateFlex(hourOfTheDay: Int, periodInDays: Int): Long {
