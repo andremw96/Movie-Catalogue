@@ -21,11 +21,6 @@ import javax.inject.Inject
 
 class SettingsActivity : DaggerAppCompatActivity() {
 
-   /* @Inject
-    lateinit var appSettingPreference: AppSettingPreference
-
-    private val tagDailyReminderWorker = "DailyReminderWorker"*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -37,8 +32,6 @@ class SettingsActivity : DaggerAppCompatActivity() {
                 title = applicationContext.getString(R.string.change_settings_app)
             }
         }
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -48,26 +41,4 @@ class SettingsActivity : DaggerAppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
-    // region DailyReminder
-    /*private fun scheduleDailyReminder() {
-
-        val hourOfTheDay = 11 // When to run the job
-        val repeatInterval = 1 // In days
-
-        val flexTime = calculateFlex(hourOfTheDay, repeatInterval)
-
-        val dailyReminderWorker = PeriodicWorkRequest.Builder(DailyReminderWorker::class.java,
-                repeatInterval.toLong(), TimeUnit.DAYS,
-                flexTime, TimeUnit.MILLISECONDS)
-                .addTag(tagDailyReminderWorker)
-                .build()
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(tagDailyReminderWorker, ExistingPeriodicWorkPolicy.REPLACE, dailyReminderWorker)
-    }
-
-    private fun cancelDailyReminder() {
-        WorkManager.getInstance(this).cancelAllWorkByTag(tagDailyReminderWorker)
-    }*/
-    // endregion DailyReminder
 }

@@ -3,7 +3,7 @@
 
     <ListPreference
         android:defaultValue="false"
-        android:summary="No Notification"
+        android:summary="@string/notification_disabled"
         android:entries="@array/time_preference"
         android:entryValues="@array/time_preference"
         android:key="daily_reminder_time_key"

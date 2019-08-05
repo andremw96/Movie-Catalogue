@@ -17,6 +17,6 @@
         <item>20.00</item>
         <item>21.00</item>
         <item>22.00</item>
-        <item>No Notification</item>
+        <item>@string/notification_disabled</item>
     </string-array>
 </resources>

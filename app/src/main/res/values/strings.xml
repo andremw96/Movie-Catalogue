@@ -40,5 +40,6 @@
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
     <string name="today_release_summary">Notification for today released movies</string>
+    <string name="notification_disabled">Notification Disabled</string>
 
 </resources>

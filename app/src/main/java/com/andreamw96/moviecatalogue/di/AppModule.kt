@@ -2,6 +2,7 @@ package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -98,11 +99,5 @@ class AppModule {
     @Provides
     fun provideRateLimiter() : RateLimiter {
         return RateLimiter(10, TimeUnit.MINUTES)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAppSettingPreference(context: Context) : AppSettingPreference {
-        return AppSettingPreference(context)
     }
 }

@@ -39,5 +39,6 @@
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
     <string name="today_release_summary">Pengingat untuk film rilis hari ini</string>
+    <string name="notification_disabled">Tidak ada Notifikasi</string>
 
 </resources>
