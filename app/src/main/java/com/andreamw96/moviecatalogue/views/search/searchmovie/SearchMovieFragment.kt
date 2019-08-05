@@ -14,13 +14,11 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
-import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.search.SearchViewModel
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_search_movie.*
 import javax.inject.Inject
-
 
 
 class SearchMovieFragment : BaseFragment() {

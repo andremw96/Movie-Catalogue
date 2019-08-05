@@ -11,7 +11,6 @@ import androidx.work.WorkManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.service.DailyReminderWorker
 import com.andreamw96.moviecatalogue.utils.calculateFlex
-import com.andreamw96.moviecatalogue.utils.logd
 import java.util.concurrent.TimeUnit
 
 class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -46,6 +45,11 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
         todayReleaseReminderPreference = findPreference(todayReleaseReminderKey)
     }
 
+    private fun setSummaries() {
+        val sh = preferenceManager.sharedPreferences
+        dailyReminderTimePreference?.summary = sh.getString(dailyReminderKey, context?.getString(R.string.notification_disabled))
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key.equals(dailyReminderKey)) {
             val notifHour = sharedPreferences?.getString(dailyReminderKey, context?.getString(R.string.notification_disabled))
@@ -58,11 +62,6 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             }
         }
 
-    }
-
-    private fun setSummaries() {
-        val sh = preferenceManager.sharedPreferences
-        dailyReminderTimePreference?.summary = sh.getString(dailyReminderKey, context?.getString(R.string.notification_disabled))
     }
 
     // region DailyReminder

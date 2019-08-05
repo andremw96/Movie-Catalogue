@@ -13,7 +13,6 @@ import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.common.Resource
-import com.andreamw96.moviecatalogue.views.search.SearchActivity
 import com.andreamw96.moviecatalogue.views.search.SearchViewModel
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter

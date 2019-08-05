@@ -2,17 +2,11 @@ package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.room.Room
 import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
-import com.andreamw96.moviecatalogue.data.local.MovieDao
-import com.andreamw96.moviecatalogue.data.local.TvShowDao
-import com.andreamw96.moviecatalogue.data.network.MovieApi
-import com.andreamw96.moviecatalogue.data.sharedpreference.AppSettingPreference
 import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.bumptech.glide.Glide
@@ -20,7 +14,6 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.Provides
-import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -1,22 +1,9 @@
 package com.andreamw96.moviecatalogue.views.settings
 
-import android.app.TimePickerDialog
 import android.os.Bundle
-import android.preference.PreferenceActivity
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.sharedpreference.AppSettingPreference
-import com.andreamw96.moviecatalogue.service.DailyReminderWorker
-import com.andreamw96.moviecatalogue.utils.calculateFlex
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_settings.*
-import java.util.*
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 
 class SettingsActivity : DaggerAppCompatActivity() {

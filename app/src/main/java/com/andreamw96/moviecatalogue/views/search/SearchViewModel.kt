@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.data.repository.SearchRepository
-import com.andreamw96.moviecatalogue.utils.logd
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
