@@ -1,7 +1,10 @@
 package com.andreamw96.moviecatalogue.views.settings
 
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.preference.PreferenceActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
@@ -11,20 +14,22 @@ import com.andreamw96.moviecatalogue.service.DailyReminderWorker
 import com.andreamw96.moviecatalogue.utils.calculateFlex
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
 class SettingsActivity : DaggerAppCompatActivity() {
 
-    @Inject
+   /* @Inject
     lateinit var appSettingPreference: AppSettingPreference
 
-    private val tagDailyReminderWorker = "DailyReminderWorker"
+    private val tagDailyReminderWorker = "DailyReminderWorker"*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        supportFragmentManager.beginTransaction().add(R.id.setting_holder, NotificationPreferenceFragment()).commit()
 
         if (supportActionBar != null) {
             supportActionBar?.apply {
@@ -33,16 +38,7 @@ class SettingsActivity : DaggerAppCompatActivity() {
             }
         }
 
-        stateDailyReminder()
-        stateTodayReleaseReminder()
 
-        lav_toggle_daily_reminder.setOnClickListener {
-            setDailyReminder()
-        }
-
-        lav_toggle_today_release_reminder.setOnClickListener {
-            setTodayReleaseReminder()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -53,71 +49,10 @@ class SettingsActivity : DaggerAppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setDailyReminder() {
-        if (!appSettingPreference.getPrefsDailyReminder()) {
-            lav_toggle_daily_reminder.apply {
-                setMinAndMaxProgress(0f, 0.43f)
-                playAnimation()
-                appSettingPreference.setPrefsDailyReminder(true)
-            }
-            scheduleDailyReminder()
-        } else {
-            lav_toggle_daily_reminder.apply {
-                setMinAndMaxProgress(0.5f, 1f)
-                playAnimation()
-                appSettingPreference.setPrefsDailyReminder(false)
-            }
-            cancelDailyReminder()
-        }
-    }
+    // region DailyReminder
+    /*private fun scheduleDailyReminder() {
 
-    private fun stateDailyReminder() {
-        if (appSettingPreference.getPrefsDailyReminder()) {
-            lav_toggle_daily_reminder.apply {
-                setMinAndMaxProgress(0f, 0.43f)
-                playAnimation()
-            }
-        } else {
-            lav_toggle_daily_reminder.apply {
-                setMinAndMaxProgress(0.5f, 1f)
-                playAnimation()
-            }
-        }
-    }
-
-    private fun stateTodayReleaseReminder() {
-        if (appSettingPreference.getPrefsTodayReleaseReminder()) {
-            lav_toggle_today_release_reminder.apply {
-                setMinAndMaxProgress(0f, 0.43f)
-                playAnimation()
-            }
-        } else {
-            lav_toggle_today_release_reminder.apply {
-                setMinAndMaxProgress(0.5f, 1f)
-                playAnimation()
-            }
-        }
-    }
-
-    private fun setTodayReleaseReminder() {
-        if (!appSettingPreference.getPrefsTodayReleaseReminder()) {
-            lav_toggle_today_release_reminder.apply {
-                setMinAndMaxProgress(0f, 0.43f)
-                playAnimation()
-                appSettingPreference.setPrefsTodayReleaseReminder(true)
-            }
-        } else {
-            lav_toggle_today_release_reminder.apply {
-                setMinAndMaxProgress(0.5f, 1f)
-                playAnimation()
-                appSettingPreference.setPrefsTodayReleaseReminder(false)
-            }
-        }
-    }
-
-    private fun scheduleDailyReminder() {
-
-        val hourOfTheDay = 7 // When to run the job
+        val hourOfTheDay = 11 // When to run the job
         val repeatInterval = 1 // In days
 
         val flexTime = calculateFlex(hourOfTheDay, repeatInterval)
@@ -133,6 +68,6 @@ class SettingsActivity : DaggerAppCompatActivity() {
 
     private fun cancelDailyReminder() {
         WorkManager.getInstance(this).cancelAllWorkByTag(tagDailyReminderWorker)
-    }
-
+    }*/
+    // endregion DailyReminder
 }

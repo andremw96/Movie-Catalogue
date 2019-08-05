@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="false"
+        android:summary="No Notification"
+        android:entries="@array/time_preference"
+        android:entryValues="@array/time_preference"
+        android:key="daily_reminder_time_key"
+        android:title="@string/enable_daily_reminder" />
+
+    <SwitchPreference
+        android:key="switch_preference_today_release_key"
+        android:summary="@string/today_release_summary"
+        android:title="@string/today_release_reminder" />
+
+
+</PreferenceScreen>
+
+
+

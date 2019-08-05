@@ -34,4 +34,10 @@
     <string name="fav_movie_banner">Film Favorite</string>
     <string name="fav_tv_banner">Seri Tv Favorite</string>
 
+    <string name="enable_daily_reminder">Pengingat harian untuk cek film baru</string>
+    <string name="today_release_reminder">Film rilis hari ini</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="today_release_summary">Pengingat untuk film rilis hari ini</string>
+
 </resources>
