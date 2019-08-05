@@ -11,19 +11,10 @@ import com.andreamw96.moviecatalogue.views.movies.list.MovieAdapter
 import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class MovieModule {
-
-    @Provides
-    fun provideMovieRepository(mMoviesApi : MovieApi, movieDao: MovieDao, appExecutors: AppExecutors, rateLimiter: RateLimiter) : MovieRepository {
-        return MovieRepository(mMoviesApi, movieDao, appExecutors, rateLimiter)
-    }
-
-    @Provides
-    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : MovieDao {
-        return movieCatalogueDatabase.movieDao()
-    }
 
     @Provides
     fun provideMovieAdapter(application: Application, requestManager: RequestManager) : MovieAdapter {

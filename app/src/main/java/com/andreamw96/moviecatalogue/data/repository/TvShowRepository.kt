@@ -11,10 +11,11 @@ import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.views.common.Resource
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TvShowRepository (
+class TvShowRepository @Inject constructor(
         private val mMoviesApi: MovieApi,
         private val tvShowDao: TvShowDao,
         private val appExecutors: AppExecutors,

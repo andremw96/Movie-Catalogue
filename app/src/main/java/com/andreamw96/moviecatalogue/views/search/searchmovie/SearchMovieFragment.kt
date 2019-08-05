@@ -40,12 +40,16 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
+        activity?.let {
+            searchViewModel = ViewModelProviders.of(it, providersFactory).get(SearchViewModel::class.java)
+        }
 
         val mActivity = activity as SearchActivity
         mActivity.setMovieSearchDataListener(this)
 
         initRecyclerView()
+
+        logd("OnViewCreated")
 
         // region rv_search onitemclicklistener
         rv_search_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_movie, object : RecyclerItemClickListener.OnItemClickListener {

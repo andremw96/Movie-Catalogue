@@ -9,14 +9,10 @@ import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Singleton
 
 @Module
 class SearchModule {
-    
-    @Provides
-    fun provideSearchRepository(mMoviesApi : MovieApi, compositeDisposable: CompositeDisposable) : SearchRepository {
-        return SearchRepository(mMoviesApi, compositeDisposable)
-    }
 
     @Provides
     fun provideSearchMovieAdapter(application: Application, requestManager: RequestManager) : SearchMovieAdapter {

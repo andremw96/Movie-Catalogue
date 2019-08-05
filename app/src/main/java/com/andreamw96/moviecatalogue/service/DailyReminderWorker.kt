@@ -26,7 +26,7 @@ class DailyReminderWorker(context: Context, params: WorkerParameters) : Worker(c
                     NOTIFICATION_DAILY_ID,
                     "Daily Reminder",
                     "Ayo cek film terbaru di aplikasi movie catalogue",
-                    "Movie Catalogue",
+                    "",
                     notifyPendingIntent)
 
             Result.success()

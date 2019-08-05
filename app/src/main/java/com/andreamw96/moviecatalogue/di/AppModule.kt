@@ -6,7 +6,10 @@ import androidx.room.Room
 import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.local.FavoriteDao
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
+import com.andreamw96.moviecatalogue.data.local.MovieDao
+import com.andreamw96.moviecatalogue.data.local.TvShowDao
 import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.data.sharedpreference.AppSettingPreference
 import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
@@ -101,15 +104,5 @@ class AppModule {
     @Provides
     fun provideAppSettingPreference(context: Context) : AppSettingPreference {
         return AppSettingPreference(context)
-    }
-
-    @Provides
-    fun provideMovieApi(retrofit: Retrofit) : MovieApi {
-        return retrofit.create(MovieApi::class.java)
-    }
-
-    @Provides
-    fun provideCompositeDisposable() : CompositeDisposable {
-        return CompositeDisposable()
     }
 }

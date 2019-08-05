@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
+import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.views.ViewPagerAdapter
 import com.andreamw96.moviecatalogue.views.search.searchmovie.SearchMovieFragment
 import com.andreamw96.moviecatalogue.views.search.searchtv.SearchTvFragment
@@ -44,6 +45,7 @@ class SearchActivity : DaggerAppCompatActivity() {
 
         setViewPager()
         handleIntent(intent)
+        logd("OnCreate")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

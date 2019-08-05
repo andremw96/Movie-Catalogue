@@ -10,10 +10,11 @@ import com.andreamw96.moviecatalogue.views.common.Resource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SearchRepository (
+class SearchRepository @Inject constructor(
         private val mMoviesApi : MovieApi,
         private val compositeDisposable: CompositeDisposable
 ) {

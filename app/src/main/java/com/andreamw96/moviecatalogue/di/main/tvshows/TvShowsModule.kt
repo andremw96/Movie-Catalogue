@@ -11,19 +11,10 @@ import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowsAdapter
 import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class TvShowsModule {
-
-    @Provides
-    fun provideTvShowRepository(mMoviesApi : MovieApi, tvShowDao: TvShowDao, appExecutors: AppExecutors, rateLimiter: RateLimiter) : TvShowRepository {
-        return TvShowRepository(mMoviesApi, tvShowDao, appExecutors, rateLimiter)
-    }
-
-    @Provides
-    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : TvShowDao {
-        return movieCatalogueDatabase.tvShowDao()
-    }
 
     @Provides
     fun provideTvShowsAdapter(application: Application, requestManager: RequestManager) : TvShowsAdapter {
