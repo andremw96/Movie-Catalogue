@@ -51,12 +51,11 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             val notifHour = sharedPreferences?.getString(dailyReminderKey, context?.getString(R.string.notification_disabled))
             dailyReminderTimePreference?.summary = notifHour
 
-            val notifHourInt = if (notifHour.toString() == context?.getString(R.string.notification_disabled)) {
-                0
+            if (notifHour.toString() == context?.getString(R.string.notification_disabled)) {
+                cancelDailyReminder()
             } else {
-                (notifHour!!.substring(0, 2)).toInt()
+                scheduleDailyReminder((notifHour!!.substring(0, 2)).toInt())
             }
-            scheduleDailyReminder(notifHourInt)
         }
 
     }
