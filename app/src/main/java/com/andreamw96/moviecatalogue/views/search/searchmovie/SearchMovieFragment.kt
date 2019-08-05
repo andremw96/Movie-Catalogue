@@ -23,9 +23,8 @@ import javax.inject.Inject
 
 
 
-class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataListener {
+class SearchMovieFragment : BaseFragment() {
 
-    //private lateinit var searchMovieViewModel: SearchMovieViewModel
     private lateinit var searchViewModel: SearchViewModel
 
     @Inject
@@ -44,12 +43,7 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
             searchViewModel = ViewModelProviders.of(it, providersFactory).get(SearchViewModel::class.java)
         }
 
-        val mActivity = activity as SearchActivity
-        mActivity.setMovieSearchDataListener(this)
-
         initRecyclerView()
-
-        logd("OnViewCreated")
 
         // region rv_search onitemclicklistener
         rv_search_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_movie, object : RecyclerItemClickListener.OnItemClickListener {
@@ -65,14 +59,11 @@ class SearchMovieFragment : BaseFragment(), SearchActivity.OnMovieSearchDataList
 
         }))
         // endregion rv_search onitemclicklistener
+
+        showSearchMovie()
     }
 
-    override fun onDataMovieSearchReceived(query: String) {
-        showSearchMovie(query)
-    }
-
-    private fun showSearchMovie(query: String) {
-        searchViewModel.setQuery(query)
+    private fun showSearchMovie() {
         searchViewModel.getSearchMovies.removeObservers(viewLifecycleOwner)
         searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {

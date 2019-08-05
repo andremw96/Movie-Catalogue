@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_search_tv.*
 import javax.inject.Inject
 
 
-class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
+class SearchTvFragment : BaseFragment() {
 
     private lateinit var searchViewModel: SearchViewModel
 
@@ -38,13 +38,13 @@ class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
-
-        val mActivity = activity as SearchActivity
-        mActivity.setTvSearchDataListener(this)
+        activity?.let {
+            searchViewModel = ViewModelProviders.of(it, providersFactory).get(SearchViewModel::class.java)
+        }
 
         initRecyclerView()
 
+        // region rv_search onitemclicklistener
         rv_search_tv.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_search_tv, object : RecyclerItemClickListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
@@ -55,11 +55,12 @@ class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
             override fun onItemLongClick(view: View?, position: Int) {
             }
         }))
+        //endregion
+
+        showSearchTvs()
     }
 
-    private fun showSearchTvs(query: String) {
-        searchViewModel.setQuery(query)
-
+    private fun showSearchTvs() {
         searchViewModel.getSearchTvs.removeObservers(viewLifecycleOwner)
         searchViewModel.getSearchTvs.observe(viewLifecycleOwner, Observer { it ->
             if(it != null) {
@@ -86,10 +87,6 @@ class SearchTvFragment : BaseFragment(), SearchActivity.OnTvSearchDataListener {
                 }
             }
         })
-    }
-
-    override fun onDataTvSearchReceived(query: String) {
-        showSearchTvs(query)
     }
 
     private fun initRecyclerView() {

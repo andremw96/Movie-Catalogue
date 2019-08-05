@@ -45,7 +45,6 @@ class SearchActivity : DaggerAppCompatActivity() {
 
         setViewPager()
         handleIntent(intent)
-        logd("OnCreate")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,9 +59,7 @@ class SearchActivity : DaggerAppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                mMovieSearchDataListener?.onDataMovieSearchReceived(query)
-                mTvSearchDataListener?.onDataTvSearchReceived(query)
-
+                searchViewModel.setQuery(query)
                 searchView.clearFocus()
 
                 return true
@@ -97,8 +94,7 @@ class SearchActivity : DaggerAppCompatActivity() {
         if (Intent.ACTION_SEARCH == intent?.action) {
             queryFromMain = if (intent.getStringExtra(SearchManager.QUERY) != null) {
                 intent.getStringExtra(SearchManager.QUERY).also {
-                    mMovieSearchDataListener?.onDataMovieSearchReceived(it)
-                    mTvSearchDataListener?.onDataTvSearchReceived(it)
+                    searchViewModel.setQuery(it)
                     clearIntent(intent)
                 }
             } else {
@@ -125,26 +121,6 @@ class SearchActivity : DaggerAppCompatActivity() {
     }
     // endregion setViewPager
 
-    // region interface that send data to fragment
-    private var mMovieSearchDataListener: OnMovieSearchDataListener? = null
 
-    interface OnMovieSearchDataListener {
-        fun onDataMovieSearchReceived(query: String)
-    }
-
-    fun setMovieSearchDataListener(listener: OnMovieSearchDataListener) {
-        this.mMovieSearchDataListener = listener
-    }
-
-    private var mTvSearchDataListener: OnTvSearchDataListener? = null
-
-    interface OnTvSearchDataListener {
-        fun onDataTvSearchReceived(query: String)
-    }
-
-    fun setTvSearchDataListener(listener: OnTvSearchDataListener) {
-        this.mTvSearchDataListener = listener
-    }
-    // endregion interface that send data to fragment
 }
 

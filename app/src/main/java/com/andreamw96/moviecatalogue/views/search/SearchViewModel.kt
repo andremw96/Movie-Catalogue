@@ -25,8 +25,6 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
             }
 
     fun setQuery(query: String) {
-        logd("setQuery $query")
-        logd("setQuery ${_query.value}")
         if(_query.value != query) {
             _query.value = query
         }
@@ -35,7 +33,6 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     override fun onCleared() {
         super.onCleared()
         searchRepository.clearRepo()
-        logd("onCleared")
     }
 
 }
