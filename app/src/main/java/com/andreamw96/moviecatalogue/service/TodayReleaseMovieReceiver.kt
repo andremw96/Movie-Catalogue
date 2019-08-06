@@ -4,17 +4,31 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
-import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
-import com.andreamw96.moviecatalogue.utils.TIME_FORMAT
-import com.andreamw96.moviecatalogue.utils.isDateInvalid
-import com.andreamw96.moviecatalogue.utils.logd
+import com.andreamw96.moviecatalogue.utils.*
+import com.andreamw96.moviecatalogue.views.MainActivity
 
 class TodayReleaseMovieReceiver(private val movieRepository: MovieRepository) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        
+        val notifyIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val notifyPendingIntent = PendingIntent.getActivity(
+                context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        getTodayReleaseList()
+
+        if (context != null) {
+            sendNotification(context,
+                    NOTIFICATION_TODAY_ID,
+                    context.getString(R.string.daily_reminder),
+                    context.getString(R.string.content_daily_reminder),
+                    notifyPendingIntent)
+        }
     }
 
     fun getTodayReleaseList() : List<MovieResult> = movieRepository.getTodayReleaseMovie()

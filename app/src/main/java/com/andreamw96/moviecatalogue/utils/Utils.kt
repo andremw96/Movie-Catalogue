@@ -6,7 +6,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.view.View
 import android.widget.Toast
@@ -59,7 +58,7 @@ fun sendNotification(context: Context, NOTIFICATION_ID: Int, title: String, cont
     val mBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_notification)
-            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_notification))
+            .setStyle(NotificationCompat.BigTextStyle())
             .setContentTitle(title)
             .setContentText(content)
             .setDefaults(Notification.DEFAULT_ALL)

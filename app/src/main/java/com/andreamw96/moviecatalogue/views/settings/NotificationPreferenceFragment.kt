@@ -9,7 +9,6 @@ import androidx.preference.SwitchPreference
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.service.DailyReminderReceiver
 import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver
-import com.andreamw96.moviecatalogue.utils.logd
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -73,7 +72,7 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
 
         if(key.equals(todayReleaseReminderKey)) {
             val isActive = sharedPreferences?.getBoolean(todayReleaseReminderKey, false)
-            logd("$isActive")
+
             if(isActive!!) {
                 todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "08:00")
             } else {
