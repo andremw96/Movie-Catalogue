@@ -8,6 +8,8 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.service.DailyReminderReceiver
+import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver
+import com.andreamw96.moviecatalogue.utils.logd
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -21,6 +23,9 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
 
     @Inject
     lateinit var dailyReminderReceiver: DailyReminderReceiver
+
+    @Inject
+    lateinit var todayReleaseReminderReceiver: TodayReleaseMovieReceiver
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -59,12 +64,20 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             val notifHour = sharedPreferences?.getString(dailyReminderKey, context?.getString(R.string.notification_disabled))
             dailyReminderTimePreference?.summary = notifHour
 
-            activity?.let {
-                if (notifHour.toString() == context?.getString(R.string.notification_disabled)) {
-                    dailyReminderReceiver.cancelDailyReminder(it)
-                } else {
-                    dailyReminderReceiver.setDailyReminder(it, notifHour.toString())
-                }
+            if (notifHour.toString() == context?.getString(R.string.notification_disabled)) {
+                dailyReminderReceiver.cancelDailyReminder(preferenceScreen.context)
+            } else {
+                dailyReminderReceiver.setDailyReminder(preferenceScreen.context, notifHour.toString())
+            }
+        }
+
+        if(key.equals(todayReleaseReminderKey)) {
+            val isActive = sharedPreferences?.getBoolean(todayReleaseReminderKey, false)
+            logd("$isActive")
+            if(isActive!!) {
+                todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "08:00")
+            } else {
+                todayReleaseReminderReceiver.cancelTodayReleaseReminder(preferenceScreen.context)
             }
         }
 

@@ -35,5 +35,12 @@ interface MovieApi {
             @Query("query") query: String
     ): Flowable<TvShows>
 
+    @GET("discover/movie")
+    fun getTodayReleaseMovie(
+            @Query("api_key") apiKey: String,
+            @Query("primary_release_date.gte") gteDate: String,
+            @Query("primary_release_date.lte") lteDate: String
+    ) : Flowable<Movies>
+
 
 }

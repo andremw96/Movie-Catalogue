@@ -10,7 +10,13 @@ import com.andreamw96.moviecatalogue.data.model.Movies
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.utils.RateLimiter
+import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.views.common.Resource
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +25,8 @@ class MovieRepository @Inject constructor(
         private val mMoviesApi : MovieApi,
         private val movieDao: MovieDao,
         private val appExecutors: AppExecutors,
-        private val rateLimiter: RateLimiter
+        private val rateLimiter: RateLimiter,
+        private val compositeDisposable: CompositeDisposable
 ) {
 
     fun setMovies() : LiveData<Resource<List<MovieResult>>> {
@@ -44,5 +51,25 @@ class MovieRepository @Inject constructor(
                 rateLimiter.reset()
             }
         }.asLiveData()
+    }
+
+    private val listTodayReleaseMovie : MutableList<MovieResult> = mutableListOf()
+
+    fun getTodayReleaseMovie() : List<MovieResult> {
+        val currentDate = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateNow = formatter.format(currentDate)
+
+        compositeDisposable.add(mMoviesApi
+                .getTodayReleaseMovie(BuildConfig.API_KEY, dateNow, dateNow)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    listTodayReleaseMovie.addAll(it.results)
+                }, {
+                    logd("Something went wrong")
+                }))
+
+        return listTodayReleaseMovie
     }
 }
