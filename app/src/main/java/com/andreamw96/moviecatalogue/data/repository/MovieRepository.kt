@@ -12,7 +12,6 @@ import com.andreamw96.moviecatalogue.data.network.MovieApi
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.views.common.Resource
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -63,7 +62,7 @@ class MovieRepository @Inject constructor(
         compositeDisposable.add(mMoviesApi
                 .getTodayReleaseMovie(BuildConfig.API_KEY, dateNow, dateNow)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .subscribe({
                     listTodayReleaseMovie.addAll(it.results)
                 }, {

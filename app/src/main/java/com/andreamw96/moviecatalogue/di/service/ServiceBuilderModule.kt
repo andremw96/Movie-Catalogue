@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.di.service
 
 import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
+import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver
 import com.andreamw96.moviecatalogue.widget.movie.StackMovieWidgetService
 import com.andreamw96.moviecatalogue.widget.tvshows.StackTvWidgetService
 import dagger.Module
@@ -23,6 +24,7 @@ abstract class ServiceBuilderModule {
     )
     abstract fun contributeStackTvWidgetService() : StackTvWidgetService
 
-
+    @ContributesAndroidInjector
+    abstract fun contributeTodayReleaseMovieReceiver() : TodayReleaseMovieReceiver
 
 }

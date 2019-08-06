@@ -82,6 +82,10 @@
         <receiver android:name=".service.DailyReminderReceiver"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver android:name=".service.TodayReleaseMovieReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

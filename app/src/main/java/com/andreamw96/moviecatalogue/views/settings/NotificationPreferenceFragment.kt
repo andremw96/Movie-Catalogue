@@ -74,7 +74,7 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             val isActive = sharedPreferences?.getBoolean(todayReleaseReminderKey, false)
 
             if(isActive!!) {
-                todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "08:00")
+                todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "21:12")
             } else {
                 todayReleaseReminderReceiver.cancelTodayReleaseReminder(preferenceScreen.context)
             }

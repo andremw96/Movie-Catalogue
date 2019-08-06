@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.views
 
+import android.app.PendingIntent
 import android.app.SearchManager
 import android.app.SearchManager.QUERY
 import android.content.Context
@@ -11,6 +12,8 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.utils.NOTIFICATION_DAILY_ID
+import com.andreamw96.moviecatalogue.utils.sendNotification
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.settings.SettingsActivity
