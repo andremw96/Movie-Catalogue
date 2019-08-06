@@ -35,6 +35,9 @@
     <string name="fav_movie_banner">Favorite Movie</string>
     <string name="fav_tv_banner">Favorite TV</string>
 
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="content_daily_reminder">Let\'s check the latest films in the movie catalog application</string>
+
     <string name="enable_daily_reminder">Daily Reminder to check new movies</string>
     <string name="today_release_reminder">Today Release Reminder</string>
     <string name="set">Set</string>

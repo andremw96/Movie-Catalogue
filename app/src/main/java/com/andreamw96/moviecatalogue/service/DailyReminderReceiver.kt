@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.MainActivity
 import java.util.*
@@ -23,8 +24,8 @@ class DailyReminderReceiver : BroadcastReceiver() {
         if (context != null) {
             sendNotification(context,
                     NOTIFICATION_DAILY_ID,
-                    "Daily Reminder",
-                    "Ayo cek film terbaru di aplikasi movie catalogue",
+                    context.getString(R.string.daily_reminder),
+                    context.getString(R.string.content_daily_reminder),
                     notifyPendingIntent)
         }
     }
@@ -35,7 +36,7 @@ class DailyReminderReceiver : BroadcastReceiver() {
             return
         }
 
-        if (isAlarmSet(context)) {
+        if (isDailyReminderSet(context)) {
             cancelDailyReminder(context)
         }
 
@@ -71,7 +72,7 @@ class DailyReminderReceiver : BroadcastReceiver() {
     }
 
 
-    private fun isAlarmSet(context: Context): Boolean {
+    private fun isDailyReminderSet(context: Context): Boolean {
         val intent = Intent(context, DailyReminderReceiver::class.java)
 
         return PendingIntent.getBroadcast(context, NOTIFICATION_DAILY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null

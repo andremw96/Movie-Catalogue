@@ -2,8 +2,8 @@ package com.andreamw96.moviecatalogue.utils
 
 const val NOTIFICATION_DAILY_ID = 1
 const val NOTIFICATION_TODAY_ID = 2
-const val CHANNEL_ID = "channel_01"
-const val CHANNEL_NAME = "movie catalogue channel"
+const val CHANNEL_ID = "channel_notifikasi"
+const val CHANNEL_NAME = "Notifikasi"
 
 const val DAILY_REMINDER : String = "DAILY REMINDER"
 const val TODAY_RELEASE_REMINDER : String = "TODAY RELEASE REMINDER"

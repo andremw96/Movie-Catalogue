@@ -34,6 +34,9 @@
     <string name="fav_movie_banner">Film Favorite</string>
     <string name="fav_tv_banner">Seri Tv Favorite</string>
 
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="content_daily_reminder">Ayo cek film terbaru di aplikasi movie catalogue</string>
+
     <string name="enable_daily_reminder">Pengingat harian untuk cek film baru</string>
     <string name="today_release_reminder">Film rilis hari ini</string>
     <string name="set">Set</string>
