@@ -78,6 +78,10 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
+        <receiver android:name=".service.DailyReminderReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

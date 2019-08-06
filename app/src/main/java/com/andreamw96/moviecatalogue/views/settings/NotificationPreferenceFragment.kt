@@ -1,22 +1,17 @@
 package com.andreamw96.moviecatalogue.views.settings
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.service.DailyReminderWorker
-import com.andreamw96.moviecatalogue.utils.calculateFlex
-import com.andreamw96.moviecatalogue.utils.logd
-import java.util.concurrent.TimeUnit
+import com.andreamw96.moviecatalogue.service.DailyReminderReceiver
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private val tagDailyReminderWorker = "DailyReminderWorker"
 
     private val dailyReminderKey = "daily_reminder_time_key"
     private val todayReleaseReminderKey = "switch_preference_today_release_key"
@@ -24,15 +19,19 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
     private var dailyReminderTimePreference : ListPreference? = null
     private var todayReleaseReminderPreference : SwitchPreference? = null
 
+    @Inject
+    lateinit var dailyReminderReceiver: DailyReminderReceiver
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.notif_settings_preferences)
 
         init()
         setSummaries()
-
-        activity?.let {
-            logd("${WorkManager.getInstance(it).getWorkInfosByTag(tagDailyReminderWorker)}")
-        }
     }
 
     override fun onResume() {
@@ -60,42 +59,15 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             val notifHour = sharedPreferences?.getString(dailyReminderKey, context?.getString(R.string.notification_disabled))
             dailyReminderTimePreference?.summary = notifHour
 
-            if (notifHour.toString() == context?.getString(R.string.notification_disabled)) {
-                cancelDailyReminder()
-            } else {
-                scheduleDailyReminder((notifHour!!.substring(0, 2)).toInt())
+            activity?.let {
+                if (notifHour.toString() == context?.getString(R.string.notification_disabled)) {
+                    dailyReminderReceiver.cancelDailyReminder(it)
+                } else {
+                    dailyReminderReceiver.setDailyReminder(it, notifHour.toString())
+                }
             }
         }
 
     }
-
-    // region DailyReminder
-    private fun scheduleDailyReminder(hourOfTheDay: Int) {
-        val repeatInterval = 1 // In days
-
-        val flexTime = calculateFlex(hourOfTheDay, repeatInterval)
-
-        val dailyReminderWorker = PeriodicWorkRequest.Builder(DailyReminderWorker::class.java,
-                repeatInterval.toLong(), TimeUnit.DAYS,
-                flexTime, TimeUnit.MILLISECONDS)
-                .addTag(tagDailyReminderWorker)
-                .build()
-
-       /* val oneTimeReminderWorker = OneTimeWorkRequest.Builder(DailyReminderWorker::class.java)
-                .setInitialDelay(5, TimeUnit.SECONDS)
-                .addTag(tagDailyReminderWorker)
-                .build()*/
-
-        activity?.let {
-            WorkManager.getInstance(it).enqueueUniquePeriodicWork(tagDailyReminderWorker, ExistingPeriodicWorkPolicy.REPLACE, dailyReminderWorker)
-        }
-    }
-
-    private fun cancelDailyReminder() {
-        activity?.let {
-            WorkManager.getInstance(it).cancelAllWorkByTag(tagDailyReminderWorker)
-        }
-    }
-    // endregion DailyReminder
 
 }

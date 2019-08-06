@@ -11,12 +11,11 @@ import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import androidx.work.PeriodicWorkRequest
 import com.andreamw96.moviecatalogue.R
 import com.google.android.material.snackbar.Snackbar
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 fun showSnackbar(view: View, text: String?) {
@@ -77,26 +76,13 @@ fun sendNotification(context: Context, NOTIFICATION_ID: Int, title: String, cont
     mNotificationManager.notify(NOTIFICATION_ID, mBuilder)
 }
 
-fun calculateFlex(hourOfTheDay: Int, periodInDays: Int): Long {
-
-    // Initialize the calendar with today and the preferred time to run the job.
-    val cal1 = Calendar.getInstance()
-    cal1.set(Calendar.HOUR_OF_DAY, hourOfTheDay)
-    cal1.set(Calendar.MINUTE, 0)
-    cal1.set(Calendar.SECOND, 0)
-
-    // Initialize a calendar with now.
-    val cal2 = Calendar.getInstance()
-
-    if (cal2.timeInMillis < cal1.timeInMillis) {
-        // Add the worker periodicity.
-        cal2.timeInMillis = cal2.timeInMillis + TimeUnit.DAYS.toMillis(periodInDays.toLong())
+fun isDateInvalid(date: String, format: String) : Boolean {
+    return try {
+        val df = SimpleDateFormat(format, Locale.getDefault())
+        df.isLenient = false
+        df.parse(date)
+        false
+    } catch (e : ParseException) {
+        true
     }
-
-    val delta = cal2.timeInMillis - cal1.timeInMillis
-
-    return if (delta > PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS)
-        delta
-    else
-        PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
 }

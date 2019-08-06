@@ -7,6 +7,8 @@ import com.andreamw96.moviecatalogue.di.main.favorite.FavoriteModule
 import com.andreamw96.moviecatalogue.di.search.SearchFragmentBuilderModule
 import com.andreamw96.moviecatalogue.di.search.SearchModule
 import com.andreamw96.moviecatalogue.di.search.SearchViewModelModule
+import com.andreamw96.moviecatalogue.di.setting.SettingModule
+import com.andreamw96.moviecatalogue.di.setting.SettingsFragmentBuilderModule
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.andreamw96.moviecatalogue.views.search.SearchActivity
@@ -50,6 +52,11 @@ abstract class ActivityBuilderModule {
     )
     abstract fun contributeSearchActivity(): SearchActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [
+                SettingsFragmentBuilderModule::class,
+                SettingModule::class
+            ]
+    )
     abstract fun contributeSettingsActivity(): SettingsActivity
 }
