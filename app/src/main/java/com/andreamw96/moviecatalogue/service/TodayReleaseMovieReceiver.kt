@@ -34,12 +34,13 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent?) {
-        if (intent?.action == TODAY_RELEASE_ACTION) {
-            val movieTitle = intent.getStringExtra("movieTitle")
-            val movieId = intent.getStringExtra("movieId")
-            logd("$movieTitle $movieId")
+        /*if (intent?.action == TODAY_RELEASE_ACTION) {
+            val movieTitle = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
+            movieTitle.forEach {
+                logd("${it.title} ${it.id}")
+            }
             //sendNotification(context, movieId.toInt(), movieTitle, "$movieTitle released today", null)
-        }
+        }*/
     }
 
 

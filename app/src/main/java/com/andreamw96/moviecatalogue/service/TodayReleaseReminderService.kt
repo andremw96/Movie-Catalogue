@@ -22,10 +22,11 @@ class TodayReleaseReminderService : IntentService("TodayReleaseReminderService")
             logd("${it.title}")
         }
 
-      /*  val broadcastIntent = Intent(this, TodayReleaseMovieReceiver::class.java)
+        /*val broadcastIntent = Intent(this, TodayReleaseMovieReceiver::class.java)
         broadcastIntent.action = TODAY_RELEASE_ACTION
-        broadcastIntent.putExtra("movieId", listTodayReleaseMovie[0].id)
-        broadcastIntent.putExtra("movieTitle", listTodayReleaseMovie[0].title)
+        broadcastIntent.putParcelableArrayListExtra("movieResult", listTodayReleaseMovie)
+        *//*broadcastIntent.putExtra("movieId", listTodayReleaseMovie[0].id)
+        broadcastIntent.putExtra("movieTitle", listTodayReleaseMovie[0].title)*//*
         sendBroadcast(broadcastIntent)*/
     }
 
