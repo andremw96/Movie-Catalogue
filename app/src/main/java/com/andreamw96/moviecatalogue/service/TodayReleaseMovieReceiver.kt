@@ -2,6 +2,7 @@ package com.andreamw96.moviecatalogue.service
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -19,17 +20,21 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         if (intent?.action == TODAY_RELEASE_ACTION) {
-            val movieResult = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
-            movieResult.forEach {
+            val intentResult = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
+            intentResult.forEach { movieResult ->
                 val notifyIntent = Intent(context, DetailMovieActivity::class.java).apply {
-                    putExtra(DetailMovieActivity.INTENT_MOVIE, it)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    putExtra(DetailMovieActivity.INTENT_MOVIE, movieResult)
                 }
                 val notifyPendingIntent = PendingIntent.getActivity(
-                        context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
-                )
+                        context, movieResult.id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                ).also {
+                    TaskStackBuilder.create(context)
+                            .addParentStack(DetailMovieActivity::class.java)
+                            .addNextIntent(notifyIntent)
+                            .getPendingIntent(movieResult.id, PendingIntent.FLAG_UPDATE_CURRENT)
+                }
 
-                sendNotification(context, it.id, it.title.toString(), "${it.title} released today", notifyPendingIntent)
+                sendNotification(context, movieResult.id, movieResult.title.toString(), "${movieResult.title} released today", notifyPendingIntent)
             }
         }
     }
