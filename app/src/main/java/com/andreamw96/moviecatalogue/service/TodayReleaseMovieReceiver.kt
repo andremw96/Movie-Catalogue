@@ -76,8 +76,8 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     fun cancelTodayReleaseReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val intent = Intent(context, TodayReleaseReminderService::class.java)
+        val pendingIntent = PendingIntent.getService(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         pendingIntent.cancel()
 
         alarmManager.cancel(pendingIntent)
@@ -87,8 +87,8 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
 
     private fun isTodayReleaseSet(context: Context): Boolean {
-        val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
+        val intent = Intent(context, TodayReleaseReminderService::class.java)
 
-        return PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null
+        return PendingIntent.getService(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null
     }
 }
