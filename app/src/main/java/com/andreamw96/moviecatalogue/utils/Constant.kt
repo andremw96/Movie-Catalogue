@@ -5,11 +5,7 @@ const val NOTIFICATION_TODAY_ID = 2
 const val CHANNEL_ID = "channel_notifikasi"
 const val CHANNEL_NAME = "Notifikasi"
 
-const val DAILY_REMINDER : String = "DAILY REMINDER"
-const val TODAY_RELEASE_REMINDER : String = "TODAY RELEASE REMINDER"
-
-const val EXTRA_MESSAGE : String  = "message"
-const val EXTRA_TYPE : String  = "type"
-
 const val DATE_FORMAT = "yyyy-MM-dd"
 const val TIME_FORMAT = "HH:mm"
+
+const val GROUP_KEY_NOTIFICATION = "GROUP_KEY_NOTIFICATION"

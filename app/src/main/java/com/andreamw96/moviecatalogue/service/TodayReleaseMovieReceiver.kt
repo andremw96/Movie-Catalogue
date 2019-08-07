@@ -21,21 +21,20 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         if (intent?.action == TODAY_RELEASE_ACTION) {
             val intentResult = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
+
             intentResult.forEach { movieResult ->
                 val notifyIntent = Intent(context, DetailMovieActivity::class.java).apply {
                     putExtra(DetailMovieActivity.INTENT_MOVIE, movieResult)
                 }
-                val notifyPendingIntent = PendingIntent.getActivity(
-                        context, movieResult.id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
-                ).also {
-                    TaskStackBuilder.create(context)
-                            .addParentStack(DetailMovieActivity::class.java)
-                            .addNextIntent(notifyIntent)
-                            .getPendingIntent(movieResult.id, PendingIntent.FLAG_UPDATE_CURRENT)
-                }
 
-                sendNotification(context, movieResult.id, movieResult.title.toString(), "${movieResult.title} released today", notifyPendingIntent)
+                val notifyPendingIntent = TaskStackBuilder.create(context)
+                        .addParentStack(DetailMovieActivity::class.java)
+                        .addNextIntent(notifyIntent)
+                        .getPendingIntent(movieResult.id, PendingIntent.FLAG_UPDATE_CURRENT)
+
+                sendNotification2(context, movieResult.id, movieResult.title.toString(), "${movieResult.title} released today", notifyPendingIntent)
             }
+            //summaryNotification(context, intentResult)
         }
     }
 
@@ -59,6 +58,7 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
         calendar.set(Calendar.SECOND, 0)
 
+        //start a service to get data
         val intent = Intent(context, TodayReleaseReminderService::class.java)
         val pendingIntent = PendingIntent.getService(context, NOTIFICATION_TODAY_ID, intent, 0)
         alarmManager.setInexactRepeating(
