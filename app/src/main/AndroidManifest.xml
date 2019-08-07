@@ -25,6 +25,10 @@
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+        <service android:name=".service.TodayReleaseReminderService"
+            android:exported="true"
+            android:enabled="true" />
+
         <receiver
             android:name=".widget.movie.FavoriteMovieBannerWidget"
             android:label="@string/fav_movie_banner">

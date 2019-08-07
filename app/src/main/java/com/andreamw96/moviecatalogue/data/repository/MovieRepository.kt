@@ -53,9 +53,9 @@ class MovieRepository @Inject constructor(
         }.asLiveData()
     }
 
-    private val listTodayReleaseMovie : MutableList<MovieResult> = mutableListOf()
+    private val listTodayReleaseMovie : ArrayList<MovieResult> = arrayListOf()
 
-    fun getTodayReleaseMovie() : List<MovieResult> {
+    fun getTodayReleaseMovie() : ArrayList<MovieResult> {
         val currentDate = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val dateNow = formatter.format(currentDate)
