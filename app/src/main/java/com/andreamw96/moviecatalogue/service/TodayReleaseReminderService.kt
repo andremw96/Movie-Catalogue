@@ -6,12 +6,18 @@ import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
 import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver.Companion.TODAY_RELEASE_ACTION
 import com.andreamw96.moviecatalogue.utils.logd
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class TodayReleaseReminderService : IntentService("TodayReleaseReminderService") {
 
     @Inject
     lateinit var movieRepository: MovieRepository
+
+    override fun onCreate() {
+        AndroidInjection.inject(this)
+        super.onCreate()
+    }
 
     override fun onHandleIntent(intent: Intent?) {
         logd("onHandleIntent")
