@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.data.model.Movies
 import com.andreamw96.moviecatalogue.data.model.TvShows
 import io.reactivex.Flowable
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -40,7 +41,7 @@ interface MovieApi {
             @Query("api_key") apiKey: String,
             @Query("primary_release_date.gte") gteDate: String,
             @Query("primary_release_date.lte") lteDate: String
-    ) : Flowable<Movies>
+    ) : Call<Movies>
 
 
 }

@@ -9,6 +9,7 @@ import androidx.preference.SwitchPreference
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.service.DailyReminderReceiver
 import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver
+import com.andreamw96.moviecatalogue.utils.showToast
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -74,7 +75,8 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             val isActive = sharedPreferences?.getBoolean(todayReleaseReminderKey, false)
 
             if(isActive!!) {
-                todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "14:56")
+                todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "20:01")
+                showToast(preferenceScreen.context, getString(R.string.toastTodayReleaseReminder))
             } else {
                 todayReleaseReminderReceiver.cancelTodayReleaseReminder(preferenceScreen.context)
             }

@@ -1,30 +1,14 @@
 package com.andreamw96.moviecatalogue.service
 
-import android.app.*
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.data.network.MovieApi
-import com.andreamw96.moviecatalogue.data.repository.MovieRepository
 import com.andreamw96.moviecatalogue.utils.*
-import com.andreamw96.moviecatalogue.views.MainActivity
-import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import java.text.SimpleDateFormat
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import java.util.*
-import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 class TodayReleaseMovieReceiver : BroadcastReceiver() {
@@ -34,13 +18,20 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent?) {
-        /*if (intent?.action == TODAY_RELEASE_ACTION) {
-            val movieTitle = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
-            movieTitle.forEach {
-                logd("${it.title} ${it.id}")
+        if (intent?.action == TODAY_RELEASE_ACTION) {
+            val movieResult = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
+            movieResult.forEach {
+                val notifyIntent = Intent(context, DetailMovieActivity::class.java).apply {
+                    putExtra(DetailMovieActivity.INTENT_MOVIE, it)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                val notifyPendingIntent = PendingIntent.getActivity(
+                        context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                )
+
+                sendNotification(context, it.id, it.title.toString(), "${it.title} released today", notifyPendingIntent)
             }
-            //sendNotification(context, movieId.toInt(), movieTitle, "$movieTitle released today", null)
-        }*/
+        }
     }
 
 

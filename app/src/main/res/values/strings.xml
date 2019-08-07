@@ -44,5 +44,6 @@
     <string name="cancel">Cancel</string>
     <string name="today_release_summary">Notification for today released movies</string>
     <string name="notification_disabled">Notification Disabled</string>
+    <string name="toastTodayReleaseReminder">Today movie release reminder has been set to 8am</string>
 
 </resources>

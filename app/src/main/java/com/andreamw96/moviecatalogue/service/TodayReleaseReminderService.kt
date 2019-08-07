@@ -1,12 +1,9 @@
 package com.andreamw96.moviecatalogue.service
 
-import android.app.IntentService
 import android.content.Intent
-import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
 import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver.Companion.TODAY_RELEASE_ACTION
 import com.andreamw96.moviecatalogue.utils.logd
-import dagger.android.AndroidInjection
 import dagger.android.DaggerIntentService
 import javax.inject.Inject
 
@@ -18,18 +15,19 @@ class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderSer
     override fun onHandleIntent(intent: Intent?) {
         logd("onHandleIntent")
 
-        val listTodayReleaseMovie = movieRepository.getTodayReleaseMovie()
+        // karena onhandleintent sudah asynchronus maka gettodayreleasemovie dibuat synchronus
+        val listTodayReleaseMovie = ArrayList(movieRepository.getTodayReleaseMovie())
 
-        listTodayReleaseMovie.forEach {
-            logd("${it.title}")
+        if(listTodayReleaseMovie.size != 0) {
+            listTodayReleaseMovie.forEach {
+                logd("${it.title}")
+            }
+
+            val broadcastIntent = Intent(this, TodayReleaseMovieReceiver::class.java)
+            broadcastIntent.action = TODAY_RELEASE_ACTION
+            broadcastIntent.putParcelableArrayListExtra("movieResult", listTodayReleaseMovie)
+            sendBroadcast(broadcastIntent)
         }
-
-        /*val broadcastIntent = Intent(this, TodayReleaseMovieReceiver::class.java)
-        broadcastIntent.action = TODAY_RELEASE_ACTION
-        broadcastIntent.putParcelableArrayListExtra("movieResult", listTodayReleaseMovie)
-        *//*broadcastIntent.putExtra("movieId", listTodayReleaseMovie[0].id)
-        broadcastIntent.putExtra("movieTitle", listTodayReleaseMovie[0].title)*//*
-        sendBroadcast(broadcastIntent)*/
     }
 
 
