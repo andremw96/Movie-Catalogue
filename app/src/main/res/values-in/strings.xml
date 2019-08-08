@@ -22,9 +22,6 @@
 
     <string name="search">Cari</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="buttonfav">ButtonFav</string>
-
     <string name="ok">OK</string>
 
     <string name="movie_widget_text">Film Favorite Anda</string>
@@ -39,8 +36,6 @@
 
     <string name="enable_daily_reminder">Pengingat harian untuk cek film baru</string>
     <string name="today_release_reminder">Film rilis hari ini</string>
-    <string name="set">Set</string>
-    <string name="cancel">Cancel</string>
     <string name="today_release_summary">Pengingat untuk film rilis hari ini</string>
     <string name="notification_disabled">Tidak ada Notifikasi</string>
 

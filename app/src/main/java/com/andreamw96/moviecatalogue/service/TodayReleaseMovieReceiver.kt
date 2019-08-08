@@ -34,7 +34,8 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
                 sendNotification2(context, movieResult.id, movieResult.title.toString(), "${movieResult.title} released today", notifyPendingIntent)
             }
-            //summaryNotification(context, intentResult)
+            summaryNotification(context, intentResult)
+            context.stopService(Intent(context, TodayReleaseReminderService::class.java))
         }
     }
 

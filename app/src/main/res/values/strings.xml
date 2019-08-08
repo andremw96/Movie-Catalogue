@@ -22,10 +22,6 @@
 
     <string name="search">Search</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="buttonfav">ButtonFav</string>
-
     <string name="ok">OK</string>
 
     <string name="movie_widget_text">Your Favorite Movie</string>
@@ -40,8 +36,6 @@
 
     <string name="enable_daily_reminder">Daily Reminder to check new movies</string>
     <string name="today_release_reminder">Today Release Reminder</string>
-    <string name="set">Set</string>
-    <string name="cancel">Cancel</string>
     <string name="today_release_summary">Notification for today released movies</string>
     <string name="notification_disabled">Notification Disabled</string>
     <string name="toastTodayReleaseReminder">Today movie release reminder has been set to 8am</string>
