@@ -20,10 +20,6 @@ import javax.inject.Inject
 
 class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderService") {
 
-    init {
-        setIntentRedelivery(true)
-    }
-
     @Inject
     lateinit var movieRepository: MovieRepository
 
@@ -41,9 +37,10 @@ class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderSer
             val listTodayReleaseMovie = ArrayList(movieRepository.getTodayReleaseMovie())
 
             if (listTodayReleaseMovie.size != 0) {
-                val broadcastIntent = Intent(this, TodayReleaseMovieReceiver::class.java)
-                broadcastIntent.action = TODAY_RELEASE_ACTION
-                broadcastIntent.putParcelableArrayListExtra("movieResult", listTodayReleaseMovie)
+                val broadcastIntent = Intent(this, TodayReleaseReminderReceiver::class.java).apply {
+                    action = TODAY_RELEASE_ACTION
+                    putParcelableArrayListExtra("movieResult", listTodayReleaseMovie)
+                }
                 sendBroadcast(broadcastIntent)
             }
         } catch (e: Exception) {
