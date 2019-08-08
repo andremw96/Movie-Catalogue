@@ -3,6 +3,8 @@
     package="com.andreamw96.moviecatalogue">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".BaseApplication"
@@ -92,6 +94,10 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <receiver
             android:name=".service.br.DailyReminderReceiver"
             android:enabled="true"
@@ -104,10 +110,6 @@
             android:name=".service.br.TodayReleaseReminderReceiver"
             android:enabled="true"
             android:exported="true" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

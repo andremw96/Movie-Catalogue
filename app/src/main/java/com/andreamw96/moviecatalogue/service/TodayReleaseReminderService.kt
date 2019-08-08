@@ -8,8 +8,8 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
-import com.andreamw96.moviecatalogue.service.br.TodayReleaseMovieReceiver.Companion.TODAY_RELEASE_ACTION
 import com.andreamw96.moviecatalogue.service.br.TodayReleaseReminderReceiver
+import com.andreamw96.moviecatalogue.service.br.TodayReleaseReminderReceiver.Companion.TODAY_RELEASE_ACTION
 import com.andreamw96.moviecatalogue.utils.CHANNEL_ID
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.logd

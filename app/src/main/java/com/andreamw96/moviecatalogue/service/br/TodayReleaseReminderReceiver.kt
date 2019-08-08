@@ -12,8 +12,12 @@ import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 
 class TodayReleaseReminderReceiver : BroadcastReceiver() {
 
+    companion object {
+        const val TODAY_RELEASE_ACTION = "TODAY_RELEASE_ACTION"
+    }
+
     override fun onReceive(context: Context, intent: Intent?) {
-        if (intent?.action == TodayReleaseMovieReceiver.TODAY_RELEASE_ACTION) {
+        if (intent?.action == TODAY_RELEASE_ACTION) {
             val intentResult = intent.getParcelableArrayListExtra<MovieResult>("movieResult")
 
             intentResult.forEach { movieResult ->

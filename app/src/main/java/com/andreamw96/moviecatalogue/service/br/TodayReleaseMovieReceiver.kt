@@ -16,10 +16,6 @@ import java.util.*
 
 class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
-    companion object {
-        const val TODAY_RELEASE_ACTION = "TODAY_RELEASE_ACTION"
-    }
-
     override fun onReceive(context: Context, intent: Intent?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(Intent(context, TodayReleaseReminderService::class.java))

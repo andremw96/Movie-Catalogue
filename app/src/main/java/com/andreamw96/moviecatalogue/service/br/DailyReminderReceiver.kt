@@ -10,10 +10,11 @@ import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.MainActivity
 import java.util.*
 
+
+
 class DailyReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-
         val notifyIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
