@@ -7,8 +7,8 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.service.DailyReminderReceiver
-import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver
+import com.andreamw96.moviecatalogue.service.br.DailyReminderReceiver
+import com.andreamw96.moviecatalogue.service.br.TodayReleaseMovieReceiver
 import com.andreamw96.moviecatalogue.utils.showToast
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject

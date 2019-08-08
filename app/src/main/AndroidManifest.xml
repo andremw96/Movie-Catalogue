@@ -91,15 +91,15 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <receiver android:name=".service.DailyReminderReceiver"
+        <receiver android:name=".service.br.DailyReminderReceiver"
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name=".service.TodayReleaseMovieReceiver"
+        <receiver android:name=".service.br.TodayReleaseMovieReceiver"
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name=".service.TodayReleaseReminderReceiver"
+        <receiver android:name=".service.br.TodayReleaseReminderReceiver"
             android:enabled="true"
             android:exported="true" />
     </application>

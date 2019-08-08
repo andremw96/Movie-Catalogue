@@ -1,7 +1,7 @@
 package com.andreamw96.moviecatalogue.di.setting
 
-import com.andreamw96.moviecatalogue.service.DailyReminderReceiver
-import com.andreamw96.moviecatalogue.service.TodayReleaseMovieReceiver
+import com.andreamw96.moviecatalogue.service.br.DailyReminderReceiver
+import com.andreamw96.moviecatalogue.service.br.TodayReleaseMovieReceiver
 import dagger.Module
 import dagger.Provides
 

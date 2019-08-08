@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.service
+package com.andreamw96.moviecatalogue.service.br
 
 import android.app.AlarmManager
 import android.app.PendingIntent

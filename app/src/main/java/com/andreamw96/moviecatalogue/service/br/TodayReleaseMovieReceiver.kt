@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.service
+package com.andreamw96.moviecatalogue.service.br
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.andreamw96.moviecatalogue.service.TodayReleaseReminderService
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.TIME_FORMAT
 import com.andreamw96.moviecatalogue.utils.isDateInvalid
