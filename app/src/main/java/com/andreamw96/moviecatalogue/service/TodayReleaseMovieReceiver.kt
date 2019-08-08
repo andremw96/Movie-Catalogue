@@ -6,6 +6,7 @@ import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.utils.*
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
@@ -16,6 +17,7 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     companion object {
         const val TODAY_RELEASE_ACTION = "TODAY_RELEASE_ACTION"
+        const val TODAY_RELEASE_BROADCAST = "TODAY_RELEASE_BROADCAST"
     }
 
     override fun onReceive(context: Context, intent: Intent?) {
@@ -35,7 +37,12 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
                 sendNotification2(context, movieResult.id, movieResult.title.toString(), "${movieResult.title} released today", notifyPendingIntent)
             }
             summaryNotification(context, intentResult)
-            context.stopService(Intent(context, TodayReleaseReminderService::class.java))
+        } else if (intent?.action == TODAY_RELEASE_BROADCAST) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(Intent(context, TodayReleaseReminderService::class.java))
+            } else {
+                context.startService(Intent(context, TodayReleaseReminderService::class.java))
+            }
         }
     }
 
@@ -59,9 +66,10 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
         calendar.set(Calendar.SECOND, 0)
 
-        //start a service to get data
-        val intent = Intent(context, TodayReleaseReminderService::class.java)
-        val pendingIntent = PendingIntent.getService(context, NOTIFICATION_TODAY_ID, intent, 0)
+        val intent = Intent(context, TodayReleaseMovieReceiver::class.java).apply {
+            action = TODAY_RELEASE_BROADCAST
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, 0)
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
@@ -73,8 +81,8 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     fun cancelTodayReleaseReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, TodayReleaseReminderService::class.java)
-        val pendingIntent = PendingIntent.getService(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         pendingIntent.cancel()
 
         alarmManager.cancel(pendingIntent)
@@ -84,8 +92,8 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
 
     private fun isTodayReleaseSet(context: Context): Boolean {
-        val intent = Intent(context, TodayReleaseReminderService::class.java)
+        val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
 
-        return PendingIntent.getService(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null
+        return PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null
     }
 }

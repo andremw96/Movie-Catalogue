@@ -20,6 +20,10 @@ import javax.inject.Inject
 
 class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderService") {
 
+    init {
+        setIntentRedelivery(true)
+    }
+
     @Inject
     lateinit var movieRepository: MovieRepository
 
