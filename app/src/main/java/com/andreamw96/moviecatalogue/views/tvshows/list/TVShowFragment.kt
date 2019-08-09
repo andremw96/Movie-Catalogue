@@ -72,9 +72,9 @@ class TVShowFragment : BaseFragment() {
 
     private fun showTvShows() {
         tvShowMovieViewModel.getTvShows().removeObservers(viewLifecycleOwner)
-        tvShowMovieViewModel.getTvShows().observe(viewLifecycleOwner, Observer {
-            if(it != null) {
-                when(it.status) {
+        tvShowMovieViewModel.getTvShows().observe(viewLifecycleOwner, Observer { resource ->
+            if(resource != null) {
+                when(resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -82,17 +82,22 @@ class TVShowFragment : BaseFragment() {
                     Resource.Status.SUCCESS -> {
                         logd("got the tvshows...")
                         hideLoading()
-                        somethingHappened(true)
-                        it.data?.let {
-                            tvShowsAdapter.bindData(it)
+                        if (!resource.data.isNullOrEmpty()) {
+                            resource.data?.let {
+                                tvShowsAdapter.bindData(it)
+                            }
+                            somethingHappened(true)
+                            runAnimation(rv_tv_show)
+                        } else {
+                            tvShowsAdapter.bindData(emptyList())
+                            somethingHappened(false)
                         }
-                        runAnimation(rv_tv_show)
                     }
                     Resource.Status.ERROR -> {
                         hideLoading()
                         somethingHappened(false)
                         showSnackbar(fragment_tvshow, context?.getString(R.string.failed_fetch_tv))
-                        loge("ERROR ${it.message}")
+                        loge("ERROR ${resource.message}")
                     }
                 }
             }

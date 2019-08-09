@@ -61,9 +61,9 @@ class SearchTvFragment : BaseFragment() {
 
     private fun showSearchTvs() {
         searchViewModel.getSearchTvs.removeObservers(viewLifecycleOwner)
-        searchViewModel.getSearchTvs.observe(viewLifecycleOwner, Observer { it ->
-            if(it != null) {
-                when(it.status) {
+        searchViewModel.getSearchTvs.observe(viewLifecycleOwner, Observer { resource ->
+            if(resource != null) {
+                when(resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -71,17 +71,22 @@ class SearchTvFragment : BaseFragment() {
                     Resource.Status.SUCCESS -> {
                         logd("got the search tv...")
                         hideLoading()
-                        somethingHappened(true)
-                        it.data?.let {
-                            searchTvAdapter.bindData(it)
+                        if (!resource.data.isNullOrEmpty()) {
+                            resource.data?.let {
+                                searchTvAdapter.bindData(it)
+                            }
+                            somethingHappened(true)
+                            runAnimation(rv_search_tv)
+                        } else {
+                            searchTvAdapter.bindData(emptyList())
+                            somethingHappened(false)
                         }
-                        runAnimation(rv_search_tv)
                     }
                     Resource.Status.ERROR -> {
                         hideLoading()
                         somethingHappened(false)
                         showSnackbar(fragment_search_tv, context?.getString(R.string.failed_fetch_movies))
-                        loge("ERROR ${it.message}")
+                        loge("ERROR ${resource.message}")
                     }
                 }
             }

@@ -63,9 +63,9 @@ class SearchMovieFragment : BaseFragment() {
 
     private fun showSearchMovie() {
         searchViewModel.getSearchMovies.removeObservers(viewLifecycleOwner)
-        searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer { it ->
-            if(it != null) {
-                when(it.status) {
+        searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer { resource ->
+            if(resource != null) {
+                when(resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -73,17 +73,22 @@ class SearchMovieFragment : BaseFragment() {
                     Resource.Status.SUCCESS -> {
                         logd("got the search movies...")
                         hideLoading()
-                        somethingHappened(true)
-                        it.data?.let {
-                            searchMovieAdapter.bindData(it)
+                        if (!resource.data.isNullOrEmpty()) {
+                            resource.data?.let {
+                                searchMovieAdapter.bindData(it)
+                            }
+                            somethingHappened(true)
+                            runAnimation(rv_search_movie)
+                        } else {
+                            searchMovieAdapter.bindData(emptyList())
+                            somethingHappened(false)
                         }
-                        runAnimation(rv_search_movie)
                     }
                     Resource.Status.ERROR -> {
                         hideLoading()
                         somethingHappened(false)
                         showSnackbar(fragment_search_movie, context?.getString(R.string.failed_fetch_movies))
-                        loge("ERROR ${it.message}")
+                        loge("ERROR ${resource.message}")
                     }
                 }
             }

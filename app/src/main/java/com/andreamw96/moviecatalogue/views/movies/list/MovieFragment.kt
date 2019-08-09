@@ -77,9 +77,9 @@ class MovieFragment : BaseFragment() {
 
     private fun showMovie() {
         movieViewModel.getMovies().removeObservers(viewLifecycleOwner)
-        movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { it ->
-            if(it != null) {
-                when(it.status) {
+        movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { resource ->
+            if(resource != null) {
+                when(resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -87,17 +87,22 @@ class MovieFragment : BaseFragment() {
                     Resource.Status.SUCCESS -> {
                         logd("got the movies...")
                         hideLoading()
-                        somethingHappened(true)
-                        it.data?.let {
-                            movieAdapter.bindData(it)
+                        if (!resource.data.isNullOrEmpty()) {
+                            resource.data?.let {
+                                movieAdapter.bindData(it)
+                            }
+                            somethingHappened(true)
+                            runAnimation(rv_movie)
+                        } else {
+                            movieAdapter.bindData(emptyList())
+                            somethingHappened(false)
                         }
-                        runAnimation(rv_movie)
                     }
                     Resource.Status.ERROR -> {
                         hideLoading()
                         somethingHappened(false)
                         showSnackbar(fragment_movie, context?.getString(R.string.failed_fetch_movies))
-                        loge("ERROR ${it.message}")
+                        loge("ERROR ${resource.message}")
                     }
                 }
             }

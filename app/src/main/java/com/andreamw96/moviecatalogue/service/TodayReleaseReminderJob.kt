@@ -1,22 +1,17 @@
 package com.andreamw96.moviecatalogue.service
 
 import android.app.AlarmManager
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
-import androidx.core.app.NotificationCompat
-import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
 import com.andreamw96.moviecatalogue.service.br.TodayReleaseReminderReceiver
 import com.andreamw96.moviecatalogue.service.br.TodayReleaseReminderReceiver.Companion.TODAY_RELEASE_ACTION
-import com.andreamw96.moviecatalogue.utils.CHANNEL_ID
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
 import dagger.android.AndroidInjection
-import dagger.android.DaggerIntentService
 import java.util.*
 import javax.inject.Inject
 

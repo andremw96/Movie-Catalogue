@@ -12,7 +12,6 @@ import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.andreamw96.moviecatalogue.utils.GlideApp
 import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
 import com.andreamw96.moviecatalogue.utils.RateLimiter
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
