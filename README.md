@@ -1,5 +1,5 @@
 # Movie-Catalogue
-Movie Catalogue Dicoding Submission MADE
+Movie Catalogue
 
 Movie Catalogue Android Application to see list of movies and tv series, see the detail, add it to favorites, and many more
 Developed using :
