@@ -12,11 +12,19 @@ import com.andreamw96.moviecatalogue.utils.isDateInvalid
 import com.andreamw96.moviecatalogue.utils.logd
 import java.util.*
 
+/*
+*
+* Broadcast receiver to start service to get data today releases movie
+*
+*
+*/
 
 class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        TodayReleaseReminderJob.enqueueWork(context, Intent(context, TodayReleaseReminderJob::class.java))
+        if (intent?.action == "service.br.TodayReleaseMovieReceiver") {
+            TodayReleaseReminderJob.enqueueWork(context, Intent(context, TodayReleaseReminderJob::class.java))
+        }
     }
 
 

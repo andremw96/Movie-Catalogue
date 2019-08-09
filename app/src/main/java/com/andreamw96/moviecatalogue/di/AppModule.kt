@@ -9,6 +9,7 @@ import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
+import com.andreamw96.moviecatalogue.utils.GlideApp
 import com.andreamw96.moviecatalogue.utils.LiveDataCallAdapterFactory
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.bumptech.glide.Glide
@@ -68,7 +69,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideGlideInstance(application: Application, requestOptions: RequestOptions) : RequestManager {
-        return Glide.with(application)
+        return GlideApp.with(application)
                 .setDefaultRequestOptions(requestOptions)
     }
 

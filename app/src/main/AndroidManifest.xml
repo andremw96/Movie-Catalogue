@@ -108,19 +108,25 @@
 
         <receiver
             android:name=".service.br.DailyReminderReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="service.br.DailyReminderReceiver"/>
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".service.br.TodayReleaseMovieReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:process=":remote"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="service.br.TodayReleaseMovieReceiver"/>
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".service.br.TodayReleaseReminderReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:process=":remote"
+            android:enabled="true" />
         <receiver android:name=".service.restartalarm.RestartAlarmReceiver"
-            android:enabled="true"
-            android:exported="true" >
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

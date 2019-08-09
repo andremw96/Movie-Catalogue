@@ -15,19 +15,21 @@ import java.util.*
 class DailyReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        val notifyIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val notifyPendingIntent = PendingIntent.getActivity(
-                context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        if(intent?.action == "service.br.DailyReminderReceiver") {
+            val notifyIntent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val notifyPendingIntent = PendingIntent.getActivity(
+                    context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
-        if (context != null) {
-            sendNotification(context,
-                    NOTIFICATION_DAILY_ID,
-                    context.getString(R.string.daily_reminder),
-                    context.getString(R.string.content_daily_reminder),
-                    notifyPendingIntent)
+            if (context != null) {
+                sendNotification(context,
+                        NOTIFICATION_DAILY_ID,
+                        context.getString(R.string.daily_reminder),
+                        context.getString(R.string.content_daily_reminder),
+                        notifyPendingIntent)
+            }
         }
     }
 
