@@ -9,8 +9,6 @@ import com.andreamw96.moviecatalogue.data.network.ApiEmptyResponse
 import com.andreamw96.moviecatalogue.data.network.ApiErrorResponse
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.ApiSuccessResponse
-import com.andreamw96.moviecatalogue.utils.logd
-import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.views.common.Resource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.GlobalScope.coroutineContext

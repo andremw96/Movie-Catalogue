@@ -13,8 +13,10 @@ import javax.inject.Inject
 class TvShowViewModel @Inject constructor(private val tvShowRepository : TvShowRepository) : ViewModel() {
 
     private val _tvshows = MediatorLiveData<Resource<List<TvResult>>>()
-    val tvshows: LiveData<Resource<List<TvResult>>> get() = _tvshows
     private var tvShowsSource: LiveData<Resource<List<TvResult>>> = MutableLiveData()
+
+    // LiveData that would be observe in view
+    val tvshows: LiveData<Resource<List<TvResult>>> = _tvshows
 
     init {
         listTvShows()
