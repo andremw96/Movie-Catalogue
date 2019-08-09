@@ -71,8 +71,8 @@ class TVShowFragment : BaseFragment() {
     }
 
     private fun showTvShows() {
-        tvShowMovieViewModel.getTvShows().removeObservers(viewLifecycleOwner)
-        tvShowMovieViewModel.getTvShows().observe(viewLifecycleOwner, Observer { resource ->
+        tvShowMovieViewModel.tvshows.removeObservers(viewLifecycleOwner)
+        tvShowMovieViewModel.tvshows.observe(viewLifecycleOwner, Observer { resource ->
             if(resource != null) {
                 when(resource.status) {
                     Resource.Status.LOADING -> {

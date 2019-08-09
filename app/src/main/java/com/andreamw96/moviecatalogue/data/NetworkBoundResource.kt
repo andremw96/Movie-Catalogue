@@ -9,7 +9,11 @@ import com.andreamw96.moviecatalogue.data.network.ApiEmptyResponse
 import com.andreamw96.moviecatalogue.data.network.ApiErrorResponse
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.ApiSuccessResponse
+import com.andreamw96.moviecatalogue.utils.logd
+import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.views.common.Resource
+import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope.coroutineContext
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -24,21 +28,26 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 @MainThread constructor(private val appExecutors: AppExecutors) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
+    private val supervisorJob = SupervisorJob()
 
-    init {
-        result.value = Resource.loading(null)
-        @Suppress("LeakingThis")
-        val dbSource = loadFromDb()
-        result.addSource(dbSource) { data ->
-            result.removeSource(dbSource)
-            if (shouldFetch(data)) {
-                fetchFromNetwork(dbSource)
-            } else {
-                result.addSource(dbSource) { newData ->
-                    setValue(Resource.success(newData))
+    suspend fun build(): NetworkBoundResource<ResultType, RequestType> {
+        withContext(Dispatchers.Main) { result.value =
+                Resource.loading(null)
+        }
+        CoroutineScope(coroutineContext).launch(supervisorJob) {
+            val dbSource = loadFromDb()
+            result.addSource(dbSource) { data ->
+                result.removeSource(dbSource)
+                if (shouldFetch(data)) {
+                    fetchFromNetwork(dbSource)
+                } else {
+                    result.addSource(dbSource) { newData ->
+                        setValue(Resource.success(newData))
+                    }
                 }
             }
         }
+        return this
     }
 
     @MainThread

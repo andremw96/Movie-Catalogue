@@ -24,7 +24,7 @@ class MovieRepository @Inject constructor(
         private val rateLimiter: RateLimiter
 ) {
 
-    fun setMovies() : LiveData<Resource<List<MovieResult>>> {
+    suspend fun setMovies() : LiveData<Resource<List<MovieResult>>> {
         return object : NetworkBoundResource<List<MovieResult>, Movies>(appExecutors) {
             override fun saveCallResult(item: Movies) {
                 movieDao.insert(item.results)
@@ -45,7 +45,7 @@ class MovieRepository @Inject constructor(
             override fun onFetchFailed() {
                 rateLimiter.reset()
             }
-        }.asLiveData()
+        }.build().asLiveData()
     }
 
     fun getTodayReleaseMovie() : List<MovieResult>? {

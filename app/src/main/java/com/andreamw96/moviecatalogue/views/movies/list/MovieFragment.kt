@@ -76,8 +76,8 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun showMovie() {
-        movieViewModel.getMovies().removeObservers(viewLifecycleOwner)
-        movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { resource ->
+        movieViewModel.movies.removeObservers(viewLifecycleOwner)
+        movieViewModel.movies.observe(viewLifecycleOwner, Observer { resource ->
             if(resource != null) {
                 when(resource.status) {
                     Resource.Status.LOADING -> {
