@@ -5,6 +5,7 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.JobIntentService
 import androidx.core.app.NotificationCompat
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
@@ -14,12 +15,13 @@ import com.andreamw96.moviecatalogue.utils.CHANNEL_ID
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
+import dagger.android.AndroidInjection
 import dagger.android.DaggerIntentService
 import java.util.*
 import javax.inject.Inject
 
 
-class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderService") {
+class TodayReleaseReminderJob : JobIntentService() {
 
     @Inject
     lateinit var movieRepository: MovieRepository
@@ -29,11 +31,18 @@ class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderSer
     private val MAX_RETRIES = 10
     private val RETRY_DELAY = 1000
 
-    override fun onHandleIntent(intent: Intent?) {
-        startServiceForeground(intent)
+    companion object {
+        fun enqueueWork(context: Context, intent: Intent) {
+            enqueueWork(context, TodayReleaseReminderJob::class.java, NOTIFICATION_TODAY_ID, intent)
+        }
     }
 
-    private fun startServiceForeground(intent: Intent?) {
+    override fun onCreate() {
+        AndroidInjection.inject(this)
+        super.onCreate()
+    }
+
+    override fun onHandleWork(intent: Intent) {
         try {
             val listTodayReleaseMovie = ArrayList(movieRepository.getTodayReleaseMovie())
 
@@ -71,17 +80,6 @@ class TodayReleaseReminderService : DaggerIntentService("TodayReleaseReminderSer
                 alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + thisDelay, pendingIntent)
             }
         }
-
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Movie Catalogue")
-                .setTicker("Movie Catalogue")
-                .setContentText("My Movie Catalogue")
-                .setSmallIcon(R.drawable.ic_notification)
-                .setOngoing(true)
-                .build()
-
-        notification.flags = notification.flags or Notification.FLAG_NO_CLEAR     // NO_CLEAR makes the notification stay when the user performs a "delete all" command
-        startForeground(NOTIFICATION_TODAY_ID, notification)
     }
 
     override fun onDestroy() {

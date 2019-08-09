@@ -15,8 +15,10 @@ import javax.inject.Inject
 
 class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private val dailyReminderKey = "daily_reminder_time_key"
-    private val todayReleaseReminderKey = "switch_preference_today_release_key"
+    companion object {
+        const val dailyReminderKey = "daily_reminder_time_key"
+        const val todayReleaseReminderKey = "switch_preference_today_release_key"
+    }
 
     private var dailyReminderTimePreference : ListPreference? = null
     private var todayReleaseReminderPreference : SwitchPreference? = null

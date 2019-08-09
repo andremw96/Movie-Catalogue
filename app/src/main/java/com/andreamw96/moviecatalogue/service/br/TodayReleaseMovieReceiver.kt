@@ -5,8 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import com.andreamw96.moviecatalogue.service.TodayReleaseReminderService
+import com.andreamw96.moviecatalogue.service.TodayReleaseReminderJob
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.TIME_FORMAT
 import com.andreamw96.moviecatalogue.utils.isDateInvalid
@@ -17,11 +16,7 @@ import java.util.*
 class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(Intent(context, TodayReleaseReminderService::class.java))
-        } else {
-            context.startService(Intent(context, TodayReleaseReminderService::class.java))
-        }
+        TodayReleaseReminderJob.enqueueWork(context, Intent(context, TodayReleaseReminderJob::class.java))
     }
 
 
