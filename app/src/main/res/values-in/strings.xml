@@ -42,5 +42,6 @@
     <string name="toastTodayReleaseReminder">Pengingat film rilis hari ini telah diset pada jam 8 pagi</string>
     <string name="best_movies_is_coming">Menunggu untuk Daftar Film Terbaik</string>
 
+    <string name="no_data">Data Tidak Ditemukan</string>
 
 </resources>

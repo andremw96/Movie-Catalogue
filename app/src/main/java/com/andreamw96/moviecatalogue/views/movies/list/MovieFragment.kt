@@ -121,9 +121,13 @@ class MovieFragment : BaseFragment() {
         if(isSuccess) {
             rv_movie.visibility = View.VISIBLE
             img_movie_data_notfound.visibility = View.GONE
+            txt_movie_data_notfound.visibility = View.GONE
+            img_movie_data_notfound.cancelAnimation()
         } else {
             rv_movie.visibility = View.GONE
             img_movie_data_notfound.visibility = View.VISIBLE
+            txt_movie_data_notfound.visibility = View.VISIBLE
+            img_movie_data_notfound.playAnimation()
         }
     }
 }

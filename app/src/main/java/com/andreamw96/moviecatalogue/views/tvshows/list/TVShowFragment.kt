@@ -115,10 +115,14 @@ class TVShowFragment : BaseFragment() {
     override fun somethingHappened(isSuccess: Boolean) {
         if(isSuccess) {
             rv_tv_show.visibility = View.VISIBLE
-            img_tvshow_data_notfound.visibility = View.GONE
+            img_tv_show_data_notfound.visibility = View.GONE
+            txt_tv_data_notfound.visibility = View.GONE
+            img_tv_show_data_notfound.cancelAnimation()
         } else {
             rv_tv_show.visibility = View.GONE
-            img_tvshow_data_notfound.visibility = View.VISIBLE
+            img_tv_show_data_notfound.visibility = View.VISIBLE
+            txt_tv_data_notfound.visibility = View.VISIBLE
+            img_tv_show_data_notfound.playAnimation()
         }
     }
 

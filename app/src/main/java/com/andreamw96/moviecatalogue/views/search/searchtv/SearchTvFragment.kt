@@ -119,10 +119,14 @@ class SearchTvFragment : BaseFragment() {
     override fun somethingHappened(isSuccess: Boolean) {
         if(isSuccess) {
             rv_search_tv.visibility = View.VISIBLE
-            img_search_tv_data_notfound.visibility = View.GONE
+            img_search_tv_show_data_notfound.visibility = View.GONE
+            txt_search_tv_data_notfound.visibility = View.GONE
+            img_search_tv_show_data_notfound.cancelAnimation()
         } else {
             rv_search_tv.visibility = View.GONE
-            img_search_tv_data_notfound.visibility = View.VISIBLE
+            img_search_tv_show_data_notfound.visibility = View.VISIBLE
+            txt_search_tv_data_notfound.visibility = View.VISIBLE
+            img_search_tv_show_data_notfound.playAnimation()
         }
     }
 

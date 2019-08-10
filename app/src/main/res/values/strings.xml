@@ -41,4 +41,6 @@
     <string name="toastTodayReleaseReminder">Today movie release reminder has been set to 8am</string>
     <string name="best_movies_is_coming">Waiting For the Best Movie List</string>
 
+    <string name="no_data">No Data Found</string>
+
 </resources>

@@ -123,10 +123,14 @@ class SearchMovieFragment : BaseFragment() {
     override fun somethingHappened(isSuccess: Boolean) {
         if(isSuccess) {
             rv_search_movie.visibility = View.VISIBLE
-            img_search_movie_data_notfound.visibility = View.GONE
+            img_search_movie_show_data_notfound.visibility = View.GONE
+            txt_search_movie_data_notfound.visibility = View.GONE
+            img_search_movie_show_data_notfound.cancelAnimation()
         } else {
             rv_search_movie.visibility = View.GONE
-            img_search_movie_data_notfound.visibility = View.VISIBLE
+            img_search_movie_show_data_notfound.visibility = View.VISIBLE
+            txt_search_movie_data_notfound.visibility = View.VISIBLE
+            img_search_movie_show_data_notfound.playAnimation()
         }
     }
     // endregion ProgressBar Interface
