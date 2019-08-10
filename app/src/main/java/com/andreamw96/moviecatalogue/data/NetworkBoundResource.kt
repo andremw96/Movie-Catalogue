@@ -10,8 +10,11 @@ import com.andreamw96.moviecatalogue.data.network.ApiErrorResponse
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.ApiSuccessResponse
 import com.andreamw96.moviecatalogue.views.common.Resource
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope.coroutineContext
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -26,13 +29,12 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 @MainThread constructor(private val appExecutors: AppExecutors) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
-    private val supervisorJob = SupervisorJob()
 
     suspend fun build(): NetworkBoundResource<ResultType, RequestType> {
         withContext(Dispatchers.Main) { result.value =
                 Resource.loading(null)
         }
-        CoroutineScope(coroutineContext).launch(supervisorJob) {
+        CoroutineScope(coroutineContext).launch(Dispatchers.Main) {
             val dbSource = loadFromDb()
             result.addSource(dbSource) { data ->
                 result.removeSource(dbSource)
@@ -61,19 +63,24 @@ abstract class NetworkBoundResource<ResultType, RequestType>
         result.addSource(dbSource) { newData ->
             setValue(Resource.loading(newData))
         }
+
         result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
             result.removeSource(dbSource)
             when (response) {
                 is ApiSuccessResponse -> {
                     appExecutors.diskIO().execute {
-                        saveCallResult(processResponse(response))
+                        CoroutineScope(coroutineContext).launch(Dispatchers.Main) {
+                            saveCallResult(processResponse(response))
+                        }
                         appExecutors.mainThread().execute {
                             // we specially request a new live data,
                             // otherwise we will get immediately last cached value,
                             // which may not be updated with latest results received from network.
-                            result.addSource(loadFromDb()) { newData ->
-                                setValue(Resource.success(newData))
+                            CoroutineScope(coroutineContext).launch(Dispatchers.Main) {
+                                result.addSource(loadFromDb()) { newData ->
+                                    setValue(Resource.success(newData))
+                                }
                             }
                         }
                     }
@@ -81,8 +88,10 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 is ApiEmptyResponse -> {
                     appExecutors.mainThread().execute {
                         // reload from disk whatever we had
-                        result.addSource(loadFromDb()) { newData ->
-                            setValue(Resource.success(newData))
+                        CoroutineScope(coroutineContext).launch(Dispatchers.Main) {
+                            result.addSource(loadFromDb()) { newData ->
+                                setValue(Resource.success(newData))
+                            }
                         }
                     }
                 }
@@ -104,13 +113,13 @@ abstract class NetworkBoundResource<ResultType, RequestType>
     protected open fun processResponse(response: ApiSuccessResponse<RequestType>) = response.body
 
     @WorkerThread
-    protected abstract fun saveCallResult(item: RequestType)
+    protected abstract suspend fun saveCallResult(item: RequestType)
 
     @MainThread
     protected abstract fun shouldFetch(data: ResultType?): Boolean
 
     @MainThread
-    protected abstract fun loadFromDb(): LiveData<ResultType>
+    protected abstract suspend fun loadFromDb(): LiveData<ResultType>
 
     @MainThread
     protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>

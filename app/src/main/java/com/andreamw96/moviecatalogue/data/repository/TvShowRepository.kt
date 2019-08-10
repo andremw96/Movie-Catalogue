@@ -24,7 +24,7 @@ class TvShowRepository @Inject constructor(
 
     suspend fun setTvShows() : LiveData<Resource<List<TvResult>>> {
         return object : NetworkBoundResource<List<TvResult>, TvShows>(appExecutors) {
-            override fun saveCallResult(item: TvShows) {
+            override suspend fun saveCallResult(item: TvShows) {
                 tvShowDao.insert(item.results)
             }
 
@@ -32,7 +32,7 @@ class TvShowRepository @Inject constructor(
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
-            override fun loadFromDb(): LiveData<List<TvResult>>  {
+            override suspend fun loadFromDb(): LiveData<List<TvResult>>  {
                 return tvShowDao.getTVShowLocal()
             }
 

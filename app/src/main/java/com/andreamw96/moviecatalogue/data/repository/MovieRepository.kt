@@ -26,7 +26,7 @@ class MovieRepository @Inject constructor(
 
     suspend fun setMovies() : LiveData<Resource<List<MovieResult>>> {
         return object : NetworkBoundResource<List<MovieResult>, Movies>(appExecutors) {
-            override fun saveCallResult(item: Movies) {
+            override suspend fun saveCallResult(item: Movies) {
                 movieDao.insert(item.results)
             }
 
@@ -34,7 +34,7 @@ class MovieRepository @Inject constructor(
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
-            override fun loadFromDb(): LiveData<List<MovieResult>>  {
+            override suspend fun loadFromDb(): LiveData<List<MovieResult>>  {
                 return movieDao.getMoviesLocal()
             }
 

@@ -11,7 +11,7 @@ import com.andreamw96.moviecatalogue.data.model.TvResult
 abstract class TvShowDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(tvResult: List<TvResult>)
+    abstract suspend fun insert(tvResult: List<TvResult>)
 
     @Query("SELECT * FROM tv_shows_table")
     abstract fun getTVShowLocal(): LiveData<List<TvResult>>

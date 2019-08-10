@@ -11,7 +11,7 @@ import com.andreamw96.moviecatalogue.data.model.MovieResult
 abstract class MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(movieResult: List<MovieResult>)
+    abstract suspend fun insert(movieResult: List<MovieResult>)
 
     @Query("SELECT * FROM movies_table")
     abstract fun getMoviesLocal(): LiveData<List<MovieResult>>
