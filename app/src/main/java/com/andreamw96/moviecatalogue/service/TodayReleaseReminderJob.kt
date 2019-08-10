@@ -8,6 +8,7 @@ import androidx.core.app.JobIntentService
 import com.andreamw96.moviecatalogue.data.repository.MovieRepository
 import com.andreamw96.moviecatalogue.service.br.TodayReleaseReminderReceiver
 import com.andreamw96.moviecatalogue.service.br.TodayReleaseReminderReceiver.Companion.TODAY_RELEASE_ACTION
+import com.andreamw96.moviecatalogue.utils.JOB_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.logd
 import com.andreamw96.moviecatalogue.utils.loge
@@ -28,7 +29,7 @@ class TodayReleaseReminderJob : JobIntentService() {
 
     companion object {
         fun enqueueWork(context: Context, intent: Intent) {
-            enqueueWork(context, TodayReleaseReminderJob::class.java, NOTIFICATION_TODAY_ID, intent)
+            enqueueWork(context, TodayReleaseReminderJob::class.java, JOB_TODAY_ID, intent)
         }
     }
 

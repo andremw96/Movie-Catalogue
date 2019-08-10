@@ -6,7 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.andreamw96.moviecatalogue.service.TodayReleaseReminderJob
-import com.andreamw96.moviecatalogue.utils.NOTIFICATION_TODAY_ID
+import com.andreamw96.moviecatalogue.utils.JOB_TODAY_ID
 import com.andreamw96.moviecatalogue.utils.TIME_FORMAT
 import com.andreamw96.moviecatalogue.utils.isDateInvalid
 import com.andreamw96.moviecatalogue.utils.logd
@@ -22,9 +22,7 @@ import java.util.*
 class TodayReleaseMovieReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        if (intent?.action == "service.br.TodayReleaseMovieReceiver") {
-            TodayReleaseReminderJob.enqueueWork(context, Intent(context, TodayReleaseReminderJob::class.java))
-        }
+        TodayReleaseReminderJob.enqueueWork(context, Intent(context, TodayReleaseReminderJob::class.java))
     }
 
 
@@ -46,22 +44,25 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]))
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
         calendar.set(Calendar.SECOND, 0)
+        if(calendar.timeInMillis <= System.currentTimeMillis()) {
+            calendar.add(Calendar.DATE, 1)
+        }
 
         val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(context, JOB_TODAY_ID, intent, 0)
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
+                calendar.timeInMillis + AlarmManager.INTERVAL_DAY,
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
         )
-        logd("Today Release Reminder set up")
+        logd("Today Release Reminder set up at ${calendar.timeInMillis}")
     }
 
     fun cancelTodayReleaseReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(context, JOB_TODAY_ID, intent, 0)
         pendingIntent.cancel()
 
         alarmManager.cancel(pendingIntent)
@@ -73,6 +74,6 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
     private fun isTodayReleaseSet(context: Context): Boolean {
         val intent = Intent(context, TodayReleaseMovieReceiver::class.java)
 
-        return PendingIntent.getBroadcast(context, NOTIFICATION_TODAY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null
+        return PendingIntent.getBroadcast(context, JOB_TODAY_ID, intent, PendingIntent.FLAG_NO_CREATE) != null
     }
 }
