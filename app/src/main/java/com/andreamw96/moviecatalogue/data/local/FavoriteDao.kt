@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.data.local
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -24,4 +25,8 @@ interface FavoriteDao {
 
     @Query("DELETE FROM favorites_table WHERE movieId = :idMovie")
     suspend fun deleteFavorites(idMovie: Int)
+
+    // Content Provider
+    @Query("SELECT * FROM favorites_table")
+    fun provideFavorites(): Cursor
 }

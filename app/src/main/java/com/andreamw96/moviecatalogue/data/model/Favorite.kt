@@ -3,11 +3,12 @@ package com.andreamw96.moviecatalogue.data.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.andreamw96.moviecatalogue.utils.favorites_table
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "favorites_table")
+@Entity(tableName = favorites_table)
 data class Favorite(
         var movieId: Int,
         var isMovie: Boolean,
