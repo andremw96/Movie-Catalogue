@@ -52,7 +52,7 @@ class TodayReleaseMovieReceiver : BroadcastReceiver() {
         val pendingIntent = PendingIntent.getBroadcast(context, JOB_TODAY_ID, intent, 0)
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis + AlarmManager.INTERVAL_DAY,
+                calendar.timeInMillis,
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
         )
