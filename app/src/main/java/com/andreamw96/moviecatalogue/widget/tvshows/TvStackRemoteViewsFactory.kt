@@ -23,7 +23,7 @@ class TvStackRemoteViewsFactory(private val context: Context,
     }
 
     override fun onDataSetChanged() {
-        if(mWidgetItems.size != 0) {
+        if (mWidgetItems.size != 0) {
             mWidgetItems.clear()
         }
 

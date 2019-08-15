@@ -106,11 +106,11 @@ fun summaryNotification(context: Context, stackNotif: ArrayList<MovieResult>) {
     val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     val inboxStyle = NotificationCompat.InboxStyle()
-            .addLine( "${stackNotif[0].title} released today")
-            .addLine( "${stackNotif[1].title} released today")
-            .addLine( "${stackNotif[2].title} released today")
-            .addLine( "${stackNotif[3].title} released today")
-            .addLine( "${stackNotif[4].title} released today")
+            .addLine("${stackNotif[0].title} released today")
+            .addLine("${stackNotif[1].title} released today")
+            .addLine("${stackNotif[2].title} released today")
+            .addLine("${stackNotif[3].title} released today")
+            .addLine("${stackNotif[4].title} released today")
             .setBigContentTitle("${stackNotif.size} movies released today")
             .setSummaryText("Released today movie")
 
@@ -130,13 +130,13 @@ fun summaryNotification(context: Context, stackNotif: ArrayList<MovieResult>) {
     mNotificationManager.notify(0, mBuilder)
 }
 
-fun isDateInvalid(date: String, format: String) : Boolean {
+fun isDateInvalid(date: String, format: String): Boolean {
     return try {
         val df = SimpleDateFormat(format, Locale.getDefault())
         df.isLenient = false
         df.parse(date)
         false
-    } catch (e : ParseException) {
+    } catch (e: ParseException) {
         true
     }
 }

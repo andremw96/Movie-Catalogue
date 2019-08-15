@@ -35,7 +35,7 @@ data class MovieResult(
         @SerializedName("vote_average")
         var voteAverage: Double = 0.0
 ) : Parcelable {
-        @IgnoredOnParcel
-        @PrimaryKey(autoGenerate = true)
-        var autoid: Int = 0
+    @IgnoredOnParcel
+    @PrimaryKey(autoGenerate = true)
+    var autoid: Int = 0
 }

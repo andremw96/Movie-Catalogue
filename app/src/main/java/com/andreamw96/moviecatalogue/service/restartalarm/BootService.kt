@@ -43,7 +43,7 @@ class BootService : JobIntentService() {
         val dailyReminderTime = settingPreference.getString(dailyReminderKey, getString(R.string.notification_disabled))
         val todayReleaseRemindIsActive = settingPreference.getBoolean(todayReleaseReminderKey, false)
 
-        if(!dailyReminderTime.isNullOrEmpty()) {
+        if (!dailyReminderTime.isNullOrEmpty()) {
             restartDailyReminderAlarm(dailyReminderTime)
             logd("Daily reminder alarm has been restarted")
         }

@@ -41,7 +41,7 @@ interface MovieApi {
             @Query("api_key") apiKey: String,
             @Query("primary_release_date.gte") gteDate: String,
             @Query("primary_release_date.lte") lteDate: String
-    ) : Call<Movies>
+    ): Call<Movies>
 
 
 }

@@ -10,9 +10,9 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class SearchViewModelModule {
 
-     @Binds
-     @IntoMap
-     @ViewModelKey(SearchViewModel::class)
-     abstract fun bindSearchViewModel(viewModel: SearchViewModel) : ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
 }

@@ -11,12 +11,12 @@ import dagger.Provides
 class SearchModule {
 
     @Provides
-    fun provideSearchMovieAdapter(application: Application, requestManager: RequestManager) : SearchMovieAdapter {
+    fun provideSearchMovieAdapter(application: Application, requestManager: RequestManager): SearchMovieAdapter {
         return SearchMovieAdapter(application.applicationContext, requestManager)
     }
 
     @Provides
-    fun provideSearchTvShowsAdapter(application: Application, requestManager: RequestManager) : SearchTvAdapter {
+    fun provideSearchTvShowsAdapter(application: Application, requestManager: RequestManager): SearchTvAdapter {
         return SearchTvAdapter(application.applicationContext, requestManager)
     }
 }

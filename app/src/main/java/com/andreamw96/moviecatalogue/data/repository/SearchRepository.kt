@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(
-        private val mMoviesApi : MovieApi,
+        private val mMoviesApi: MovieApi,
         private val compositeDisposable: CompositeDisposable
 ) {
 
@@ -21,7 +21,7 @@ class SearchRepository @Inject constructor(
     private val listSearchTv = MutableLiveData<Resource<List<TvResult>>>()
 
 
-    fun setSearchMovie(query: String) : LiveData<Resource<List<MovieResult>>> {
+    fun setSearchMovie(query: String): LiveData<Resource<List<MovieResult>>> {
         listSearchMovies.postValue(Resource.loading(null))
 
         compositeDisposable.add(mMoviesApi
@@ -37,7 +37,7 @@ class SearchRepository @Inject constructor(
         return listSearchMovies
     }
 
-    fun setSearchTv(query: String) : LiveData<Resource<List<TvResult>>> {
+    fun setSearchTv(query: String): LiveData<Resource<List<TvResult>>> {
         listSearchTv.postValue(Resource.loading(null))
 
         compositeDisposable.add(mMoviesApi

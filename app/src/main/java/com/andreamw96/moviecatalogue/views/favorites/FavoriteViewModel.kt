@@ -11,13 +11,12 @@ class FavoriteViewModel @Inject constructor(private val favoriteRepository: Favo
     private val _isMovie = MutableLiveData<Boolean>()
 
 
-    val favorites = Transformations.
-            switchMap(_isMovie) {isMovie ->
-                favoriteRepository.getFavorites(isMovie)
-            }
+    val favorites = Transformations.switchMap(_isMovie) { isMovie ->
+        favoriteRepository.getFavorites(isMovie)
+    }
 
     fun setIsMovie(isMovie: Boolean) {
-        if(_isMovie.value != isMovie) {
+        if (_isMovie.value != isMovie) {
             _isMovie.value = isMovie
         }
     }

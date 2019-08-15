@@ -10,7 +10,7 @@ import dagger.Provides
 class TvShowsModule {
 
     @Provides
-    fun provideTvShowsAdapter(application: Application, requestManager: RequestManager) : TvShowsAdapter {
+    fun provideTvShowsAdapter(application: Application, requestManager: RequestManager): TvShowsAdapter {
         return TvShowsAdapter(application.applicationContext, requestManager)
     }
 

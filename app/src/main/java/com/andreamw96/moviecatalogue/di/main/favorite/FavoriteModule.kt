@@ -10,7 +10,7 @@ import dagger.Provides
 class FavoriteModule {
 
     @Provides
-    fun provideFavoriteAdapter(application: Application, requestManager: RequestManager) : FavoriteAdapter {
+    fun provideFavoriteAdapter(application: Application, requestManager: RequestManager): FavoriteAdapter {
         return FavoriteAdapter(application.applicationContext, requestManager)
     }
 

@@ -14,10 +14,10 @@ abstract class MoviCatalogueDatabase : RoomDatabase() {
 
     abstract fun favDao(): FavoriteDao
 
-    abstract fun movieDao() : MovieDao
+    abstract fun movieDao(): MovieDao
 
-    abstract fun tvShowDao() : TvShowDao
+    abstract fun tvShowDao(): TvShowDao
 
-   // abstract fun searchDao() : SearchDao
+    // abstract fun searchDao() : SearchDao
 
 }

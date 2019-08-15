@@ -11,5 +11,4 @@ abstract class BaseFragment : DaggerFragment(), ProgressBarInterface {
     lateinit var providersFactory: ViewModelProvidersFactory
 
 
-
 }

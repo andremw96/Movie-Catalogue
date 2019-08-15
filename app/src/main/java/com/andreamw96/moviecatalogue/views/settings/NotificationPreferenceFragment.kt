@@ -20,8 +20,8 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
         const val todayReleaseReminderKey = "switch_preference_today_release_key"
     }
 
-    private var dailyReminderTimePreference : ListPreference? = null
-    private var todayReleaseReminderPreference : SwitchPreference? = null
+    private var dailyReminderTimePreference: ListPreference? = null
+    private var todayReleaseReminderPreference: SwitchPreference? = null
 
     @Inject
     lateinit var dailyReminderReceiver: DailyReminderReceiver
@@ -73,10 +73,10 @@ class NotificationPreferenceFragment : PreferenceFragmentCompat(), SharedPrefere
             }
         }
 
-        if(key.equals(todayReleaseReminderKey)) {
+        if (key.equals(todayReleaseReminderKey)) {
             val isActive = sharedPreferences?.getBoolean(todayReleaseReminderKey, false)
 
-            if(isActive!!) {
+            if (isActive!!) {
                 todayReleaseReminderReceiver.setTodayReleaseReminder(preferenceScreen.context, "08:00")
                 showToast(preferenceScreen.context, getString(R.string.toastTodayReleaseReminder))
             } else {

@@ -23,7 +23,7 @@ abstract class MainFragmentBuilderModule {
                 MovieViewModelModule::class
             ]
     )
-    abstract fun contributeMovieFragment() : MovieFragment
+    abstract fun contributeMovieFragment(): MovieFragment
 
 
     @ContributesAndroidInjector(
@@ -32,11 +32,11 @@ abstract class MainFragmentBuilderModule {
                 TvShowsViewModelModule::class
             ]
     )
-    abstract fun contributeTvShowsFragment() : TVShowFragment
+    abstract fun contributeTvShowsFragment(): TVShowFragment
 
 
     @ContributesAndroidInjector
-    abstract fun contributeFavoriteFragment() : FavoriteFragment
+    abstract fun contributeFavoriteFragment(): FavoriteFragment
 
 
     @ContributesAndroidInjector(
@@ -45,7 +45,7 @@ abstract class MainFragmentBuilderModule {
                 FavoriteViewModelModule::class
             ]
     )
-    abstract fun contributeFavoriteMovieFragment() : FavMovieFragment
+    abstract fun contributeFavoriteMovieFragment(): FavMovieFragment
 
 
     @ContributesAndroidInjector(
@@ -54,5 +54,5 @@ abstract class MainFragmentBuilderModule {
                 FavoriteViewModelModule::class
             ]
     )
-    abstract fun contributeFavoriteTvShowFragment() : FavTvFragment
+    abstract fun contributeFavoriteTvShowFragment(): FavTvFragment
 }

@@ -28,11 +28,11 @@ class AppSettingPreference(context: Context) {
         editor.apply()
     }
 
-    fun getPrefsDailyReminder() : Boolean {
+    fun getPrefsDailyReminder(): Boolean {
         return preferences.getBoolean(PREFS_DAILY_REMINDER, false)
     }
 
-    fun getPrefsTodayReleaseReminder() : Boolean {
+    fun getPrefsTodayReleaseReminder(): Boolean {
         return preferences.getBoolean(PREFS_TODAY_RELEASE_REMINDER, false)
     }
 

@@ -17,23 +17,23 @@ abstract class ServiceBuilderModule {
                 FavoriteModule::class
             ]
     )
-    abstract fun contributeStackMovieWidgetService() : StackMovieWidgetService
+    abstract fun contributeStackMovieWidgetService(): StackMovieWidgetService
 
     @ContributesAndroidInjector(
             modules = [
                 FavoriteModule::class
             ]
     )
-    abstract fun contributeStackTvWidgetService() : StackTvWidgetService
+    abstract fun contributeStackTvWidgetService(): StackTvWidgetService
 
     @ContributesAndroidInjector
-    abstract fun contributeTodayReleaseReminderJob() : TodayReleaseReminderJob
+    abstract fun contributeTodayReleaseReminderJob(): TodayReleaseReminderJob
 
     @ContributesAndroidInjector(
             modules = [
                 SettingModule::class
             ]
     )
-    abstract fun contributeBootService() : BootService
+    abstract fun contributeBootService(): BootService
 
 }

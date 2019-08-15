@@ -13,6 +13,6 @@ abstract class DetailTvShowViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(DetailTvShowViewModel::class)
-    abstract fun bindDetailTvShowViewModel(viewModel: DetailTvShowViewModel) : ViewModel
+    abstract fun bindDetailTvShowViewModel(viewModel: DetailTvShowViewModel): ViewModel
 
 }

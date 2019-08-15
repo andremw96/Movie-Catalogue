@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
@@ -99,7 +98,7 @@ class FavMovieFragment : BaseFragment() {
     }
 
     override fun somethingHappened(isSuccess: Boolean) {
-        if(isSuccess) {
+        if (isSuccess) {
             rv_fav_movie.visibility = View.VISIBLE
             img_favmovie_data_notfound.visibility = View.GONE
         } else {

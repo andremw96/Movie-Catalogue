@@ -11,20 +11,18 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 
     private val _query = MutableLiveData<String>()
 
-    val query : LiveData<String> = _query
+    val query: LiveData<String> = _query
 
-    val getSearchMovies = Transformations.
-            switchMap(_query) { query ->
-                searchRepository.setSearchMovie(query)
-            }
+    val getSearchMovies = Transformations.switchMap(_query) { query ->
+        searchRepository.setSearchMovie(query)
+    }
 
-    val getSearchTvs = Transformations.
-            switchMap(_query) { query ->
-                searchRepository.setSearchTv(query)
-            }
+    val getSearchTvs = Transformations.switchMap(_query) { query ->
+        searchRepository.setSearchTv(query)
+    }
 
     fun setQuery(query: String) {
-        if(_query.value != query) {
+        if (_query.value != query) {
             _query.value = query
         }
     }

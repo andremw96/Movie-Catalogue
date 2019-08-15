@@ -31,8 +31,9 @@ abstract class NetworkBoundResource<ResultType, RequestType>
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     suspend fun build(): NetworkBoundResource<ResultType, RequestType> {
-        withContext(Dispatchers.Main) { result.value =
-                Resource.loading(null)
+        withContext(Dispatchers.Main) {
+            result.value =
+                    Resource.loading(null)
         }
         CoroutineScope(coroutineContext).launch(Dispatchers.Main) {
             val dbSource = loadFromDb()

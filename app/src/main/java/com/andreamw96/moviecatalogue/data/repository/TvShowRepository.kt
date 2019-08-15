@@ -22,7 +22,7 @@ class TvShowRepository @Inject constructor(
         private val rateLimiter: RateLimiter
 ) {
 
-    suspend fun setTvShows() : LiveData<Resource<List<TvResult>>> {
+    suspend fun setTvShows(): LiveData<Resource<List<TvResult>>> {
         return object : NetworkBoundResource<List<TvResult>, TvShows>(appExecutors) {
             override suspend fun saveCallResult(item: TvShows) {
                 tvShowDao.insert(item.results)
@@ -32,7 +32,7 @@ class TvShowRepository @Inject constructor(
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
-            override suspend fun loadFromDb(): LiveData<List<TvResult>>  {
+            override suspend fun loadFromDb(): LiveData<List<TvResult>> {
                 return tvShowDao.getTVShowLocal()
             }
 

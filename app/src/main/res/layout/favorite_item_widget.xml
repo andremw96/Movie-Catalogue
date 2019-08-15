@@ -11,5 +11,6 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        tools:srcCompat="@drawable/not_found" />
+        tools:srcCompat="@drawable/not_found"
+        android:contentDescription="TODO" />
 </LinearLayout>

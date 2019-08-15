@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class MovieViewModel @Inject constructor(private val movieRepository : MovieRepository) : ViewModel() {
+class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
 
     private val _movies = MediatorLiveData<Resource<List<MovieResult>>>()
     private var moviesSource: LiveData<Resource<List<MovieResult>>> = MutableLiveData()

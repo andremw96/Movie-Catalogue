@@ -10,7 +10,7 @@ import dagger.Provides
 class MovieModule {
 
     @Provides
-    fun provideMovieAdapter(application: Application, requestManager: RequestManager) : MovieAdapter {
+    fun provideMovieAdapter(application: Application, requestManager: RequestManager): MovieAdapter {
         return MovieAdapter(application.applicationContext, requestManager)
     }
 }

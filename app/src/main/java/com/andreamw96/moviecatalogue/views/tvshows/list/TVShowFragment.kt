@@ -73,8 +73,8 @@ class TVShowFragment : BaseFragment() {
     private fun showTvShows() {
         tvShowMovieViewModel.tvshows.removeObservers(viewLifecycleOwner)
         tvShowMovieViewModel.tvshows.observe(viewLifecycleOwner, Observer { resource ->
-            if(resource != null) {
-                when(resource.status) {
+            if (resource != null) {
+                when (resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -113,7 +113,7 @@ class TVShowFragment : BaseFragment() {
     }
 
     override fun somethingHappened(isSuccess: Boolean) {
-        if(isSuccess) {
+        if (isSuccess) {
             rv_tv_show.visibility = View.VISIBLE
             img_tv_show_data_notfound.visibility = View.GONE
             txt_tv_data_notfound.visibility = View.GONE

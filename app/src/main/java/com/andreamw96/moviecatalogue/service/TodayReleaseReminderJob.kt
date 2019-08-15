@@ -53,7 +53,7 @@ class TodayReleaseReminderJob : JobIntentService() {
             loge(e.message.toString())
 
             // Get the number of previously failed attempts, and add one.
-            val failedAttempts = intent?.getIntExtra(EXTRA_FAILED_ATTEMPTS, 0)!! + 1
+            val failedAttempts = intent.getIntExtra(EXTRA_FAILED_ATTEMPTS, 0) + 1
             // if we have failed less than the max retries, reschedule the intent
             if (failedAttempts < MAX_RETRIES) {
                 logd("retry fetch data")

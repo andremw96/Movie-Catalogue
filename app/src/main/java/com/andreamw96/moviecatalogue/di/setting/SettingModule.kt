@@ -9,12 +9,12 @@ import dagger.Provides
 class SettingModule {
 
     @Provides
-    fun provideDailyReminderReceiver() : DailyReminderReceiver {
+    fun provideDailyReminderReceiver(): DailyReminderReceiver {
         return DailyReminderReceiver()
     }
 
     @Provides
-    fun provideTodayReleaseReminderReceiver() : TodayReleaseMovieReceiver {
+    fun provideTodayReleaseReminderReceiver(): TodayReleaseMovieReceiver {
         return TodayReleaseMovieReceiver()
     }
 

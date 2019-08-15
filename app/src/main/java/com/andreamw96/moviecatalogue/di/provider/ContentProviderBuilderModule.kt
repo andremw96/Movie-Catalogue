@@ -8,6 +8,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class ContentProviderBuilderModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeFavoriteProvider() : FavoriteProvider
+    abstract fun contributeFavoriteProvider(): FavoriteProvider
 
 }

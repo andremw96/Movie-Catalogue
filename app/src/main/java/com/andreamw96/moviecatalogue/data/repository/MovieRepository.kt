@@ -18,13 +18,13 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieRepository @Inject constructor(
-        private val mMoviesApi : MovieApi,
+        private val mMoviesApi: MovieApi,
         private val movieDao: MovieDao,
         private val appExecutors: AppExecutors,
         private val rateLimiter: RateLimiter
 ) {
 
-    suspend fun setMovies() : LiveData<Resource<List<MovieResult>>> {
+    suspend fun setMovies(): LiveData<Resource<List<MovieResult>>> {
         return object : NetworkBoundResource<List<MovieResult>, Movies>(appExecutors) {
             override suspend fun saveCallResult(item: Movies) {
                 movieDao.insert(item.results)
@@ -34,7 +34,7 @@ class MovieRepository @Inject constructor(
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch()
             }
 
-            override suspend fun loadFromDb(): LiveData<List<MovieResult>>  {
+            override suspend fun loadFromDb(): LiveData<List<MovieResult>> {
                 return movieDao.getMoviesLocal()
             }
 
@@ -48,7 +48,7 @@ class MovieRepository @Inject constructor(
         }.build().asLiveData()
     }
 
-    fun getTodayReleaseMovie() : List<MovieResult>? {
+    fun getTodayReleaseMovie(): List<MovieResult>? {
         val currentDate = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val dateNow = formatter.format(currentDate)

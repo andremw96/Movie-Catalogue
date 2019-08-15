@@ -29,7 +29,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideContext(application: Application) : Context {
+    fun provideContext(application: Application): Context {
         return application.applicationContext
     }
 
@@ -58,7 +58,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRequestOptions() : RequestOptions {
+    fun provideRequestOptions(): RequestOptions {
         return RequestOptions()
                 .placeholder(R.drawable.white_background)
                 .fallback(R.drawable.noimage)
@@ -67,14 +67,14 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideGlideInstance(application: Application, requestOptions: RequestOptions) : RequestManager {
+    fun provideGlideInstance(application: Application, requestOptions: RequestOptions): RequestManager {
         return GlideApp.with(application)
                 .setDefaultRequestOptions(requestOptions)
     }
 
     @Singleton
     @Provides
-    fun provideMovieCatalogueDatabase(application: Application) : MoviCatalogueDatabase {
+    fun provideMovieCatalogueDatabase(application: Application): MoviCatalogueDatabase {
         return Room.databaseBuilder(
                 application.applicationContext,
                 MoviCatalogueDatabase::class.java,
@@ -86,19 +86,19 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideAppExecutors() : AppExecutors {
+    fun provideAppExecutors(): AppExecutors {
         return AppExecutors()
     }
 
     @Singleton
     @Provides
-    fun provideRateLimiter() : RateLimiter {
+    fun provideRateLimiter(): RateLimiter {
         return RateLimiter(10, TimeUnit.MINUTES)
     }
 
     @Singleton
     @Provides
-    fun provideSettingPreferences(context: Context) : SharedPreferences {
+    fun provideSettingPreferences(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 }

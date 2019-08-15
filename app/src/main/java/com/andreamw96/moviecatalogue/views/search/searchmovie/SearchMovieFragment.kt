@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
@@ -65,8 +64,8 @@ class SearchMovieFragment : BaseFragment() {
     private fun showSearchMovie() {
         searchViewModel.getSearchMovies.removeObservers(viewLifecycleOwner)
         searchViewModel.getSearchMovies.observe(viewLifecycleOwner, Observer { resource ->
-            if(resource != null) {
-                when(resource.status) {
+            if (resource != null) {
+                when (resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -122,7 +121,7 @@ class SearchMovieFragment : BaseFragment() {
     }
 
     override fun somethingHappened(isSuccess: Boolean) {
-        if(isSuccess) {
+        if (isSuccess) {
             rv_search_movie.visibility = View.VISIBLE
             img_search_movie_show_data_notfound.visibility = View.GONE
             txt_search_movie_data_notfound.visibility = View.GONE

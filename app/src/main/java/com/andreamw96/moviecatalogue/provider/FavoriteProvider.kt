@@ -31,8 +31,8 @@ class FavoriteProvider : DaggerContentProvider() {
     }
 
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, sortOrder: String?): Cursor? {
-        val cursor : Cursor?
-        when(sUriMatcher.match(uri)) {
+        val cursor: Cursor?
+        when (sUriMatcher.match(uri)) {
             FAVORITE -> {
                 cursor = favoriteDao.provideAllFavorites()
             }
@@ -61,7 +61,6 @@ class FavoriteProvider : DaggerContentProvider() {
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 
 
 }

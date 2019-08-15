@@ -11,9 +11,6 @@ import com.andreamw96.moviecatalogue.views.MainActivity
 import java.util.*
 
 
-
-
-
 class DailyReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -51,7 +48,7 @@ class DailyReminderReceiver : BroadcastReceiver() {
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]))
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
         calendar.set(Calendar.SECOND, 0)
-        if(calendar.timeInMillis <= System.currentTimeMillis()) {
+        if (calendar.timeInMillis <= System.currentTimeMillis()) {
             calendar.add(Calendar.DATE, 1)
         }
 

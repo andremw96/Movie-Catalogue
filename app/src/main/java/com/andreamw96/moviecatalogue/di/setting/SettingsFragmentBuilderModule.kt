@@ -8,6 +8,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class SettingsFragmentBuilderModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeNotifPrefFragment() : NotificationPreferenceFragment
+    abstract fun contributeNotifPrefFragment(): NotificationPreferenceFragment
 
 }

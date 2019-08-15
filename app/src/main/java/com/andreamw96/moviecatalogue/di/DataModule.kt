@@ -14,27 +14,27 @@ import retrofit2.Retrofit
 class DataModule {
 
     @Provides
-    fun provideMovieApi(retrofit: Retrofit) : MovieApi {
+    fun provideMovieApi(retrofit: Retrofit): MovieApi {
         return retrofit.create(MovieApi::class.java)
     }
 
     @Provides
-    fun provideCompositeDisposable() : CompositeDisposable {
+    fun provideCompositeDisposable(): CompositeDisposable {
         return CompositeDisposable()
     }
 
     @Provides
-    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase) : MovieDao {
+    fun provideMovieDao(movieCatalogueDatabase: MoviCatalogueDatabase): MovieDao {
         return movieCatalogueDatabase.movieDao()
     }
 
     @Provides
-    fun provideFavoriteDao(movieCatalogueDatabase: MoviCatalogueDatabase) : FavoriteDao {
+    fun provideFavoriteDao(movieCatalogueDatabase: MoviCatalogueDatabase): FavoriteDao {
         return movieCatalogueDatabase.favDao()
     }
 
     @Provides
-    fun provideTvShowsDao(movieCatalogueDatabase: MoviCatalogueDatabase) : TvShowDao {
+    fun provideTvShowsDao(movieCatalogueDatabase: MoviCatalogueDatabase): TvShowDao {
         return movieCatalogueDatabase.tvShowDao()
     }
 

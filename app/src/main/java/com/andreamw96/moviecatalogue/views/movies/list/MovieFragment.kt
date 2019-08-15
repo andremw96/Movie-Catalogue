@@ -78,8 +78,8 @@ class MovieFragment : BaseFragment() {
     private fun showMovie() {
         movieViewModel.movies.removeObservers(viewLifecycleOwner)
         movieViewModel.movies.observe(viewLifecycleOwner, Observer { resource ->
-            if(resource != null) {
-                when(resource.status) {
+            if (resource != null) {
+                when (resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
                         logd("LOADING...")
@@ -118,7 +118,7 @@ class MovieFragment : BaseFragment() {
     }
 
     override fun somethingHappened(isSuccess: Boolean) {
-        if(isSuccess) {
+        if (isSuccess) {
             rv_movie.visibility = View.VISIBLE
             img_movie_data_notfound.visibility = View.GONE
             txt_movie_data_notfound.visibility = View.GONE
