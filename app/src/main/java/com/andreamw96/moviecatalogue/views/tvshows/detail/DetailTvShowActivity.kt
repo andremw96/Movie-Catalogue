@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -30,7 +31,7 @@ class DetailTvShowActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_tv_show)
 
-        detailTvShowViewModel = ViewModelProviders.of(this, providersFactory).get(DetailTvShowViewModel::class.java)
+        detailTvShowViewModel = ViewModelProvider(this, providersFactory).get(DetailTvShowViewModel::class.java)
 
         showLoading()
 

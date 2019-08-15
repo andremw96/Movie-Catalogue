@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
@@ -38,7 +39,7 @@ class SearchTvFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
-            searchViewModel = ViewModelProviders.of(it, providersFactory).get(SearchViewModel::class.java)
+            searchViewModel = ViewModelProvider(it, providersFactory).get(SearchViewModel::class.java)
         }
 
         initRecyclerView()

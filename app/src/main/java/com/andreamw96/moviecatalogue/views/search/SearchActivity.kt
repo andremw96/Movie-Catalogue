@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.di.ViewModelProvidersFactory
@@ -33,7 +34,7 @@ class SearchActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        searchViewModel = ViewModelProviders.of(this, providersFactory).get(SearchViewModel::class.java)
+        searchViewModel = ViewModelProvider(this, providersFactory).get(SearchViewModel::class.java)
 
         if (supportActionBar != null) {
             supportActionBar?.apply {

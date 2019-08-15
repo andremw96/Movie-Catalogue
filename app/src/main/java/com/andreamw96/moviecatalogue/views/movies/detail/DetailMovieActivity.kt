@@ -5,7 +5,7 @@ import android.content.ComponentName
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
@@ -31,7 +31,7 @@ class DetailMovieActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        detailMovieViewModel = ViewModelProviders.of(this, providersFactory).get(DetailMovieViewModel::class.java)
+        detailMovieViewModel = ViewModelProvider(this, providersFactory).get(DetailMovieViewModel::class.java)
 
         showLoading()
 

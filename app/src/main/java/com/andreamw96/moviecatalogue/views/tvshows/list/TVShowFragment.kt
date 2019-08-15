@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
@@ -38,7 +38,7 @@ class TVShowFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvShowMovieViewModel = ViewModelProviders.of(this, providersFactory).get(TvShowViewModel::class.java)
+        tvShowMovieViewModel = ViewModelProvider(this, providersFactory).get(TvShowViewModel::class.java)
 
         initRecyclerView()
 

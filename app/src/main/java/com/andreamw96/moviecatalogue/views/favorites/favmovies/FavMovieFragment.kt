@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
@@ -36,7 +37,7 @@ class FavMovieFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showLoading()
-        favoriteViewModel = ViewModelProviders.of(this, providersFactory).get(FavoriteViewModel::class.java)
+        favoriteViewModel = ViewModelProvider(this, providersFactory).get(FavoriteViewModel::class.java)
         favoriteViewModel.setIsMovie(true)
 
         initRecyclerView()
