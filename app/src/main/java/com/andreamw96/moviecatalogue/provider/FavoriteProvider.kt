@@ -9,15 +9,16 @@ import com.andreamw96.moviecatalogue.utils.favorites_table
 import dagger.android.DaggerContentProvider
 import javax.inject.Inject
 
+fun Boolean.toInt() = if (this) 1 else 0
 
 class FavoriteProvider : DaggerContentProvider() {
 
     @Inject
     lateinit var favoriteDao: FavoriteDao
 
-    private val AUTHORITY = "com.andreamw96.moviecatalogue.provider"
+    private val AUTHORITY = "com.andreamw96.moviecatalogue"
 
-    val URI_FAVORITE = Uri.parse("content://" + AUTHORITY + "/" + favorites_table)
+    val URI_FAVORITE = Uri.parse("content://$AUTHORITY/$favorites_table")
 
     private val FAVORITE = 1
     private val FAVORITE_ID = 2
@@ -33,7 +34,10 @@ class FavoriteProvider : DaggerContentProvider() {
         val cursor : Cursor?
         when(sUriMatcher.match(uri)) {
             FAVORITE -> {
-                cursor = favoriteDao.provideFavorites()
+                cursor = favoriteDao.provideAllFavorites()
+            }
+            FAVORITE_ID -> {
+                cursor = favoriteDao.provideFavorites(uri.lastPathSegment!!.toInt() == 1)
             }
             else -> {
                 cursor = null

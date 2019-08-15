@@ -27,6 +27,10 @@ interface FavoriteDao {
     suspend fun deleteFavorites(idMovie: Int)
 
     // Content Provider
+    @Query("SELECT * FROM favorites_table WHERE isMovie = :isMovie")
+    fun provideFavorites(isMovie: Boolean): Cursor
+
+    // Content Provider
     @Query("SELECT * FROM favorites_table")
-    fun provideFavorites(): Cursor
+    fun provideAllFavorites(): Cursor
 }
