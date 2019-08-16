@@ -93,7 +93,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideRateLimiter(): RateLimiter {
-        return RateLimiter(10, TimeUnit.SECONDS)
+        return RateLimiter(30, TimeUnit.SECONDS)
     }
 
     @Singleton
