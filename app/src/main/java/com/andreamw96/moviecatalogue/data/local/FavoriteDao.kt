@@ -26,11 +26,19 @@ interface FavoriteDao {
     @Query("DELETE FROM favorites_table WHERE movieId = :idMovie")
     suspend fun deleteFavorites(idMovie: Int)
 
-    // Content Provider
+    /* Content Provider */
     @Query("SELECT * FROM favorites_table WHERE isMovie = :isMovie")
     fun provideFavorites(isMovie: Boolean): Cursor
 
-    // Content Provider
     @Query("SELECT * FROM favorites_table")
     fun provideAllFavorites(): Cursor
+
+    @Query("SELECT * FROM favorites_table WHERE movieId = :idMovie")
+    fun provideIsFavorite(idMovie: Int): Cursor
+
+    @Query("DELETE FROM favorites_table WHERE movieId = :idMovie")
+    fun deleteFavoritesProvider(idMovie: Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertProvider(favorite: Favorite?)
 }
