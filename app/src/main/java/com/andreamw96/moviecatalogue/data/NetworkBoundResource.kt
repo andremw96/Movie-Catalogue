@@ -32,8 +32,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 
     suspend fun build(): NetworkBoundResource<ResultType, RequestType> {
         withContext(Dispatchers.Main) {
-            result.value =
-                    Resource.loading(null)
+            result.value = Resource.loading(null)
         }
         CoroutineScope(coroutineContext).launch(Dispatchers.Main) {
             val dbSource = loadFromDb()

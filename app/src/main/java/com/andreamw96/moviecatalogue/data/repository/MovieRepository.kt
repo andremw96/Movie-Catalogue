@@ -27,6 +27,7 @@ class MovieRepository @Inject constructor(
     suspend fun setMovies(): LiveData<Resource<List<MovieResult>>> {
         return object : NetworkBoundResource<List<MovieResult>, Movies>(appExecutors) {
             override suspend fun saveCallResult(item: Movies) {
+                movieDao.deleteMovies()
                 movieDao.insert(item.results)
             }
 

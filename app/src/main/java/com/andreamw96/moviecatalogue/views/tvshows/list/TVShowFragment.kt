@@ -12,7 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.utils.*
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
+import com.andreamw96.moviecatalogue.utils.loge
+import com.andreamw96.moviecatalogue.utils.runAnimation
+import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
@@ -77,10 +80,8 @@ class TVShowFragment : BaseFragment() {
                 when (resource.status) {
                     Resource.Status.LOADING -> {
                         showLoading()
-                        logd("LOADING...")
                     }
                     Resource.Status.SUCCESS -> {
-                        logd("got the tvshows...")
                         hideLoading()
                         if (!resource.data.isNullOrEmpty()) {
                             resource.data?.let {

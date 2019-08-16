@@ -16,4 +16,7 @@ abstract class TvShowDao {
     @Query("SELECT * FROM tv_shows_table")
     abstract fun getTVShowLocal(): LiveData<List<TvResult>>
 
+    @Query("DELETE FROM tv_shows_table")
+    abstract suspend fun deleteTvShows()
+
 }

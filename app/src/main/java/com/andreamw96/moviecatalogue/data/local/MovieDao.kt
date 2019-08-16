@@ -16,4 +16,7 @@ abstract class MovieDao {
     @Query("SELECT * FROM movies_table")
     abstract fun getMoviesLocal(): LiveData<List<MovieResult>>
 
+    @Query("DELETE FROM movies_table")
+    abstract suspend fun deleteMovies()
+
 }

@@ -25,6 +25,7 @@ class TvShowRepository @Inject constructor(
     suspend fun setTvShows(): LiveData<Resource<List<TvResult>>> {
         return object : NetworkBoundResource<List<TvResult>, TvShows>(appExecutors) {
             override suspend fun saveCallResult(item: TvShows) {
+                tvShowDao.deleteTvShows()
                 tvShowDao.insert(item.results)
             }
 
