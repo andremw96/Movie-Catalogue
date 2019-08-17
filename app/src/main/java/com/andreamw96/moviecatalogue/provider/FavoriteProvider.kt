@@ -72,7 +72,7 @@ class FavoriteProvider : DaggerContentProvider() {
             }
         }
 
-        context.contentResolver.notifyChange(uri, null)
+        context?.contentResolver?.notifyChange(uri, null)
         return Uri.parse("$URI_FAVORITE/$added")
     }
 
@@ -80,11 +80,11 @@ class FavoriteProvider : DaggerContentProvider() {
         return when (sUriMatcher.match(uri)) {
             FAVORITE_ID -> {
                 favoriteDao.deleteFavoritesProvider(uri.lastPathSegment!!.toInt())
-                context.contentResolver.notifyChange(uri, null)
+                context?.contentResolver?.notifyChange(uri, null)
                 1
             }
             else -> {
-                context.contentResolver.notifyChange(uri, null)
+                context?.contentResolver?.notifyChange(uri, null)
                 0
             }
         }
