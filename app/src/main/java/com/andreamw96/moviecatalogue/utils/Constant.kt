@@ -19,7 +19,6 @@ const val GROUP_KEY_NOTIFICATION = "GROUP_KEY_NOTIFICATION"
 
 const val favorites_table = "favorites_table"
 
-
 const val COLUMN_MOVIE_ID = "movieId"
 const val COLUMN_IS_MOVIE = "isMovie"
 const val COLUMN_TITLE = "title"

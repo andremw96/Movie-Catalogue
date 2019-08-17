@@ -39,27 +39,17 @@ data class Favorite(
 }
 
 fun fromContentValues(values: ContentValues): Favorite? {
-    val favorite : Favorite? = null
-    if (values.containsKey(COLUMN_MOVIE_ID)) {
-        favorite?.movieId = values.getAsInteger(COLUMN_MOVIE_ID)
+    return if (values.containsKey(COLUMN_MOVIE_ID) && values.containsKey(COLUMN_IS_MOVIE) && values.containsKey(COLUMN_TITLE) &&
+            values.containsKey(COLUMN_RELEASE_DATE) && values.containsKey(COLUMN_BACKDROP) && values.containsKey(COLUMN_VOTE) &&
+            values.containsKey(COLUMN_OVERVIEW)) {
+        Favorite(values.getAsInteger(COLUMN_MOVIE_ID),
+                values.getAsBoolean(COLUMN_IS_MOVIE),
+                values.getAsString(COLUMN_TITLE),
+                values.getAsString(COLUMN_RELEASE_DATE),
+                values.getAsString(COLUMN_BACKDROP),
+                values.getAsDouble(COLUMN_VOTE),
+                values.getAsString(COLUMN_OVERVIEW))
+    } else {
+        null
     }
-    if (values.containsKey(COLUMN_IS_MOVIE)) {
-        favorite?.isMovie = values.getAsBoolean(COLUMN_IS_MOVIE)
-    }
-    if (values.containsKey(COLUMN_TITLE)) {
-        favorite?.title = values.getAsString(COLUMN_TITLE)
-    }
-    if (values.containsKey(COLUMN_RELEASE_DATE)) {
-        favorite?.releaseDate = values.getAsString(COLUMN_RELEASE_DATE)
-    }
-    if (values.containsKey(COLUMN_BACKDROP)) {
-        favorite?.backdropPath = values.getAsString(COLUMN_BACKDROP)
-    }
-    if (values.containsKey(COLUMN_VOTE)) {
-        favorite?.voteAverage = values.getAsDouble(COLUMN_VOTE)
-    }
-    if (values.containsKey(COLUMN_OVERVIEW)) {
-        favorite?.overview = values.getAsString(COLUMN_OVERVIEW)
-    }
-    return favorite
 }

@@ -58,10 +58,14 @@ class FavoriteProvider : DaggerContentProvider() {
     override fun getType(uri: Uri): String? = null
 
     override fun insert(uri: Uri, values: ContentValues): Uri? {
-        val added = when(sUriMatcher.match(uri)) {
+        val added = when (sUriMatcher.match(uri)) {
             FAVORITE -> {
-                favoriteDao.insertProvider(fromContentValues(values))
-                1
+                if (fromContentValues(values) != null) {
+                    favoriteDao.insertProvider(fromContentValues(values))
+                    1
+                } else {
+                    0
+                }
             }
             else -> {
                 0
@@ -73,7 +77,7 @@ class FavoriteProvider : DaggerContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        return when(sUriMatcher.match(uri)) {
+        return when (sUriMatcher.match(uri)) {
             FAVORITE_ID -> {
                 favoriteDao.deleteFavoritesProvider(uri.lastPathSegment!!.toInt())
                 context.contentResolver.notifyChange(uri, null)
