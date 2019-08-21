@@ -5,15 +5,42 @@
     <string name="ratingString">Rating : \t</string>
     <string name="releaseDateString">Release Date :\t</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="movies">Movies</string>
     <string name="tv_shows">TV Shows</string>
     <string name="poster_film">Poster Film</string>
 
-    <string name="change_language_settings">Change Language Settings</string>
+    <string name="change_language_settings">Change Language</string>
+    <string name="change_settings_app">Settings</string>
+
     <string name="favorites">Favorites</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="buttonfav">ButtonFav</string>
+    <string name="failed_fetch_movies">Failed to fetch movies data</string>
+    <string name="failed_fetch_tv">Failed to fetch tv shows data</string>
+
+    <string name="success_delete_fav">Deleted from favorite</string>
+    <string name="success_add_fav">Added to Favorite</string>
+
+    <string name="search">Search</string>
+
+    <string name="ok">OK</string>
+
+    <string name="movie_widget_text">Your Favorite Movie</string>
+    <string name="tv_widget_text">Your Favorite Tv Shows</string>
+    <string name="empty_banner">No Data</string>
+
+    <string name="fav_movie_banner">Favorite Movie</string>
+    <string name="fav_tv_banner">Favorite TV</string>
+
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="content_daily_reminder">Let\'s check the latest films in the movie catalog application</string>
+
+    <string name="enable_daily_reminder">Daily Reminder to check new movies</string>
+    <string name="today_release_reminder">Today Release Reminder</string>
+    <string name="today_release_summary">Notification for today released movies</string>
+    <string name="notification_disabled">Notification Disabled</string>
+    <string name="toastTodayReleaseReminder">Today movie release reminder has been set to 8am</string>
+    <string name="best_movies_is_coming">Waiting For the Best Movie List</string>
+
+    <string name="no_data">No Data Found</string>
+
 </resources>

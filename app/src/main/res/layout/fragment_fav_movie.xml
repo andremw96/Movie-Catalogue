@@ -18,4 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/img_favmovie_data_notfound"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone"
+        android:src="@drawable/not_found"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/imageviewmovie" />
+
 </FrameLayout>

@@ -3,6 +3,16 @@
     package="com.andreamw96.moviecatalogue">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <permission
+        android:name="com.andreamw96.moviecatalogue.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.andreamw96.moviecatalogue.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".BaseApplication"
@@ -12,15 +22,120 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.tvshows.detail.DetailTvShowActivity"></activity>
-        <activity android:name=".views.movies.detail.DetailMovieActivity" />
-        <activity android:name=".views.MainActivity">
+        <activity
+            android:name=".views.SplashScreenActivity"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".views.settings.SettingsActivity" />
+
+        <service
+            android:name=".widget.movie.StackMovieWidgetService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".widget.tvshows.StackTvWidgetService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".service.TodayReleaseReminderJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.restartalarm.BootService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".widget.movie.FavoriteMovieBannerWidget"
+            android:label="@string/fav_movie_banner">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".widget.tvshows.FavoriteTvBannerWidget"
+            android:label="@string/fav_tv_banner">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+
+        <activity android:name=".views.tvshows.detail.DetailTvShowActivity" />
+        <activity
+            android:name=".views.movies.detail.DetailMovieActivity"
+            android:parentActivityName=".views.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.MainActivity" />
+        </activity>
+        <activity
+            android:name=".views.MainActivity"
+            android:launchMode="singleTop">
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".views.search.SearchActivity" />
+        </activity>
+        <activity
+            android:name=".views.search.SearchActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".views.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.MainActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <receiver
+            android:name=".service.br.DailyReminderReceiver"
+            android:enabled="true" />
+        <receiver
+            android:name=".service.br.TodayReleaseMovieReceiver"
+            android:enabled="true" />
+        <receiver
+            android:name=".service.br.TodayReleaseReminderReceiver"
+            android:enabled="true" />
+        <receiver
+            android:name=".service.restartalarm.RestartAlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:authorities="com.andreamw96.moviecatalogue"
+            android:name=".provider.FavoriteProvider"
+            android:exported="true"
+            android:readPermission="com.andreamw96.moviecatalogue.READ_DATABASE"
+            android:writePermission="com.andreamw96.moviecatalogue.WRITE_DATABASE" />
     </application>
 
 </manifest>

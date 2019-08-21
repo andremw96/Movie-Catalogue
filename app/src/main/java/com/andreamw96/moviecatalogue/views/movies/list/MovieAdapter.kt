@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.utils.loadImage
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
+import com.andreamw96.moviecatalogue.utils.dateFormatter
+import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
+import javax.inject.Inject
 
-class MovieAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
+class MovieAdapter @Inject constructor(private val context: Context?, private val requestManager: RequestManager) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
 
     val listMovie: ArrayList<MovieResult> = arrayListOf()
 
@@ -26,7 +27,7 @@ class MovieAdapter(private val context: Context?, private val mOnItemClickListen
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CardViewViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.cardview_movie, viewGroup, false)
-        return CardViewViewHolder(view, mOnItemClickListener)
+        return CardViewViewHolder(view)
     }
 
     override fun onBindViewHolder(cardViewViewHolder: CardViewViewHolder, i: Int) {
@@ -35,24 +36,16 @@ class MovieAdapter(private val context: Context?, private val mOnItemClickListen
 
     override fun getItemCount(): Int = listMovie.size
 
-    inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
+    inner class CardViewViewHolder internal constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bindItem(movie: MovieResult) {
 
-            img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                    .append(movie.backdropPath).toString())
+            requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
+                    .into(img_movie)
             txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), dateFormatter(movie.releaseDate))
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
-
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(view: View) {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                onItemClickListener.onItemClicked(adapterPosition)
-            }
+            rating_bar.rating = movie.voteAverage.toFloat() / 2
         }
     }
 }

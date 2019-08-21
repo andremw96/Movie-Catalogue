@@ -6,15 +6,42 @@
     <string name="ratingString">Skor : \t</string>
     <string name="releaseDateString">Tanggal Rilis : \t</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="movies">Film</string>
     <string name="tv_shows">Seri TV</string>
     <string name="poster_film">Poster Film</string>
 
-    <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
+    <string name="change_language_settings">Ubah Bahasa</string>
+    <string name="change_settings_app">Pengaturan</string>
     <string name="favorites">Favorit</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="buttonfav">ButtonFav</string>
+    <string name="failed_fetch_movies">Gagal memuat daftar film</string>
+    <string name="failed_fetch_tv">Gagal memuat daftar seri tv</string>
+
+    <string name="success_delete_fav">Berhasil dihapus dari favorite</string>
+    <string name="success_add_fav">Berhasil ditambahkan ke favorite</string>
+
+    <string name="search">Cari</string>
+
+    <string name="ok">OK</string>
+
+    <string name="movie_widget_text">Film Favorite Anda</string>
+    <string name="tv_widget_text">Seri Tv Favorite Anda</string>
+    <string name="empty_banner">Tidak ada data</string>
+
+    <string name="fav_movie_banner">Film Favorite</string>
+    <string name="fav_tv_banner">Seri Tv Favorite</string>
+
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="content_daily_reminder">Ayo cek film terbaru di aplikasi movie catalogue</string>
+
+    <string name="enable_daily_reminder">Pengingat harian untuk cek film baru</string>
+    <string name="today_release_reminder">Film rilis hari ini</string>
+    <string name="today_release_summary">Pengingat untuk film rilis hari ini</string>
+    <string name="notification_disabled">Tidak ada Notifikasi</string>
+
+    <string name="toastTodayReleaseReminder">Pengingat film rilis hari ini telah diset pada jam 8 pagi</string>
+    <string name="best_movies_is_coming">Menunggu untuk Daftar Film Terbaik</string>
+
+    <string name="no_data">Data Tidak Ditemukan</string>
+
 </resources>

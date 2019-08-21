@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_movie"
     android:layout_width="match_parent"
@@ -14,9 +15,35 @@
         android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movie"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/img_movie_data_notfound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="not_found.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
+
+    <TextView
+        android:id="@+id/txt_movie_data_notfound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:fontFamily="@font/aldrich"
+        android:layout_gravity="bottom"
+        android:text="@string/no_data"
+        android:textSize="30sp"
+        android:textStyle="normal|italic" />
 
 </FrameLayout>

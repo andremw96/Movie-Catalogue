@@ -6,13 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.favorites.FavoriteFragment">
 
-    <!-- <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center"
-        android:elevation="0dp">
-
-    </com.google.android.material.appbar.AppBarLayout> -->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_fav"

@@ -1,4 +1,8 @@
 <resources>
-    <dimen name="activity_vertical_margin">16dp</dimen>
     <integer name="animation_duration">1000</integer>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
 </resources>

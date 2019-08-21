@@ -1,31 +1,35 @@
 package com.andreamw96.moviecatalogue.views.tvshows.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.andreamw96.moviecatalogue.data.model.TvResult
-import com.andreamw96.moviecatalogue.data.network.TvShowRepository
+import com.andreamw96.moviecatalogue.data.repository.TvShowRepository
+import com.andreamw96.moviecatalogue.views.common.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class TvShowViewModel : ViewModel() {
+class TvShowViewModel @Inject constructor(private val tvShowRepository: TvShowRepository) : ViewModel() {
 
-    private var tvShowRepository = TvShowRepository()
+    private val _tvshows = MediatorLiveData<Resource<List<TvResult>>>()
+    private var tvShowsSource: LiveData<Resource<List<TvResult>>> = MutableLiveData()
 
-    fun setTvShows() {
-        tvShowRepository.setTvShows()
+    // LiveData that would be observe in view
+    val tvshows: LiveData<Resource<List<TvResult>>> = _tvshows
+
+    init {
+        listTvShows()
     }
 
-    fun getTvShows(): LiveData<List<TvResult>> {
-        return tvShowRepository.getTvShows()
-    }
-
-    fun getStatus(): MutableLiveData<Boolean?> {
-        return tvShowRepository.getStatusNetwork()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        tvShowRepository.clearRepo()
+    private fun listTvShows() = viewModelScope.launch(Dispatchers.Main) {
+        _tvshows.removeSource(tvShowsSource)
+        withContext(Dispatchers.IO) {
+            tvShowsSource = tvShowRepository.setTvShows()
+        }
+        _tvshows.addSource(tvShowsSource) {
+            _tvshows.value = it
+        }
     }
 
 }

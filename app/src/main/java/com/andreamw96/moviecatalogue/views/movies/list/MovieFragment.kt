@@ -8,25 +8,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.MovieResult
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
+import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.utils.showSnackbar
+import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
-import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_movie.*
+import javax.inject.Inject
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class MovieFragment : BaseFragment() {
 
     private lateinit var movieViewModel: MovieViewModel
-    private lateinit var movieAdapter: MovieAdapter
+
+    @Inject
+    lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,42 +43,71 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        movieViewModel.getMovies().observe(this, getMovies)
+        movieViewModel = ViewModelProvider(this, providersFactory).get(MovieViewModel::class.java)
 
-        movieAdapter = MovieAdapter(context, this)
+        initRecyclerView()
 
+        rv_movie.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_movie, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val goToDetail = Intent(activity, DetailMovieActivity::class.java)
+                goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position])
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+
+            }
+
+        }))
+
+        showMovie()
+    }
+
+    private fun initRecyclerView() {
         rv_movie.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = movieAdapter
-            movieAdapter.notifyDataSetChanged()
+            val alphaAdapter = AlphaInAnimationAdapter(movieAdapter)
+            adapter = ScaleInAnimationAdapter(alphaAdapter).apply {
+                // Change the durations.
+                setDuration(500)
+                // Disable the first scroll mode.
+                setFirstOnly(false)
+                notifyDataSetChanged()
+            }
         }
+    }
 
-        showLoading()
-        movieViewModel.setMovies()
-
-        movieViewModel.getStatus().observe(this, Observer { status ->
-            if (status == false) {
-                Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
-                hideLoading()
-            } else {
-                runAnimation(rv_movie)
+    private fun showMovie() {
+        movieViewModel.movies.removeObservers(viewLifecycleOwner)
+        movieViewModel.movies.observe(viewLifecycleOwner, Observer { resource ->
+            if (resource != null) {
+                when (resource.status) {
+                    Resource.Status.LOADING -> {
+                        showLoading()
+                    }
+                    Resource.Status.SUCCESS -> {
+                        hideLoading()
+                        if (!resource.data.isNullOrEmpty()) {
+                            resource.data?.let {
+                                movieAdapter.bindData(it)
+                            }
+                            somethingHappened(true)
+                            runAnimation(rv_movie)
+                        } else {
+                            movieAdapter.bindData(emptyList())
+                            somethingHappened(false)
+                        }
+                    }
+                    Resource.Status.ERROR -> {
+                        hideLoading()
+                        somethingHappened(false)
+                        showSnackbar(fragment_movie, context?.getString(R.string.failed_fetch_movies))
+                        loge("ERROR ${resource.message}")
+                    }
+                }
             }
         })
-    }
-
-    private val getMovies = Observer<List<MovieResult>> { movieItems ->
-        if (movieItems != null) {
-            movieAdapter.bindData(movieItems)
-            hideLoading()
-        }
-    }
-
-    override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position])
-        startActivity(goToDetail)
     }
 
     override fun showLoading() {
@@ -81,5 +116,19 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarMovieFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if (isSuccess) {
+            rv_movie.visibility = View.VISIBLE
+            img_movie_data_notfound.visibility = View.GONE
+            txt_movie_data_notfound.visibility = View.GONE
+            img_movie_data_notfound.cancelAnimation()
+        } else {
+            rv_movie.visibility = View.GONE
+            img_movie_data_notfound.visibility = View.VISIBLE
+            txt_movie_data_notfound.visibility = View.VISIBLE
+            img_movie_data_notfound.playAnimation()
+        }
     }
 }

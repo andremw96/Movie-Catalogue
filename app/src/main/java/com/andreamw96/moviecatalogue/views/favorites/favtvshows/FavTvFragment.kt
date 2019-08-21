@@ -6,26 +6,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.Favorite
 import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
 import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteViewModel
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import kotlinx.android.synthetic.main.fragment_fav_tv.*
+import javax.inject.Inject
 
 
-class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class FavTvFragment : BaseFragment() {
 
     private lateinit var favoriteViewModel: FavoriteViewModel
-    private lateinit var favAdapter: FavoriteAdapter
+
+    @Inject
+    lateinit var favAdapter: FavoriteAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,43 +38,57 @@ class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         super.onViewCreated(view, savedInstanceState)
 
         showLoading()
-        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
-        favoriteViewModel.getFavorite(false).observe(this, getFavTvs)
+        favoriteViewModel = ViewModelProvider(this, providersFactory).get(FavoriteViewModel::class.java)
+        favoriteViewModel.setIsMovie(false)
 
-        favAdapter = FavoriteAdapter(context, this)
+        initRecyclerView()
 
+        rv_fav_tv.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_fav_tv, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val tvShow = TvResult()
+                tvShow.apply {
+                    id = favAdapter.listFav[position].movieId
+                    backdropPath = favAdapter.listFav[position].backdropPath
+                    name = favAdapter.listFav[position].title
+                    firstAirDate = favAdapter.listFav[position].releaseDate
+                    overview = favAdapter.listFav[position].overview
+                    voteAverage = favAdapter.listFav[position].voteAverage
+                }
+
+                val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
+                goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShow)
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+            }
+        }))
+
+        setFavorites()
+    }
+
+    private fun setFavorites() {
+        favoriteViewModel.favorites.removeObservers(viewLifecycleOwner)
+        favoriteViewModel.favorites.observe(viewLifecycleOwner, Observer { favItems ->
+            if (favItems != null) {
+                favAdapter.bindData(favItems)
+                runAnimation(rv_fav_tv)
+                somethingHappened(true)
+            } else {
+                somethingHappened(false)
+            }
+
+            hideLoading()
+        })
+    }
+
+    private fun initRecyclerView() {
         rv_fav_tv.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = favAdapter
             favAdapter.notifyDataSetChanged()
         }
-
-    }
-
-    private val getFavTvs = Observer<List<Favorite>> { favItems ->
-        if (favItems != null) {
-            favAdapter.bindData(favItems)
-            runAnimation(rv_fav_tv)
-
-            hideLoading()
-        }
-    }
-
-    override fun onItemClicked(position: Int) {
-        val tvShow = TvResult()
-        tvShow.apply {
-            id = favAdapter.listFav[position].movieId
-            backdropPath = favAdapter.listFav[position].backdropPath
-            name = favAdapter.listFav[position].title
-            firstAirDate = favAdapter.listFav[position].releaseDate
-            overview = favAdapter.listFav[position].overview
-            voteAverage = favAdapter.listFav[position].voteAverage
-        }
-
-        val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
-        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShow)
-        startActivity(goToDetail)
     }
 
     override fun showLoading() {
@@ -82,5 +97,15 @@ class FavTvFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarFavTvFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if (isSuccess) {
+            rv_fav_tv.visibility = View.VISIBLE
+            img_favtv_data_notfound.visibility = View.GONE
+        } else {
+            rv_fav_tv.visibility = View.GONE
+            img_favtv_data_notfound.visibility = View.VISIBLE
+        }
     }
 }

@@ -1,32 +1,35 @@
 package com.andreamw96.moviecatalogue.views.movies.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.andreamw96.moviecatalogue.data.model.MovieResult
-import com.andreamw96.moviecatalogue.data.network.MovieRepository
+import com.andreamw96.moviecatalogue.data.repository.MovieRepository
+import com.andreamw96.moviecatalogue.views.common.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class MovieViewModel : ViewModel() {
+class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
 
-    private var movieRepository = MovieRepository()
+    private val _movies = MediatorLiveData<Resource<List<MovieResult>>>()
+    private var moviesSource: LiveData<Resource<List<MovieResult>>> = MutableLiveData()
 
-    fun setMovies() {
-        movieRepository.setMovies()
+    // LiveData that would be observe in view
+    val movies: LiveData<Resource<List<MovieResult>>> = _movies
+
+    init {
+        listMovies()
     }
 
-    fun getMovies(): LiveData<List<MovieResult>> {
-        return movieRepository.getMovies()
-    }
-
-    fun getStatus(): MutableLiveData<Boolean?> {
-        return movieRepository.getStatusNetwork()
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        movieRepository.clearRepo()
+    private fun listMovies() = viewModelScope.launch(Dispatchers.Main) {
+        _movies.removeSource(moviesSource)
+        withContext(Dispatchers.IO) {
+            moviesSource = movieRepository.setMovies()
+        }
+        _movies.addSource(moviesSource) {
+            _movies.value = it
+        }
     }
 
 

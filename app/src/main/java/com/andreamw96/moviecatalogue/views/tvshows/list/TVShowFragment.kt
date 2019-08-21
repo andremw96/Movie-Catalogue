@@ -8,24 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.model.TvResult
+import com.andreamw96.moviecatalogue.utils.RecyclerItemClickListener
+import com.andreamw96.moviecatalogue.utils.loge
 import com.andreamw96.moviecatalogue.utils.runAnimation
-import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.utils.showSnackbar
+import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
-import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_tvshow.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class TVShowFragment : BaseFragment() {
 
     private lateinit var tvShowMovieViewModel: TvShowViewModel
-    private lateinit var tvShowsAdapter: TvShowsAdapter
+
+    @Inject
+    lateinit var tvShowsAdapter: TvShowsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,41 +41,68 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvShowMovieViewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
-        tvShowMovieViewModel.getTvShows().observe(this, getTvShows)
+        tvShowMovieViewModel = ViewModelProvider(this, providersFactory).get(TvShowViewModel::class.java)
 
-        tvShowsAdapter = TvShowsAdapter(activity, this)
+        initRecyclerView()
+
+        rv_tv_show.addOnItemTouchListener(RecyclerItemClickListener(activity?.applicationContext, rv_tv_show, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
+                goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
+                startActivity(goToDetail)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+            }
+        }))
+
+        showTvShows()
+    }
+
+    private fun initRecyclerView() {
         rv_tv_show.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = tvShowsAdapter
-            tvShowsAdapter.notifyDataSetChanged()
+            adapter = SlideInBottomAnimationAdapter(tvShowsAdapter).apply {
+                // Change the durations.
+                setDuration(1000)
+                // Disable the first scroll mode.
+                setFirstOnly(false)
+                notifyDataSetChanged()
+            }
         }
+    }
 
-        showLoading()
-        tvShowMovieViewModel.setTvShows()
-
-        tvShowMovieViewModel.getStatus().observe(this, Observer { status ->
-            if (status == false) {
-                Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_LONG).show()
-                hideLoading()
-            } else {
-                runAnimation(rv_tv_show)
+    private fun showTvShows() {
+        tvShowMovieViewModel.tvshows.removeObservers(viewLifecycleOwner)
+        tvShowMovieViewModel.tvshows.observe(viewLifecycleOwner, Observer { resource ->
+            if (resource != null) {
+                when (resource.status) {
+                    Resource.Status.LOADING -> {
+                        showLoading()
+                    }
+                    Resource.Status.SUCCESS -> {
+                        hideLoading()
+                        if (!resource.data.isNullOrEmpty()) {
+                            resource.data?.let {
+                                tvShowsAdapter.bindData(it)
+                            }
+                            somethingHappened(true)
+                            runAnimation(rv_tv_show)
+                        } else {
+                            tvShowsAdapter.bindData(emptyList())
+                            somethingHappened(false)
+                        }
+                    }
+                    Resource.Status.ERROR -> {
+                        hideLoading()
+                        somethingHappened(false)
+                        showSnackbar(fragment_tvshow, context?.getString(R.string.failed_fetch_tv))
+                        loge("ERROR ${resource.message}")
+                    }
+                }
             }
         })
-    }
-
-    override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
-        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
-        startActivity(goToDetail)
-    }
-
-    private val getTvShows = Observer<List<TvResult>> { tvItems ->
-        if (tvItems != null) {
-            tvShowsAdapter.bindData(tvItems)
-            hideLoading()
-        }
     }
 
     override fun showLoading() {
@@ -79,6 +111,20 @@ class TVShowFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
     override fun hideLoading() {
         progressBarTvFrag.visibility = View.GONE
+    }
+
+    override fun somethingHappened(isSuccess: Boolean) {
+        if (isSuccess) {
+            rv_tv_show.visibility = View.VISIBLE
+            img_tv_show_data_notfound.visibility = View.GONE
+            txt_tv_data_notfound.visibility = View.GONE
+            img_tv_show_data_notfound.cancelAnimation()
+        } else {
+            rv_tv_show.visibility = View.GONE
+            img_tv_show_data_notfound.visibility = View.VISIBLE
+            txt_tv_data_notfound.visibility = View.VISIBLE
+            img_tv_show_data_notfound.playAnimation()
+        }
     }
 
 }

@@ -2,7 +2,10 @@ package com.andreamw96.moviecatalogue.data.model
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 data class TvShows(
@@ -17,31 +20,22 @@ data class TvShows(
 )
 
 @Parcelize
+@Entity(tableName = "tv_shows_table")
 data class TvResult(
         @SerializedName("backdrop_path")
-        var backdropPath: String = "",
+        var backdropPath: String? = null,
         @SerializedName("first_air_date")
-        var firstAirDate: String = "",
-        @SerializedName("genre_ids")
-        var genreIds: List<Int> = emptyList(),
+        var firstAirDate: String? = null,
         @SerializedName("id")
         var id: Int = -1,
         @SerializedName("name")
-        var name: String = "",
-        @SerializedName("origin_country")
-        var originCountry: List<String> = emptyList(),
-        @SerializedName("original_language")
-        var originalLanguage: String = "",
-        @SerializedName("original_name")
-        var originalName: String = "",
+        var name: String? = null,
         @SerializedName("overview")
-        var overview: String = "",
-        @SerializedName("popularity")
-        var popularity: Double = 0.0,
-        @SerializedName("poster_path")
-        var posterPath: String = "",
+        var overview: String? = null,
         @SerializedName("vote_average")
-        var voteAverage: Double = 0.0,
-        @SerializedName("vote_count")
-        var voteCount: Int = 0
-) : Parcelable
+        var voteAverage: Double = 0.0
+) : Parcelable {
+    @IgnoredOnParcel
+    @PrimaryKey(autoGenerate = true)
+    var autoid: Int = 0
+}

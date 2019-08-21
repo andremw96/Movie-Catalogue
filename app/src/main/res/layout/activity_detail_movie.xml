@@ -6,24 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".views.movies.detail.DetailMovieActivity">
 
-   <!-- <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="@color/colorPrimary">
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout> -->
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_detail_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -54,19 +39,21 @@
             app:srcCompat="@drawable/poster_infinity_war"
             android:contentDescription="@string/poster_film" />
 
-        <ImageButton
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/fav_button_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:contentDescription="@string/buttonfav"
-            android:src="@drawable/ic_fav"
+            app:layout_constraintBottom_toBottomOf="@+id/detail_image_movie"
             app:layout_constraintEnd_toEndOf="@+id/detail_image_movie"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/detail_image_movie"
-            app:layout_constraintTop_toBottomOf="@+id/detail_image_movie" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_image_movie"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="favourite_app_icon.json"
+            app:lottie_loop="false"
+            app:lottie_speed="1" />
 
         <TextView
             android:id="@+id/detail_title_movie"

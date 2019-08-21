@@ -1,20 +1,28 @@
 package com.andreamw96.moviecatalogue.views
 
+import android.app.SearchManager
+import android.app.SearchManager.QUERY
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.views.favorites.FavoriteFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
+import com.andreamw96.moviecatalogue.views.settings.SettingsActivity
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : DaggerAppCompatActivity() {
+
+    private lateinit var searchView: SearchView
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val fragment: Fragment
@@ -52,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         if (savedInstanceState == null) {
@@ -61,16 +71,46 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = (menu.findItem(R.id.search_m).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setIconifiedByDefault(false)
+            clearFocus()
+        }
+
+        return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_change_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+        when (item.itemId) {
+            R.id.action_change_settings -> {
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+                return false
+            }
+
+            R.id.search_m -> {
+                return onSearchRequested()
+            }
+
+            R.id.action_settings_app -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+
+                return false
+            }
+
+            else -> return false
         }
-        return super.onOptionsItemSelected(item)
     }
 
+    override fun onSearchRequested(): Boolean {
+        val appData = Bundle().apply {
+            putString(QUERY, "${searchView.query}")
+        }
+        startSearch(null, false, appData, false)
+
+        return true
+    }
 }
