@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.MovieResult
+import com.andreamw96.moviecatalogue.model.Movies
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import kotlinx.android.extensions.LayoutContainer
@@ -16,9 +15,9 @@ import java.util.*
 
 class MovieAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
 
-    val listMovie: ArrayList<MovieResult> = arrayListOf()
+    val listMovie: ArrayList<Movies> = arrayListOf()
 
-    fun bindData(movies: List<MovieResult>) {
+    fun bindData(movies: List<Movies>) {
         listMovie.clear()
         listMovie.addAll(movies)
         notifyDataSetChanged()
@@ -37,13 +36,12 @@ class MovieAdapter(private val context: Context?, private val mOnItemClickListen
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-        fun bindItem(movie: MovieResult) {
+        fun bindItem(movie: Movies) {
 
-            img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                    .append(movie.backdropPath).toString())
+            img_movie.loadImage(movie.photo.toString())
             txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
-            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.date)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.rating)
 
             itemView.setOnClickListener(this)
         }

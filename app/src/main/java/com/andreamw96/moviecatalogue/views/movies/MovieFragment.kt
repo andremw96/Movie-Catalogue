@@ -7,24 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.MovieResult
+import com.andreamw96.moviecatalogue.model.Movies
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
-import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class MovieFragment : Fragment(), OnItemClickListener {
 
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var movieAdapter: MovieAdapter
+    private lateinit var movies: List<Movies>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,9 +34,10 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         super.onViewCreated(view, savedInstanceState)
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        movieViewModel.getMovies().observe(this, getMovies)
+        movies = movieViewModel.getMovies()
 
         movieAdapter = MovieAdapter(context, this)
+        movieAdapter.bindData(movies)
 
         rv_movie.apply {
             setHasFixedSize(true)
@@ -46,24 +45,8 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
             rv_movie.adapter = movieAdapter
         }
 
-        showLoading()
-        movieViewModel.setMovies()
-
-        movieViewModel.status.observe(this, Observer { status ->
-            if (status == false) {
-                Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
-                hideLoading()
-            }
-        }
-        )
     }
 
-    private val getMovies = Observer<List<MovieResult>> { movieItems ->
-        if (movieItems != null) {
-            movieAdapter.bindData(movieItems)
-            hideLoading()
-        }
-    }
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
@@ -71,11 +54,4 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
         startActivity(goToDetail)
     }
 
-    override fun showLoading() {
-        progressBarMovieFrag.visibility = View.VISIBLE
-    }
-
-    override fun hideLoading() {
-        progressBarMovieFrag.visibility = View.GONE
-    }
 }
