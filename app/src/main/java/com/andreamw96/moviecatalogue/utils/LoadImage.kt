@@ -1,11 +1,13 @@
 package com.andreamw96.moviecatalogue.utils
 
 import android.widget.ImageView
+import com.andreamw96.moviecatalogue.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 fun ImageView.loadImage(source: String?) {
-    val requestBuilder = Glide.with(this.context)
+    val requestBuilder = GlideApp.with(this.context)
             .load(source ?: "")
-
-    requestBuilder.into(this)
+            .apply(RequestOptions.placeholderOf(R.drawable.ic_broken_image).error(R.drawable.ic_broken_image))
+            .into(this)
 }
