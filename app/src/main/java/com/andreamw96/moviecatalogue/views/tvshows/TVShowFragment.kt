@@ -47,7 +47,7 @@ class TVShowFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
-        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
+        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShows[position].id)
         startActivity(goToDetail)
     }
 

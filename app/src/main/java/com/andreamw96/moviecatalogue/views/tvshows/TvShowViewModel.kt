@@ -8,6 +8,6 @@ import com.andreamw96.moviecatalogue.model.TVShowData
 class TvShowViewModel : ViewModel() {
 
     fun getTvShows(): List<Movies> {
-        return TVShowData.listData
+        return TVShowData.listData()
     }
 }

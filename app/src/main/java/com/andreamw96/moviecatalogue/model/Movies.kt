@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Movies (
+    var id: Int = -1,
     var title: String? = null,
     var date: String? = null,
     var photo: String? = null,

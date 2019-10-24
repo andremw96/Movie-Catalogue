@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.Movies
@@ -16,22 +17,30 @@ class DetailTvShowActivity : AppCompatActivity() {
         const val INTENT_TV_SHOW = "intent_tv_show"
     }
 
+    private lateinit var detailTvShowViewModel: DetailTvShowViewModel
+    private var selectedTvShows: Movies? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_tv_show)
 
-        val tvShow = intent.getParcelableExtra<Movies>(INTENT_TV_SHOW)
+        detailTvShowViewModel = ViewModelProviders.of(this).get(DetailTvShowViewModel::class.java)
+
+        val tvShowId = intent.getIntExtra(INTENT_TV_SHOW, 0)
+
+        detailTvShowViewModel.tvShowId = tvShowId
+        selectedTvShows = detailTvShowViewModel.getSelectedTvShow()
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.title = tvShow?.title
+            supportActionBar?.title = selectedTvShows?.title
         }
 
-        detail_image_tvshow.loadImage(tvShow?.photo.toString())
-        detail_title_tvshow.text = tvShow?.title
-        detail_description_tvshow.text = tvShow?.description
-        detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), tvShow?.rating)
-        detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), tvShow?.date)
+        detail_image_tvshow.loadImage(selectedTvShows?.photo.toString())
+        detail_title_tvshow.text = selectedTvShows?.title
+        detail_description_tvshow.text = selectedTvShows?.description
+        detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), selectedTvShows?.rating)
+        detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), selectedTvShows?.date)
 
     }
 
