@@ -1,6 +1,5 @@
 package com.andreamw96.moviecatalogue.views.movies
 
-import android.content.Context
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
@@ -9,14 +8,15 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.utils.FakeDataMovie
+import com.andreamw96.moviecatalogue.utils.FakeData
+import com.andreamw96.moviecatalogue.utils.Helper.getResourceString
 import org.junit.Rule
 import org.junit.Test
 
 
 class DetailMovieActivityTest {
 
-    private val selectedMovie = FakeDataMovie.listData()[0]
+    private val selectedMovie = FakeData.listDataMovie()[0]
 
     @JvmField
     @Rule
@@ -51,10 +51,4 @@ class DetailMovieActivityTest {
         onView(withId(R.id.detail_date_movie)).check(matches(withText("$releaseDate${selectedMovie.date}")))
 
     }
-
-    fun getResourceString(id: Int): String {
-        val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
-        return targetContext.resources.getString(id)
-    }
-
 }

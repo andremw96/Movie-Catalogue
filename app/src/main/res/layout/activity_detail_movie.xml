@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".views.movies.DetailMovieActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,7 +26,7 @@
         <ImageView
             android:id="@+id/detail_image_movie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:adjustViewBounds="true"
             android:cropToPadding="false"
             android:scaleType="fitXY"

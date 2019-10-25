@@ -8,9 +8,9 @@ class DetailMovieViewModel : ViewModel() {
 
     var movieId: Int = -1
 
-    fun getSelectedMovie() : Movies? {
+    fun getSelectedMovie(): Movies? {
         MovieData.listData().forEach {
-            if(movieId == it.id) {
+            if (movieId == it.id) {
                 return it
             }
         }

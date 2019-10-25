@@ -19,9 +19,10 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="220dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:id="@+id/img_movie"
             android:layout_marginBottom="4dp"
+            android:src="@drawable/poster_infinity_war"
             android:contentDescription="@string/imageviewmovie" />
 
         <TextView
