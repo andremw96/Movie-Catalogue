@@ -5,7 +5,7 @@
     android:id="@+id/scrollview_detail_tvshow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.tvshows.DetailTvShowActivity">
+    tools:context=".views.tvshows.detail.DetailTvShowActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

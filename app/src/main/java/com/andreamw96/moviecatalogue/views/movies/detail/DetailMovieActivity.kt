@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.movies.detail
 
 import android.os.Bundle
 import android.view.MenuItem

@@ -2,7 +2,7 @@ package com.andreamw96.moviecatalogue.views.movies
 
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.FakeData
 import com.andreamw96.moviecatalogue.utils.Helper.getResourceString
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import org.junit.Rule
 import org.junit.Test
 

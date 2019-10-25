@@ -7,6 +7,7 @@ import androidx.test.rule.ActivityTestRule
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.testing.SingleFragmentActivity
 import com.andreamw96.moviecatalogue.utils.RecyclerViewItemCountAssertion
+import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

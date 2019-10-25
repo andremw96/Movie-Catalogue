@@ -11,8 +11,8 @@ import androidx.test.rule.ActivityTestRule
 import com.andreamw96.moviecatalogue.utils.FakeData
 import com.andreamw96.moviecatalogue.utils.Helper
 import com.andreamw96.moviecatalogue.views.MainActivity
-import com.andreamw96.moviecatalogue.views.movies.MovieAdapter
-import com.andreamw96.moviecatalogue.views.tvshows.TvShowsAdapter
+import com.andreamw96.moviecatalogue.views.movies.list.MovieAdapter
+import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowsAdapter
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

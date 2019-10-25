@@ -1,8 +1,9 @@
 package com.andreamw96.moviecatalogue.views.movies
 
+import com.andreamw96.moviecatalogue.views.movies.list.MovieViewModel
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Test
 
 class MovieViewModelTest {

@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.tvshows
+package com.andreamw96.moviecatalogue.views.tvshows.detail
 
 import androidx.lifecycle.ViewModel
 import com.andreamw96.moviecatalogue.model.Movies

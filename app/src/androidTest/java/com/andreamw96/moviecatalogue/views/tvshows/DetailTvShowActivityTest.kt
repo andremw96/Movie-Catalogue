@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.FakeData
 import com.andreamw96.moviecatalogue.utils.Helper
+import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import org.junit.Rule
 import org.junit.Test
 

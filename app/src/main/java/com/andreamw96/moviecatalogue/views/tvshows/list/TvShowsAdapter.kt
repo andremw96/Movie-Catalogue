@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.tvshows.list
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,13 +13,13 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_movie.*
 import java.util.*
 
-class MovieAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
+class TvShowsAdapter(private val context: Context?, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
 
-    val listMovie: ArrayList<Movies> = arrayListOf()
+    val listTvShows: ArrayList<Movies> = arrayListOf()
 
-    fun bindData(movies: List<Movies>) {
-        listMovie.clear()
-        listMovie.addAll(movies)
+    fun bindData(TvShows: List<Movies>) {
+        listTvShows.clear()
+        listTvShows.addAll(TvShows)
         notifyDataSetChanged()
     }
 
@@ -29,19 +29,19 @@ class MovieAdapter(private val context: Context?, private val mOnItemClickListen
     }
 
     override fun onBindViewHolder(cardViewViewHolder: CardViewViewHolder, i: Int) {
-        cardViewViewHolder.bindItem(listMovie[i])
+        cardViewViewHolder.bindItem(listTvShows[i])
     }
 
-    override fun getItemCount(): Int = listMovie.size
+    override fun getItemCount(): Int = listTvShows.size
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-        fun bindItem(movie: Movies) {
+        fun bindItem(tvShow: Movies) {
 
-            img_movie.loadImage(movie.photo.toString())
-            txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.date)
-            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.rating)
+            img_movie.loadImage(tvShow.photo.toString())
+            txt_movie_title.text = tvShow.title
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), tvShow.date)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), tvShow.rating)
 
             itemView.setOnClickListener(this)
         }

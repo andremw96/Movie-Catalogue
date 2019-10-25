@@ -1,9 +1,10 @@
 package com.andreamw96.moviecatalogue.views.movies
 
 import com.andreamw96.moviecatalogue.model.Movies
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieViewModel
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Test
 
 class DetailMovieViewModelTest {

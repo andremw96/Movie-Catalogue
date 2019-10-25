@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.movies.list
 
 
 import android.content.Intent
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.model.Movies
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
+import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 
