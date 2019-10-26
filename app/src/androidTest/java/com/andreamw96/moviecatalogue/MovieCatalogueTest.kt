@@ -2,8 +2,7 @@ package com.andreamw96.moviecatalogue
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.swipeUp
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -60,6 +59,28 @@ class MovieCatalogueTest {
 
         onView(withId(R.id.bottom_navigation)).check(matches(isDisplayed()))
         onView(withId(R.id.navigation_movie)).perform(click())
+
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movie)).perform(RecyclerViewActions.actionOnItemAtPosition<MovieAdapter.CardViewViewHolder>(0, click()))
+
+        onView(withId(R.id.scrollview_detail_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.scrollview_detail_movie)).perform(swipeUp())
+
+        onView(isRoot()).perform(pressBack())
+
+        onView(withId(R.id.bottom_navigation)).check(matches(isDisplayed()))
+        onView(withId(R.id.navigation_tv_shows)).perform(click())
+
+        recyclerViewTvShow = activityRule.activity.findViewById(R.id.rv_tv_show)
+        itemCountTvShow = recyclerViewTvShow.adapter?.itemCount ?: 0
+
+        onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tv_show)).perform(RecyclerViewActions.actionOnItemAtPosition<TvShowsAdapter.CardViewViewHolder>(0, click()))
+
+        onView(withId(R.id.scrollview_detail_tvshow)).check(matches(isDisplayed()))
+        onView(withId(R.id.scrollview_detail_tvshow)).perform(swipeUp())
+
+        onView(isRoot()).perform(pressBack())
     }
 
     @Test

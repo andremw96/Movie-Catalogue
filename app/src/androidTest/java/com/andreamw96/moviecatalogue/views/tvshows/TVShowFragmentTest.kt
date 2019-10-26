@@ -26,9 +26,9 @@ class TVShowFragmentTest {
     }
 
     @Test
-    fun loadMovies() {
+    fun loadTvShows() {
         Espresso.onView(ViewMatchers.withId(R.id.rv_tv_show)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        Espresso.onView(ViewMatchers.withId(R.id.rv_tv_show)).check(RecyclerViewItemCountAssertion(5))
+        Espresso.onView(ViewMatchers.withId(R.id.rv_tv_show)).check(RecyclerViewItemCountAssertion(15))
     }
 
 }

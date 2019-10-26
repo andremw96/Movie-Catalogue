@@ -29,7 +29,7 @@ class MovieFragmentTest {
     @Test
     fun loadMovies() {
         onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
-        onView(withId(R.id.rv_movie)).check(RecyclerViewItemCountAssertion(5))
+        onView(withId(R.id.rv_movie)).check(RecyclerViewItemCountAssertion(15))
     }
 
 }
