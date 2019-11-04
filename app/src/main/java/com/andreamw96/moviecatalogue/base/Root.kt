@@ -1,7 +1,8 @@
 package com.andreamw96.moviecatalogue.base
 
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.network.MovieApi
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieApi
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit
 class Root {
     private lateinit var mRetrofit: Retrofit
     private lateinit var mMovieApi: MovieApi
+    private lateinit var mTvShowApi: TvShowApi
 
     private fun getRetrofit(): Retrofit {
         if (!::mRetrofit.isInitialized) {
@@ -43,5 +45,12 @@ class Root {
             mMovieApi = getRetrofit().create(MovieApi::class.java)
         }
         return mMovieApi
+    }
+
+    fun getTvShowAPI(): TvShowApi {
+        if(!::mTvShowApi.isInitialized) {
+            mTvShowApi = getRetrofit().create(TvShowApi::class.java)
+        }
+        return mTvShowApi
     }
 }

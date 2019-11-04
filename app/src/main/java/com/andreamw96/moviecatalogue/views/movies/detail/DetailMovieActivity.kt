@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.movies.detail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.MovieResult
+import com.andreamw96.moviecatalogue.data.MovieResult
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.activity_detail_movie.*

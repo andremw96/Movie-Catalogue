@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.tvshows
+package com.andreamw96.moviecatalogue.views.tvshows.list
 
 
 import android.content.Intent
@@ -11,9 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.TvResult
+import com.andreamw96.moviecatalogue.data.TvResult
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
+import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 

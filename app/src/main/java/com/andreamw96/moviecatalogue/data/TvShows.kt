@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.model
+package com.andreamw96.moviecatalogue.data
 
 
 import android.os.Parcelable

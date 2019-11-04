@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.movies
+package com.andreamw96.moviecatalogue.views.movies.list
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.model.MovieResult
+import com.andreamw96.moviecatalogue.data.MovieResult
 import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import kotlinx.android.extensions.LayoutContainer
