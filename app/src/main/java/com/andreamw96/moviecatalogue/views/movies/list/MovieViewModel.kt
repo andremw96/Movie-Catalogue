@@ -1,47 +1,14 @@
 package com.andreamw96.moviecatalogue.views.movies.list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.MovieResult
-import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieRepository
 
 
-class MovieViewModel : ViewModel() {
-
-    private var mMoviesApi: MovieApi = com.andreamw96.moviecatalogue.base.Root().getMovieAPI()
-    private val TAG = MovieViewModel::class.java.simpleName
-    private val listMovies = MutableLiveData<List<MovieResult>>()
-    var status = MutableLiveData<Boolean?>()
-
-    private val compositeDisposable = CompositeDisposable()
-
-    fun setMovies() {
-        compositeDisposable.add(mMoviesApi
-                .getMovies(BuildConfig.API_KEY, "en-US")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listMovies.postValue(it.results)
-                    status.value = true
-                }, {
-                    Log.d(TAG, "error fetching movies")
-                    status.value = false
-                })
-        )
-    }
+class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
     fun getMovies(): LiveData<List<MovieResult>> {
-        return listMovies
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+        return movieRepository.getMoviesFromApi()
     }
 }

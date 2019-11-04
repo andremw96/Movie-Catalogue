@@ -8,41 +8,16 @@ import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.TvResult
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieApi
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowApi
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class TvShowViewModel : ViewModel() {
-
-    private var mTvShowApi: TvShowApi = com.andreamw96.moviecatalogue.base.Root().getTvShowAPI()
-    private val TAG = TvShowViewModel::class.java.simpleName
-    private val listTvShows = MutableLiveData<List<TvResult>>()
-    var status = MutableLiveData<Boolean?>()
-
-    private val compositeDisposable = CompositeDisposable()
-
-    fun setTvShows() {
-        compositeDisposable.add(mTvShowApi
-                .getTvShows(BuildConfig.API_KEY, "en-US")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listTvShows.postValue(it.results)
-                    status.value = true
-                }, {
-                    Log.d(TAG, "error fetching tv shows")
-                    status.value = false
-                })
-        )
-    }
+class TvShowViewModel(private val tvShowRepository: TvShowRepository) : ViewModel() {
 
     fun getTvShows(): LiveData<List<TvResult>> {
-        return listTvShows
+        return tvShowRepository.getTvShowFromApi()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
-    }
 }
