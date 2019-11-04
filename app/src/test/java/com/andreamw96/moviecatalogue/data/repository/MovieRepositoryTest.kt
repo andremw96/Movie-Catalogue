@@ -1,99 +1,109 @@
 package com.andreamw96.moviecatalogue.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.AppExecutors
-import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.RxImmediateSchedulerRule
+import com.andreamw96.moviecatalogue.data.local.MoviCatalogueDatabase
 import com.andreamw96.moviecatalogue.data.local.MovieDao
 import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.model.Movies
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.MovieApi
+import com.andreamw96.moviecatalogue.utils.InstantAppExecutors
 import com.andreamw96.moviecatalogue.utils.RateLimiter
+import com.andreamw96.moviecatalogue.utils.TestUtil
+import com.andreamw96.moviecatalogue.utils.mock
 import com.andreamw96.moviecatalogue.views.common.Resource
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.internal.util.NotificationLite.getValue
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.*
+import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
+import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
 
+@RunWith(MockitoJUnitRunner::class)
 class MovieRepositoryTest {
 
-    @JvmField
+    /*@JvmField
     @Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @get:Rule
-    val schedulers = RxImmediateSchedulerRule()
+    val schedulers = RxImmediateSchedulerRule()*/
 
     @Rule
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    @InjectMocks
     private lateinit var movieRepository: MovieRepository
 
-    @Mock
-    private lateinit var mMoviesApi: MovieApi
+    private val mMoviesApi: MovieApi = mock(MovieApi::class.java)
+    private val movieDao: MovieDao = mock(MovieDao::class.java)
+    private val rateLimiter: RateLimiter = mock(RateLimiter::class.java)
 
-    @Mock
-    private lateinit var movieDao: MovieDao
-
-    @Mock
-    private lateinit var appExecutors: AppExecutors
-
-    @Mock
-    private lateinit var rateLimiter: RateLimiter
-
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
-
-    @Mock
-    private lateinit var observer: Observer<Resource<List<MovieResult>>>
+    @ExperimentalCoroutinesApi
+    private val testDispatcher = TestCoroutineDispatcher()
 
     @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testDispatcher)
+
+        val db = mock(MoviCatalogueDatabase::class.java)
+        `when`(db.movieDao()).thenReturn(movieDao)
+        `when`(db.runInTransaction(ArgumentMatchers.any())).thenCallRealMethod()
+        movieRepository = MovieRepository(mMoviesApi, movieDao, InstantAppExecutors(), rateLimiter)
+    }
+
+    @ExperimentalCoroutinesApi
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
-    fun testSetMoviesShowLoading() = runBlocking {
-        val movies = movieRepository.setMovies()
-        movies.observeForever(observer)
+    fun testGetMoviesFromNetwork() {
+        runBlocking {
+            val movie1 = TestUtil.createMovie("backdrop1", 1, "overview1", "releaseDate1", "title1", 3.5)
+            val movie2 = TestUtil.createMovie("backdrop2", 2, "overview2", "releaseDate2", "title2", 5.5)
 
-        assertNotNull(movies)
-        assertEquals(Resource.Status.LOADING, movies.value?.status)
+            val observer = mock<Observer<Resource<List<MovieResult>>>>()
+            val dbMovies = MutableLiveData<List<MovieResult>>()
+
+            val movieList = arrayListOf(movie1, movie2)
+            val apiResponse = Movies(1, movieList, 1, 1)
+
+            val callLiveData = MutableLiveData<ApiResponse<Movies>>()
+            `when`(mMoviesApi.getMovies(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn(callLiveData)
+            `when`(movieDao.getMoviesLocal()).thenReturn(dbMovies)
+
+            movieRepository.setMovies().observeForever(observer)
+
+            verify(observer).onChanged(Resource.loading(null))
+            verifyNoMoreInteractions(mMoviesApi)
+            reset(observer)
+
+            verify(mMoviesApi).getMovies(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
+            val updatedResult = MutableLiveData<List<MovieResult>>()
+            updatedResult.postValue(movieList)
+
+            callLiveData.postValue(ApiResponse.create(Response.success(apiResponse)))
+            verify(movieDao).insert(movieList)
+            dbMovies.postValue(movieList)
+            verify(observer).onChanged(Resource.success(movieList))
+            verifyNoMoreInteractions(mMoviesApi)
+        }
     }
 
-    @Test
-    fun testSetMoviesFetchData() = runBlocking {
-        val mockResponse : ApiResponse<Movies>? = null
-        val call: LiveData<ApiResponse<Movies>> = MutableLiveData(mockResponse)
-        `when`(mMoviesApi.getMovies(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn(call)
-        `when`(movieDao.getMoviesLocal()).thenReturn(MutableLiveData<List<MovieResult>>())
 
-        movieRepository.setMovies().observeForever(observer)
-
-        verify(observer).onChanged(Resource.loading(null))
-        verify(observer).onChanged(Resource.success(ArrayList()))
-
-        return@runBlocking
-    }
 }
