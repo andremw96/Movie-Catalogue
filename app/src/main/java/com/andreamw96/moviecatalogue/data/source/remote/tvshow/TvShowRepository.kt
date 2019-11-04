@@ -9,8 +9,9 @@ import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class TvShowRepository(private val mTvShowApi: TvShowApi, private val compositeDisposable: CompositeDisposable) {
+class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
@@ -27,9 +28,11 @@ class TvShowRepository(private val mTvShowApi: TvShowApi, private val compositeD
                 })
         )
 
-        compositeDisposable.dispose()
-
         return listTvShows
+    }
+
+    fun clearComposite() {
+        compositeDisposable.dispose()
     }
 
 }

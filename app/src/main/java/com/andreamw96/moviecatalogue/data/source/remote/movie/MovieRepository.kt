@@ -9,14 +9,16 @@ import com.andreamw96.moviecatalogue.views.movies.list.MovieViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository(private val mMovieApi: MovieApi, private val compositeDisposable: CompositeDisposable) {
+@Singleton
+class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = MovieViewModel::class.java.simpleName
     private val listMovies = MutableLiveData<List<MovieResult>>()
 
     fun getMoviesFromApi(): LiveData<List<MovieResult>> {
-
         compositeDisposable.add(mMovieApi
                 .getMovies(BuildConfig.API_KEY, "en-US")
                 .subscribeOn(Schedulers.io())
@@ -28,8 +30,10 @@ class MovieRepository(private val mMovieApi: MovieApi, private val compositeDisp
                 })
         )
 
-        compositeDisposable.dispose()
-
         return listMovies
+    }
+
+    fun clearComposite() {
+        compositeDisposable.dispose()
     }
 }

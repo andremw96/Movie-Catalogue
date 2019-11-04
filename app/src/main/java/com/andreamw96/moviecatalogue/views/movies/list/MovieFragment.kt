@@ -11,20 +11,25 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.MovieResult
+import com.andreamw96.moviecatalogue.di.viewmodel.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
-import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_movie.*
+import javax.inject.Inject
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
+class MovieFragment : DaggerFragment(), OnItemClickListener, ProgressBarInterface {
 
-    private lateinit var movieViewModel: MovieViewModel
+    @Inject
+    lateinit var viewModelProviderFactory : ViewModelProvidersFactory
+
+    lateinit var movieViewModel: MovieViewModel
+
     private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +41,7 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        movieViewModel.getMovies().observe(this, getMovies)
+        movieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(MovieViewModel::class.java)
 
         movieAdapter = MovieAdapter(context, this)
 
@@ -49,20 +53,17 @@ class MovieFragment : Fragment(), OnItemClickListener, ProgressBarInterface {
 
         showLoading()
 
-        /*movieViewModel.status.observe(this, Observer { status ->
-            if (status == false) {
-                Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_LONG).show()
-                hideLoading()
-            }
-        }
-        )*/
+        showMovie()
     }
 
-    private val getMovies = Observer<List<MovieResult>> { movieItems ->
-        if (movieItems != null) {
-            movieAdapter.bindData(movieItems)
+    private fun showMovie() {
+        movieViewModel.getMovies().removeObservers(viewLifecycleOwner)
+        movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
+            movieAdapter.bindData(movies)
+            movieAdapter.notifyDataSetChanged()
+
             hideLoading()
-        }
+        })
     }
 
     override fun onItemClicked(position: Int) {
