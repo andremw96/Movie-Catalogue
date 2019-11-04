@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".views.movies.list.MovieFragment">
 
-    <ProgressBar
-        android:id="@+id/progressBarMovieFrag"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:visibility="gone" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movie"
         android:layout_width="match_parent"

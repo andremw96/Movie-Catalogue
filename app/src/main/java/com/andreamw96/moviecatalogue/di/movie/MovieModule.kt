@@ -6,5 +6,4 @@ import dagger.Module
 class MovieModule {
 
 
-
 }

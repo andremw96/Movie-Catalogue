@@ -1,6 +1,5 @@
 package com.andreamw96.moviecatalogue.data.source.remote.tvshow
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -16,7 +15,7 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<List<TvResult>>()
 
-    fun getTvShowFromApi() : LiveData<List<TvResult>> {
+    fun getTvShowFromApi(): LiveData<List<TvResult>> {
         compositeDisposable.add(mTvShowApi
                 .getTvShows(BuildConfig.API_KEY, "en-US")
                 .subscribeOn(Schedulers.io())
@@ -24,7 +23,7 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
                 .subscribe({
                     listTvShows.postValue(it.results)
                 }, {
-                    Log.d(TAG, "error fetching tv shows")
+                    listTvShows.postValue(null)
                 })
         )
 

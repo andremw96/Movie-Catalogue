@@ -2,16 +2,14 @@ package com.andreamw96.moviecatalogue.views.movies.detail
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.MovieResult
 import com.andreamw96.moviecatalogue.utils.loadImage
-import com.andreamw96.moviecatalogue.views.common.ProgressBarInterface
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
-class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
+class DetailMovieActivity : AppCompatActivity() {
 
     companion object {
         const val INTENT_MOVIE = "intent_movie"
@@ -20,8 +18,6 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
-
-        showLoading()
 
         val movie = intent.getParcelableExtra<MovieResult>(INTENT_MOVIE)
 
@@ -37,7 +33,6 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         detail_rating_movie.text = String.format("%s%s", getString(R.string.ratingString), movie.voteAverage)
         detail_date_movie.text = String.format("%s%s", getString(R.string.releaseDateString), movie.releaseDate)
 
-        hideLoading()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,13 +41,5 @@ class DetailMovieActivity : AppCompatActivity(), ProgressBarInterface {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun showLoading() {
-        progressBarMovieDetail.visibility = View.VISIBLE
-    }
-
-    override fun hideLoading() {
-        progressBarMovieDetail.visibility = View.GONE
     }
 }

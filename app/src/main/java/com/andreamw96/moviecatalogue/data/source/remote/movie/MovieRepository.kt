@@ -1,6 +1,5 @@
 package com.andreamw96.moviecatalogue.data.source.remote.movie
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
@@ -26,7 +25,7 @@ class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, priva
                 .subscribe({
                     listMovies.postValue(it.results)
                 }, {
-                    Log.d(TAG, "error fetching movies")
+                    listMovies.postValue(null)
                 })
         )
 

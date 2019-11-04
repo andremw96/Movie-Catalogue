@@ -13,6 +13,6 @@ abstract class ActivityBuildersModule {
                 MainFragmentBuildersModule::class
             ]
     )
-    abstract fun contributeMainActivity() : MainActivity
+    abstract fun contributeMainActivity(): MainActivity
 
 }
