@@ -14,20 +14,19 @@ abstract class BaseFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvidersFactory
 
+    @Inject
     lateinit var loadingDialog: LoadingDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        loadingDialog = context?.let { LoadingDialog(it) }!!
-
         return inflater.inflate(getLayout(), container, false)
     }
 
     fun showLoading() {
-        loadingDialog.showLoadingDialog()
+        loadingDialog.showLoadingDialog(context)
     }
 
     fun hideLoading() {
-        loadingDialog.hideLoadingDialog()
+       loadingDialog.hideLoadingDialog()
     }
 
     abstract fun getLayout(): Int

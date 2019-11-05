@@ -4,6 +4,7 @@ import android.app.Application
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.GlideApp
+import com.andreamw96.moviecatalogue.views.common.LoadingDialog
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
@@ -55,5 +56,11 @@ class AppModule {
     fun provideGlideInstance(application: Application, requestOptions: RequestOptions): RequestManager {
         return GlideApp.with(application)
                 .setDefaultRequestOptions(requestOptions)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoadingDialog() : LoadingDialog {
+        return LoadingDialog()
     }
 }
