@@ -14,4 +14,9 @@ class DetailTvShowViewModel @Inject constructor(private val tvShowRepository: Tv
         return tvShowRepository.getTvShowDetail(id)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        tvShowRepository.clearComposite()
+    }
+
 }

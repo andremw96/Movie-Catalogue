@@ -12,7 +12,6 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = MovieViewModel::class.java.simpleName

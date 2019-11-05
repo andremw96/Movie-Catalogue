@@ -14,4 +14,9 @@ class DetailMovieViewModel @Inject constructor(private val movieRepository: Movi
         return movieRepository.getDetailMovieFromApi(movieId)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        movieRepository.clearComposite()
+    }
+
 }
