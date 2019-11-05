@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
@@ -53,11 +54,8 @@ class TVShowFragment : BaseFragment(), OnItemClickListener {
             } else {
                 tvShowsAdapter.bindData(emptyList())
 
-                Snackbar.make(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Retry") {
-                            showTvShows()
-                        }
-                        .show()
+                showSnackbar(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_INDEFINITE,
+                        View.OnClickListener { showTvShows() }, "Retry")
             }
 
             hideLoading()
@@ -66,7 +64,7 @@ class TVShowFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
-        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position])
+        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, tvShowsAdapter.listTvShows[position].id)
         startActivity(goToDetail)
     }
 }

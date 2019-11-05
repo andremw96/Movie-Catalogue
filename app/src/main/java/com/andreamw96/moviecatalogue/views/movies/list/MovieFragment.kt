@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_movie.*
  */
 class MovieFragment : BaseFragment(), OnItemClickListener {
 
-    lateinit var movieViewModel: MovieViewModel
+    private lateinit var movieViewModel: MovieViewModel
 
     private lateinit var movieAdapter: MovieAdapter
 
@@ -55,11 +56,8 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
             } else {
                 movieAdapter.bindData(emptyList())
 
-                Snackbar.make(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Retry") {
-                            showMovie()
-                        }
-                        .show()
+                showSnackbar(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_INDEFINITE,
+                        View.OnClickListener { showMovie() }, "Retry")
             }
 
             hideLoading()
@@ -68,7 +66,7 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position])
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position].id)
         startActivity(goToDetail)
     }
 }
