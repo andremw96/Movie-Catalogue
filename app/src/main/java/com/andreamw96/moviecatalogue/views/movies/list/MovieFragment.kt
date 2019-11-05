@@ -35,7 +35,7 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
 
         movieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(MovieViewModel::class.java)
 
-        movieAdapter = MovieAdapter(context, this)
+        movieAdapter = MovieAdapter(context, this, requestManager)
         rv_movie.apply {
             setHasFixedSize(true)
             rv_movie.layoutManager = LinearLayoutManager(activity)

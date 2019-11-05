@@ -34,7 +34,7 @@ class TVShowFragment : BaseFragment(), OnItemClickListener {
 
         tvShowMovieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(TvShowViewModel::class.java)
 
-        tvShowsAdapter = TvShowsAdapter(activity, this)
+        tvShowsAdapter = TvShowsAdapter(activity, this, requestManager)
         rv_tv_show.apply {
             setHasFixedSize(true)
             rv_tv_show.layoutManager = LinearLayoutManager(activity)

@@ -4,18 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.MovieResult
-import com.andreamw96.moviecatalogue.utils.loadImage
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import kotlinx.android.synthetic.main.fragment_movie.*
 
 class DetailMovieActivity : BaseActivity() {
 
@@ -47,8 +43,8 @@ class DetailMovieActivity : BaseActivity() {
         detailMovieViewModel.getDetailMovie().removeObservers(this)
         detailMovieViewModel.getDetailMovie().observe(this, Observer { movie ->
             if (movie != null) {
-                detail_image_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                        .append(movie.backdropPath).toString())
+                requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
+                        .into(detail_image_movie)
                 detail_title_movie.text = movie.title
                 detail_description_movie.text = movie.overview
                 detail_rating_movie.text = String.format("%s%s", getString(R.string.ratingString), movie.voteAverage)
