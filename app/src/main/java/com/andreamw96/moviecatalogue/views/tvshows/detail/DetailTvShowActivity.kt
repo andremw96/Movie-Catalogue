@@ -32,17 +32,16 @@ class DetailTvShowActivity : BaseActivity() {
         detailTvShowViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(DetailTvShowViewModel::class.java)
 
         val tvShowId = intent.getIntExtra(INTENT_TV_SHOW, 0)
-
         detailTvShowViewModel.id = tvShowId
 
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         showDetailTvShow()
     }
 
     private fun showDetailTvShow() {
+        showLoading()
+
         detailTvShowViewModel.getTvShowDetail().removeObservers(this)
         detailTvShowViewModel.getTvShowDetail().observe(this, Observer { tvShow ->
             if (tvShow != null) {
@@ -52,10 +51,14 @@ class DetailTvShowActivity : BaseActivity() {
                 detail_description_tvshow.text = tvShow.overview
                 detail_rating_tvshow.text = String.format("%s%s", getString(R.string.ratingString), tvShow.voteAverage)
                 detail_date_tvshow.text = String.format("%s%s", getString(R.string.releaseDateString), tvShow.firstAirDate)
+
+                supportActionBar?.title = tvShow.name
             } else {
                 showSnackbar(detail_tvshow, "Gagal memuat detail tv show", Snackbar.LENGTH_INDEFINITE,
                         View.OnClickListener { showDetailTvShow() }, "Retry")
             }
+
+            hideLoading()
         })
     }
 

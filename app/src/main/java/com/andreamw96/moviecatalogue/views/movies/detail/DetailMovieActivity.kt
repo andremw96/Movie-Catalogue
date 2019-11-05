@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.views.movies.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -31,12 +32,11 @@ class DetailMovieActivity : BaseActivity() {
         detailMovieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(DetailMovieViewModel::class.java)
 
         val movieId = intent.getIntExtra(INTENT_MOVIE, 0)
-
         detailMovieViewModel.movieId = movieId
 
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
+        Log.e("DetailMovieActivity", "$movieId")
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         showDetailMovie()
     }
