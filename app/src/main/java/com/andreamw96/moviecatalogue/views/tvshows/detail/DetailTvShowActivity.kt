@@ -49,7 +49,7 @@ class DetailTvShowActivity : BaseActivity() {
 
                 supportActionBar?.title = tvShow.name
             } else {
-                showSnackbar(detail_tvshow, "Gagal memuat detail tv show", Snackbar.LENGTH_INDEFINITE,
+                showSnackbar(scrollview_detail_tvshow, "Gagal memuat detail tv show", Snackbar.LENGTH_INDEFINITE,
                         View.OnClickListener { showDetailTvShow() }, "Retry")
             }
 

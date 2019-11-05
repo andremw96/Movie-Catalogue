@@ -52,7 +52,7 @@ class DetailMovieActivity : BaseActivity() {
 
                 supportActionBar?.title = movie.title
             } else {
-                showSnackbar(detail_movie, "Gagal memuat detail movie", Snackbar.LENGTH_INDEFINITE,
+                showSnackbar(scrollview_detail_movie, "Gagal memuat detail movie", Snackbar.LENGTH_INDEFINITE,
                         View.OnClickListener { showDetailMovie() }, "Retry")
             }
 

@@ -3,7 +3,7 @@
     <string name="overview_string">OVERVIEW</string>
     <string name="imageviewmovie">imageViewMovie</string>
     <string name="ratingString">Rating : \t</string>
-    <string name="releaseDateString">Release Date :\t</string>
+    <string name="releaseDateString">Release Date : \t</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="movies">Movies</string>

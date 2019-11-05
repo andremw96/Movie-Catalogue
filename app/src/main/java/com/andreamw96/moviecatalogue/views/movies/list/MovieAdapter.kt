@@ -43,8 +43,6 @@ class MovieAdapter(private val context: Context?,
             requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
                     .into(img_movie)
 
-        /*    img_movie.loadImage(StringBuilder().append(BuildConfig.IMAGE_BASE_URL)
-                    .append(movie.backdropPath).toString())*/
             txt_movie_title.text = movie.title
             txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
             txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
