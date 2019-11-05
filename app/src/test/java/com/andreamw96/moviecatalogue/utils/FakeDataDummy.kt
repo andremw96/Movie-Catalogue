@@ -1,9 +1,20 @@
 package com.andreamw96.moviecatalogue.utils
 
 import com.andreamw96.moviecatalogue.data.MovieResult
+import com.andreamw96.moviecatalogue.data.Movies
 import com.andreamw96.moviecatalogue.data.TvResult
+import com.andreamw96.moviecatalogue.data.TvShows
 
 object FakeDataDummy {
+
+    fun generateDummyMovies() : Movies {
+        return Movies(
+                1,
+                genereateDummyMovieResult(),
+                1,
+                1
+        )
+    }
 
     fun genereateDummyMovieResult() : List<MovieResult> {
         val movieResult = arrayListOf<MovieResult>()
@@ -64,6 +75,15 @@ object FakeDataDummy {
         )
 
         return movieResult
+    }
+
+    fun generateDummyTvShows() : TvShows {
+        return TvShows(
+                1,
+                genereateDummyTvResult(),
+                1,
+                1
+        )
     }
 
     fun genereateDummyTvResult() : List<TvResult> {
