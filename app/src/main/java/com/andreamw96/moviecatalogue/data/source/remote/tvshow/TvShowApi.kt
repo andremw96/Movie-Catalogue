@@ -1,6 +1,6 @@
 package com.andreamw96.moviecatalogue.data.source.remote.tvshow
 
-import com.andreamw96.moviecatalogue.data.TvShowDetailResponse
+import com.andreamw96.moviecatalogue.data.TvResult
 import com.andreamw96.moviecatalogue.data.TvShows
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -20,6 +20,6 @@ interface TvShowApi {
             @Path("tv_id") tvId: Int,
             @Query("api_key") apiKey: String,
             @Query("language") language: String
-    ): Single<TvShowDetailResponse>
+    ): Single<TvResult>
 
 }

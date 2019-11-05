@@ -19,31 +19,15 @@ data class Movies(
 @Parcelize
 data class MovieResult(
         @SerializedName("backdrop_path")
-        val backdropPath: String? = null,
+        val backdropPath: String,
         @SerializedName("id")
-        val id: Int? = null,
+        val id: Int,
         @SerializedName("overview")
-        val overview: String? = null,
+        val overview: String,
         @SerializedName("release_date")
-        val releaseDate: String? = null,
+        val releaseDate: String,
         @SerializedName("title")
-        val title: String? = null,
+        val title: String,
         @SerializedName("vote_average")
-        val voteAverage: Double? = null
+        val voteAverage: Double
 ) : Parcelable
-
-data class MovieDetailResponse(
-        @SerializedName("backdrop_path")
-        var backdropPath: String? = null,
-        @SerializedName("id")
-        var id: Int? = null,
-        var originalTitle: String? = null,
-        @SerializedName("overview")
-        var overview: String? = null,
-        @SerializedName("release_date")
-        var releaseDate: String? = null,
-        @SerializedName("title")
-        var title: String? = null,
-        @SerializedName("vote_average")
-        var voteAverage: Double? = null
-)

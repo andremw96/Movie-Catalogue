@@ -1,6 +1,6 @@
 package com.andreamw96.moviecatalogue.data.source.remote.movie
 
-import com.andreamw96.moviecatalogue.data.MovieDetailResponse
+import com.andreamw96.moviecatalogue.data.MovieResult
 import com.andreamw96.moviecatalogue.data.Movies
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -20,7 +20,7 @@ interface MovieApi {
             @Path("movie_id") movieId: Int,
             @Query("api_key") apiKey: String,
             @Query("language") language: String
-    ): Single<MovieDetailResponse>
+    ): Single<MovieResult>
 
 
 }
