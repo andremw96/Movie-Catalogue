@@ -25,14 +25,14 @@ abstract class ActivityBuildersModule {
                 DetailMovieViewModelModule::class
             ]
     )
-    abstract fun contributeDetailMovieActivity() : DetailMovieActivity
+    abstract fun contributeDetailMovieActivity(): DetailMovieActivity
 
     @ContributesAndroidInjector(
             modules = [
                 DetailTvShowViewModelModule::class
             ]
     )
-    abstract fun contributeDetailTvShowActivity() : DetailTvShowActivity
+    abstract fun contributeDetailTvShowActivity(): DetailTvShowActivity
 
     @ContributesAndroidInjector(
             modules = [

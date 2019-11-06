@@ -10,7 +10,7 @@ class DetailTvShowViewModel @Inject constructor(private val tvShowRepository: Tv
 
     var id = 0
 
-    fun getTvShowDetail() : LiveData<TvResult> {
+    fun getTvShowDetail(): LiveData<TvResult> {
         return tvShowRepository.getTvShowDetail(id)
     }
 

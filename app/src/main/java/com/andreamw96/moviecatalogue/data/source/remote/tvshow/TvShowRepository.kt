@@ -19,7 +19,7 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
     private val detailTvShow = MutableLiveData<TvResult>()
 
     fun getTvShowFromApi(): LiveData<List<TvResult>> {
-        if(isRunningEspressoTest) {
+        if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
 
@@ -30,13 +30,13 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
                 .subscribe({
                     listTvShows.postValue(it.results)
 
-                    if(isRunningEspressoTest) {
+                    if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 }, {
                     listTvShows.postValue(null)
 
-                    if(isRunningEspressoTest) {
+                    if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 })
@@ -46,7 +46,7 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
     }
 
     fun getTvShowDetail(id: Int): LiveData<TvResult> {
-        if(isRunningEspressoTest) {
+        if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
 

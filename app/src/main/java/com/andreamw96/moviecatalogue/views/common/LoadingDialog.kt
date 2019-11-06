@@ -25,11 +25,11 @@ class LoadingDialog @Inject constructor() {
 
         context?.let {
             GlideApp.with(it)
-                .load(R.drawable.loading)
-                .placeholder(R.drawable.loading)
-                .centerCrop()
-                .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
-                .into(DrawableImageViewTarget(gifImageView))
+                    .load(R.drawable.loading)
+                    .placeholder(R.drawable.loading)
+                    .centerCrop()
+                    .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
+                    .into(DrawableImageViewTarget(gifImageView))
         }
 
         dialog?.show()

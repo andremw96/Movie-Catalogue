@@ -10,7 +10,7 @@ class DetailMovieViewModel @Inject constructor(private val movieRepository: Movi
 
     var movieId = 0
 
-    fun getDetailMovie() : LiveData<MovieResult> {
+    fun getDetailMovie(): LiveData<MovieResult> {
         return movieRepository.getDetailMovieFromApi(movieId)
     }
 

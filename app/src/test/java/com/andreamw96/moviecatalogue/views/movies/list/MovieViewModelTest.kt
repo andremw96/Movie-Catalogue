@@ -19,7 +19,7 @@ class MovieViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var movieViewModel: MovieViewModel
-    private val movieRepository : MovieRepository = mock(MovieRepository::class.java)
+    private val movieRepository: MovieRepository = mock(MovieRepository::class.java)
 
 
     @Before

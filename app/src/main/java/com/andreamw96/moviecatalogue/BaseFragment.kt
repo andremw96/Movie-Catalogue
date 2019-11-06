@@ -30,7 +30,7 @@ abstract class BaseFragment : DaggerFragment() {
     }
 
     fun hideLoading() {
-       loadingDialog.hideLoadingDialog()
+        loadingDialog.hideLoadingDialog()
     }
 
     abstract fun getLayout(): Int

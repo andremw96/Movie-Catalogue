@@ -60,7 +60,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideLoadingDialog() : LoadingDialog {
+    fun provideLoadingDialog(): LoadingDialog {
         return LoadingDialog()
     }
 }

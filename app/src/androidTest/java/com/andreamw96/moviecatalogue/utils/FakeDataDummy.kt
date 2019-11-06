@@ -7,7 +7,7 @@ import com.andreamw96.moviecatalogue.data.TvShows
 
 object FakeData {
 
-    fun generateDummyMovies() : Movies {
+    fun generateDummyMovies(): Movies {
         return Movies(
                 1,
                 genereateDummyMovieResult(),
@@ -16,7 +16,7 @@ object FakeData {
         )
     }
 
-    fun genereateRemoteMovieResult() : List<MovieResult> {
+    fun genereateRemoteMovieResult(): List<MovieResult> {
         val movieResult = arrayListOf<MovieResult>()
 
         movieResult.add(
@@ -44,7 +44,7 @@ object FakeData {
         return movieResult
     }
 
-    fun genereateDummyMovieResult() : List<MovieResult> {
+    fun genereateDummyMovieResult(): List<MovieResult> {
         val movieResult = arrayListOf<MovieResult>()
 
         movieResult.add(
@@ -105,7 +105,7 @@ object FakeData {
         return movieResult
     }
 
-    fun generateDummyTvShows() : TvShows {
+    fun generateDummyTvShows(): TvShows {
         return TvShows(
                 1,
                 genereateDummyTvResult(),
@@ -114,7 +114,7 @@ object FakeData {
         )
     }
 
-    fun genereateDummyTvResult() : List<TvResult> {
+    fun genereateDummyTvResult(): List<TvResult> {
         val tvResult = arrayListOf<TvResult>()
 
         tvResult.add(
@@ -175,7 +175,7 @@ object FakeData {
         return tvResult
     }
 
-    fun generateRemoteTvResult() : List<TvResult> {
+    fun generateRemoteTvResult(): List<TvResult> {
         val tvResult = arrayListOf<TvResult>()
 
         tvResult.add(

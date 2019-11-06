@@ -22,7 +22,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     }
 
     fun hideLoading() {
-       loadingDialog.hideLoadingDialog()
+        loadingDialog.hideLoadingDialog()
     }
 
 }

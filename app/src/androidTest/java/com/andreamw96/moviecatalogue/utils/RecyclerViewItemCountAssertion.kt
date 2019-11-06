@@ -11,7 +11,7 @@ import org.junit.Assert.assertNotNull
 class RecyclerViewItemCountAssertion(private val expectedCount: Int) : ViewAssertion {
 
     override fun check(view: View?, noViewFoundException: NoMatchingViewException?) {
-        if(noViewFoundException != null) {
+        if (noViewFoundException != null) {
             throw noViewFoundException
         }
 
