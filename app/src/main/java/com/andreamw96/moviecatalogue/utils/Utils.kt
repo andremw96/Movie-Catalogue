@@ -17,7 +17,7 @@ fun showSnackbar(view: View, text: String, length: Int) {
 
 val isRunningEspressoTest: Boolean by lazy {
     try {
-        Class.forName("android.support.test.espresso.Espresso")
+        Class.forName("androidx.test.espresso.Espresso")
         true
     } catch (e: ClassNotFoundException) {
         false
