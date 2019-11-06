@@ -7,10 +7,8 @@ import com.andreamw96.moviecatalogue.data.TvResult
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import org.junit.Before
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mockito.*
 
 class DetailTvShowViewModelTest {

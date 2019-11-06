@@ -14,3 +14,12 @@ fun showSnackbar(view: View, text: String, length: Int, action: View.OnClickList
 fun showSnackbar(view: View, text: String, length: Int) {
     showSnackbar(view, text, length, null, null)
 }
+
+val isRunningEspressoTest : Boolean by lazy {
+    try {
+        Class.forName("android.support.test.espresso.Espresso")
+        true
+    } catch (e: ClassNotFoundException) {
+        false
+    }
+}

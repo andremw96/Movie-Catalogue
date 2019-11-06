@@ -8,9 +8,8 @@ import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
-import org.junit.Test
-
 import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 

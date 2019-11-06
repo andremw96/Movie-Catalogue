@@ -2,8 +2,8 @@ package com.andreamw96.moviecatalogue.di.main
 
 import com.andreamw96.moviecatalogue.di.movie.MovieModule
 import com.andreamw96.moviecatalogue.di.movie.MovieViewModelModule
-import com.andreamw96.moviecatalogue.di.tvshow.TvShowViewModelModule
 import com.andreamw96.moviecatalogue.di.tvshow.TvShowModule
+import com.andreamw96.moviecatalogue.di.tvshow.TvShowViewModelModule
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import dagger.Module

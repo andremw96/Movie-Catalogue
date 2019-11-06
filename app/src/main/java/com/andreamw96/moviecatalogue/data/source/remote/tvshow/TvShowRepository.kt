@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.TvResult
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
+import com.andreamw96.moviecatalogue.utils.isRunningEspressoTest
 import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -18,7 +19,9 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
     private val detailTvShow = MutableLiveData<TvResult>()
 
     fun getTvShowFromApi(): LiveData<List<TvResult>> {
-        EspressoIdlingResource.increment()
+        if(isRunningEspressoTest) {
+            EspressoIdlingResource.increment()
+        }
 
         compositeDisposable.add(mTvShowApi
                 .getTvShows(BuildConfig.API_KEY, "en-US")
@@ -27,11 +30,15 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
                 .subscribe({
                     listTvShows.postValue(it.results)
 
-                    EspressoIdlingResource.decrement()
+                    if(isRunningEspressoTest) {
+                        EspressoIdlingResource.decrement()
+                    }
                 }, {
                     listTvShows.postValue(null)
 
-                    EspressoIdlingResource.decrement()
+                    if(isRunningEspressoTest) {
+                        EspressoIdlingResource.decrement()
+                    }
                 })
         )
 
@@ -39,7 +46,9 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
     }
 
     fun getTvShowDetail(id: Int): LiveData<TvResult> {
-        EspressoIdlingResource.increment()
+        if(isRunningEspressoTest) {
+            EspressoIdlingResource.increment()
+        }
 
         compositeDisposable.add(mTvShowApi
                 .getDetailTvShow(id, BuildConfig.API_KEY, "en-US")
@@ -48,11 +57,15 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
                 .subscribe({
                     detailTvShow.postValue(it)
 
-                    EspressoIdlingResource.decrement()
+                    if (isRunningEspressoTest) {
+                        EspressoIdlingResource.decrement()
+                    }
                 }, {
                     detailTvShow.postValue(null)
 
-                    EspressoIdlingResource.decrement()
+                    if (isRunningEspressoTest) {
+                        EspressoIdlingResource.decrement()
+                    }
                 })
         )
 

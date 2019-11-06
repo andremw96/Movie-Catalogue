@@ -4,12 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.andreamw96.moviecatalogue.data.TvResult
-import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowRepository
+import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import org.junit.Before
-import org.junit.Test
-
 import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mockito.*
 
 class TvShowViewModelTest {
