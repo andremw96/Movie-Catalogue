@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue
+package com.andreamw96.moviecatalogue.utils
 
 import android.os.Handler
 import android.os.Looper

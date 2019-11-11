@@ -16,8 +16,6 @@
 
 package com.andreamw96.moviecatalogue.utils
 
-import com.andreamw96.moviecatalogue.AppExecutors
-
 import java.util.concurrent.Executor
 
 

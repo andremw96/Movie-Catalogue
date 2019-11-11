@@ -1,7 +1,6 @@
 package com.andreamw96.moviecatalogue.data.repository
 
 import androidx.lifecycle.LiveData
-import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.data.NetworkBoundResource
 import com.andreamw96.moviecatalogue.data.local.MovieDao
@@ -9,6 +8,7 @@ import com.andreamw96.moviecatalogue.data.model.MovieResult
 import com.andreamw96.moviecatalogue.data.model.Movies
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.MovieApi
+import com.andreamw96.moviecatalogue.utils.AppExecutors
 import com.andreamw96.moviecatalogue.utils.RateLimiter
 import com.andreamw96.moviecatalogue.views.common.Resource
 import java.text.SimpleDateFormat

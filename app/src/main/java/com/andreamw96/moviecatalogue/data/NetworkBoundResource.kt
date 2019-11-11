@@ -4,11 +4,11 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.andreamw96.moviecatalogue.AppExecutors
 import com.andreamw96.moviecatalogue.data.network.ApiEmptyResponse
 import com.andreamw96.moviecatalogue.data.network.ApiErrorResponse
 import com.andreamw96.moviecatalogue.data.network.ApiResponse
 import com.andreamw96.moviecatalogue.data.network.ApiSuccessResponse
+import com.andreamw96.moviecatalogue.utils.AppExecutors
 import com.andreamw96.moviecatalogue.views.common.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
