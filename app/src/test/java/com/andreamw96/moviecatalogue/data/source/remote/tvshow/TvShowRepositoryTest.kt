@@ -50,7 +50,7 @@ class TvShowRepositoryTest {
         `when`(tvShowApi.getTvShows(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
                 .thenReturn(Single.just(tvShowsDummy))
 
-        val observer = mock(Observer::class.java) as Observer<List<TvResult>>
+        val observer = mock(Observer::class.java) as Observer<List<TvResultResponse>>
 
         tvShowRepository.getTvShowFromApi().observeForever(observer)
         verify(observer).onChanged(tvShowResults)
@@ -68,7 +68,7 @@ class TvShowRepositoryTest {
         `when`(tvShowApi.getDetailTvShow(ArgumentMatchers.eq(clickedTvShowId), ArgumentMatchers.anyString(),
                 ArgumentMatchers.anyString())).thenReturn(Single.just(clickedTvShow))
 
-        val observer = mock(Observer::class.java) as Observer<TvResult>
+        val observer = mock(Observer::class.java) as Observer<TvResultResponse>
 
         tvShowRepository.getTvShowDetail(clickedTvShowId).observeForever(observer)
         verify(observer).onChanged(clickedTvShow)

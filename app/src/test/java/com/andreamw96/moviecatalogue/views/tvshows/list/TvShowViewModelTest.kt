@@ -3,7 +3,7 @@ package com.andreamw96.moviecatalogue.views.tvshows.list
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
 import com.andreamw96.moviecatalogue.data.source.TvShowRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import org.junit.Before
@@ -29,12 +29,12 @@ class TvShowViewModelTest {
     fun getTvShows() {
         val dummyTvShow = FakeDataDummy.genereateDummyTvResult()
 
-        val tvShow = MutableLiveData<List<TvResult>>()
+        val tvShow = MutableLiveData<List<TvResultResponse>>()
         tvShow.value = dummyTvShow
 
         `when`(tvShowRepository.getTvShowFromApi()).thenReturn(tvShow)
 
-        val observer = mock(Observer::class.java) as Observer<List<TvResult>>
+        val observer = mock(Observer::class.java) as Observer<List<TvResultResponse>>
 
         tvShowViewModel.getTvShows().observeForever(observer)
 

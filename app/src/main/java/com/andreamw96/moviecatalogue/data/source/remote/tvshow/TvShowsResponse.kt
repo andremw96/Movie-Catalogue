@@ -5,11 +5,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-data class TvShows(
+data class TvShowsResponse(
         @SerializedName("page")
         val page: Int,
         @SerializedName("resultResponses")
-        val results: List<TvResult>,
+        val results: List<TvResultResponse>,
         @SerializedName("total_pages")
         val totalPages: Int,
         @SerializedName("total_results")
@@ -17,7 +17,7 @@ data class TvShows(
 )
 
 @Parcelize
-data class TvResult(
+data class TvResultResponse(
         @SerializedName("backdrop_path")
         val backdropPath: String,
         @SerializedName("first_air_date")

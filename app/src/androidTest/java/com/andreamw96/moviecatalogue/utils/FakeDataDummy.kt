@@ -2,8 +2,8 @@ package com.andreamw96.moviecatalogue.utils
 
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShows
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowsResponse
 
 object FakeData {
 
@@ -105,8 +105,8 @@ object FakeData {
         return movieResult
     }
 
-    fun generateDummyTvShows(): TvShows {
-        return TvShows(
+    fun generateDummyTvShows(): TvShowsResponse {
+        return TvShowsResponse(
                 1,
                 genereateDummyTvResult(),
                 1,
@@ -114,11 +114,11 @@ object FakeData {
         )
     }
 
-    fun genereateDummyTvResult(): List<TvResult> {
-        val tvResult = arrayListOf<TvResult>()
+    fun genereateDummyTvResult(): List<TvResultResponse> {
+        val tvResult = arrayListOf<TvResultResponse>()
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop1",
                         "firstAirDate1",
                         1,
@@ -129,7 +129,7 @@ object FakeData {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop2",
                         "firstAirDate2",
                         2,
@@ -140,7 +140,7 @@ object FakeData {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop3",
                         "firstAirDate3",
                         3,
@@ -151,7 +151,7 @@ object FakeData {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop4",
                         "firstAirDate4",
                         4,
@@ -162,7 +162,7 @@ object FakeData {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop5",
                         "firstAirDate5",
                         5,
@@ -175,11 +175,11 @@ object FakeData {
         return tvResult
     }
 
-    fun generateRemoteTvResult(): List<TvResult> {
-        val tvResult = arrayListOf<TvResult>()
+    fun generateRemoteTvResult(): List<TvResultResponse> {
+        val tvResult = arrayListOf<TvResultResponse>()
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "/8qyVoHhqjIETCuQo5uMQpbfWIgd.jpg",
                         "1964-09-14",
                         321,
@@ -190,7 +190,7 @@ object FakeData {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "/dXTyVDTIgeByvUOUEiHjbi8xX9A.jpg",
                         "2012-10-10",
                         1412,

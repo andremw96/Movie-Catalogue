@@ -11,13 +11,13 @@ interface TvShowApi {
     fun getTvShows(
             @Query("api_key") apiKey: String,
             @Query("language") language: String
-    ): Single<TvShows>
+    ): Single<TvShowsResponse>
 
     @GET("tv/{tv_id}")
     fun getDetailTvShow(
             @Path("tv_id") tvId: Int,
             @Query("api_key") apiKey: String,
             @Query("language") language: String
-    ): Single<TvResult>
+    ): Single<TvResultResponse>
 
 }

@@ -2,8 +2,8 @@ package com.andreamw96.moviecatalogue.utils
 
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShows
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowsResponse
 
 object FakeDataDummy {
 
@@ -77,8 +77,8 @@ object FakeDataDummy {
         return movieResult
     }
 
-    fun generateDummyTvShows(): TvShows {
-        return TvShows(
+    fun generateDummyTvShows(): TvShowsResponse {
+        return TvShowsResponse(
                 1,
                 genereateDummyTvResult(),
                 1,
@@ -86,11 +86,11 @@ object FakeDataDummy {
         )
     }
 
-    fun genereateDummyTvResult(): List<TvResult> {
-        val tvResult = arrayListOf<TvResult>()
+    fun genereateDummyTvResult(): List<TvResultResponse> {
+        val tvResult = arrayListOf<TvResultResponse>()
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop1",
                         "firstAirDate1",
                         1,
@@ -101,7 +101,7 @@ object FakeDataDummy {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop2",
                         "firstAirDate2",
                         2,
@@ -112,7 +112,7 @@ object FakeDataDummy {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop3",
                         "firstAirDate3",
                         3,
@@ -123,7 +123,7 @@ object FakeDataDummy {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop4",
                         "firstAirDate4",
                         4,
@@ -134,7 +134,7 @@ object FakeDataDummy {
         )
 
         tvResult.add(
-                TvResult(
+                TvResultResponse(
                         "backdrop5",
                         "firstAirDate5",
                         5,

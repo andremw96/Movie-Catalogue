@@ -29,6 +29,9 @@ data class FavoriteEntity(
         val title: String,
 
         @ColumnInfo(name = "voteAverage")
-        val voteAverage: Double
+        val voteAverage: Double,
+
+        @ColumnInfo(name = "isMovie")
+        val isMovie: Boolean
 
 ) : Parcelable

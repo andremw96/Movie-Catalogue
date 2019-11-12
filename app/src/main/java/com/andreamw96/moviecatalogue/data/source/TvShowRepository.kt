@@ -3,7 +3,7 @@ package com.andreamw96.moviecatalogue.data.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowApi
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
 import com.andreamw96.moviecatalogue.utils.isRunningEspressoTest
@@ -16,10 +16,10 @@ import javax.inject.Inject
 class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = TvShowViewModel::class.java.simpleName
-    private val listTvShows = MutableLiveData<List<TvResult>>()
-    private val detailTvShow = MutableLiveData<TvResult>()
+    private val listTvShows = MutableLiveData<List<TvResultResponse>>()
+    private val detailTvShow = MutableLiveData<TvResultResponse>()
 
-    fun getTvShowFromApi(): LiveData<List<TvResult>> {
+    fun getTvShowFromApi(): LiveData<List<TvResultResponse>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
@@ -46,7 +46,7 @@ class TvShowRepository @Inject constructor(private val mTvShowApi: TvShowApi, pr
         return listTvShows
     }
 
-    fun getTvShowDetail(id: Int): LiveData<TvResult> {
+    fun getTvShowDetail(id: Int): LiveData<TvResultResponse> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
