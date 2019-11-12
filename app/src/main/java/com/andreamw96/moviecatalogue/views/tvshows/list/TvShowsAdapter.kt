@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
+import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
@@ -18,9 +18,9 @@ class TvShowsAdapter(private val context: Context?,
                      private val mOnItemClickListener: OnItemClickListener,
                      private val requestManager: RequestManager) : RecyclerView.Adapter<TvShowsAdapter.CardViewViewHolder>() {
 
-    val listTvShows: ArrayList<TvResultResponse> = arrayListOf()
+    val listTvShows: ArrayList<TvShowEntity> = arrayListOf()
 
-    fun bindData(TvShows: List<TvResultResponse>) {
+    fun bindData(TvShows: List<TvShowEntity>) {
         listTvShows.clear()
         listTvShows.addAll(TvShows)
         notifyDataSetChanged()
@@ -39,7 +39,7 @@ class TvShowsAdapter(private val context: Context?,
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-        fun bindItem(tvShow: TvResultResponse) {
+        fun bindItem(tvShow: TvShowEntity) {
             requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(tvShow.backdropPath).toString())
                     .into(img_movie)
             txt_movie_title.text = tvShow.name

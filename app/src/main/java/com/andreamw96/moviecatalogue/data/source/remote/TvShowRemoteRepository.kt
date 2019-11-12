@@ -16,10 +16,10 @@ import javax.inject.Inject
 class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = TvShowViewModel::class.java.simpleName
-    private val listTvShows = MutableLiveData<List<TvResultResponse>>()
+    private val listTvShows = MutableLiveData<ApiResponse<List<TvResultResponse>>>()
     private val detailTvShow = MutableLiveData<TvResultResponse>()
 
-    fun getTvShowFromApi(): LiveData<List<TvResultResponse>> {
+    fun getTvShowFromApi(): LiveData<ApiResponse<List<TvResultResponse>>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
@@ -29,13 +29,18 @@ class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowA
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    listTvShows.postValue(it.results)
+                    if (it.results.isNotEmpty()) {
+                        listTvShows.postValue(ApiResponse.success(it.results))
+                    } else {
+                        listTvShows.postValue(ApiResponse.empty("No Data", null))
+                    }
+
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 }, {
-                    listTvShows.postValue(null)
+                    listTvShows.postValue(ApiResponse.error("${it.stackTrace}", null))
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()

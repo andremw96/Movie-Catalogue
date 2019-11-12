@@ -7,6 +7,10 @@ import javax.inject.Inject
 
 class TvShowLocalRepository @Inject constructor(private val tvShowDao: TvShowDao) {
 
+    fun insertTvShowResponseToDB(tvshows: List<TvShowEntity>) {
+        tvShowDao.insert(tvshows)
+    }
+
     fun getTvShowFromLocal(): LiveData<List<TvShowEntity>> {
         return tvShowDao.getTVShowLocal()
     }

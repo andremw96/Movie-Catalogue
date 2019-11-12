@@ -11,7 +11,7 @@ import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 interface TvShowDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(tvResult: List<TvShowEntity>)
+    fun insert(tvResult: List<TvShowEntity>)
 
     @Query("SELECT * FROM tvshowsentity")
     fun getTVShowLocal(): LiveData<List<TvShowEntity>>
@@ -20,6 +20,6 @@ interface TvShowDao {
     fun getTvShowDetailLocal(id: Int) : LiveData<TvShowEntity>
 
     @Query("DELETE FROM tvshowsentity")
-    suspend fun deleteTvShows()
+    fun deleteTvShows()
 
 }

@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.views.movies.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -47,10 +48,8 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun showMovie() {
-
         movieViewModel.getMovies().removeObservers(viewLifecycleOwner)
         movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
-
             when(movies.status) {
                 Resource.Status.LOADING -> {
                     showLoading()

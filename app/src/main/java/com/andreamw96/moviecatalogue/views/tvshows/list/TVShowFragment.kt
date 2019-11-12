@@ -12,6 +12,7 @@ import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
+import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_tvshow.*
@@ -45,20 +46,29 @@ class TVShowFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun showTvShows() {
-        showLoading()
-
         tvShowMovieViewModel.getTvShows().removeObservers(viewLifecycleOwner)
         tvShowMovieViewModel.getTvShows().observe(viewLifecycleOwner, Observer { tvShows ->
-            if (tvShows != null) {
-                tvShowsAdapter.bindData(tvShows)
-            } else {
-                tvShowsAdapter.bindData(emptyList())
+            when(tvShows.status) {
+                Resource.Status.LOADING -> {
+                    showLoading()
+                }
 
-                showSnackbar(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_INDEFINITE,
-                        View.OnClickListener { showTvShows() }, "Retry")
+                Resource.Status.SUCCESS -> {
+                    tvShows.data?.let { tvShowsAdapter.bindData(it) }
+
+                    hideLoading()
+                }
+
+                Resource.Status.ERROR -> {
+                    tvShowsAdapter.bindData(emptyList())
+
+                    showSnackbar(fragment_tvshow, "Gagal memuat list tv shows", Snackbar.LENGTH_INDEFINITE,
+                            View.OnClickListener { showTvShows() }, "Retry")
+
+                    hideLoading()
+                }
             }
 
-            hideLoading()
         })
     }
 
