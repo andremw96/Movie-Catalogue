@@ -1,9 +1,10 @@
-package com.andreamw96.moviecatalogue.data.source.remote.tvshow
+package com.andreamw96.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.data.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowApi
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
 import com.andreamw96.moviecatalogue.utils.isRunningEspressoTest
 import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowViewModel

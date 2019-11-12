@@ -6,7 +6,7 @@
     <string name="releaseDateString">Release Date : \t</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="movies">Movies</string>
+    <string name="movieResponses">Movies</string>
     <string name="tv_shows">TV Shows</string>
     <string name="poster_film">Poster Film</string>
 

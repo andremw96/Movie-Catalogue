@@ -1,14 +1,14 @@
 package com.andreamw96.moviecatalogue.utils
 
-import com.andreamw96.moviecatalogue.data.MovieResult
-import com.andreamw96.moviecatalogue.data.Movies
-import com.andreamw96.moviecatalogue.data.TvResult
-import com.andreamw96.moviecatalogue.data.TvShows
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShows
 
 object FakeDataDummy {
 
-    fun generateDummyMovies(): Movies {
-        return Movies(
+    fun generateDummyMovies(): MoviesResponse {
+        return MoviesResponse(
                 1,
                 genereateDummyMovieResult(),
                 1,
@@ -16,11 +16,11 @@ object FakeDataDummy {
         )
     }
 
-    fun genereateDummyMovieResult(): List<MovieResult> {
-        val movieResult = arrayListOf<MovieResult>()
+    fun genereateDummyMovieResult(): List<MovieResultResponse> {
+        val movieResult = arrayListOf<MovieResultResponse>()
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop1",
                         1,
                         "overview1",
@@ -31,7 +31,7 @@ object FakeDataDummy {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop2",
                         2,
                         "overview2",
@@ -42,7 +42,7 @@ object FakeDataDummy {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop3",
                         3,
                         "overview3",
@@ -53,7 +53,7 @@ object FakeDataDummy {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop4",
                         4,
                         "overview4",
@@ -64,7 +64,7 @@ object FakeDataDummy {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop5",
                         5,
                         "overview5",

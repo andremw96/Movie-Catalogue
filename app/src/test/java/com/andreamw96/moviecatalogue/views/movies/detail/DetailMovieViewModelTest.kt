@@ -3,8 +3,8 @@ package com.andreamw96.moviecatalogue.views.movies.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.MovieResult
-import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieRepository
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
+import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
@@ -32,12 +32,12 @@ class DetailMovieViewModelTest {
 
     @Test
     fun getDetailMovie() {
-        val movieResponse = MutableLiveData<MovieResult>()
+        val movieResponse = MutableLiveData<MovieResultResponse>()
         movieResponse.value = clickedMovie
 
         `when`(movieRepository.getDetailMovieFromApi(clickedMovieId)).thenReturn(movieResponse)
 
-        val observer = mock(Observer::class.java) as Observer<MovieResult>
+        val observer = mock(Observer::class.java) as Observer<MovieResultResponse>
 
         detailMovieViewModel.getDetailMovie().observeForever(observer)
 

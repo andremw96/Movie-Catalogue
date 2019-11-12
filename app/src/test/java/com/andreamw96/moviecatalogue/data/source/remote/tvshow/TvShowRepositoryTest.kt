@@ -2,7 +2,7 @@ package com.andreamw96.moviecatalogue.data.source.remote.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.TvResult
+import com.andreamw96.moviecatalogue.data.source.TvShowRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
 import com.andreamw96.moviecatalogue.utils.RxImmediateSchedulerRule

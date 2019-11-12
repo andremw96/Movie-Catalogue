@@ -2,8 +2,8 @@ package com.andreamw96.moviecatalogue.views.tvshows.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.andreamw96.moviecatalogue.data.TvResult
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowRepository
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
+import com.andreamw96.moviecatalogue.data.source.TvShowRepository
 import javax.inject.Inject
 
 

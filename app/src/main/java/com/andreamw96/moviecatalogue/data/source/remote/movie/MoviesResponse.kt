@@ -1,15 +1,15 @@
-package com.andreamw96.moviecatalogue.data
+package com.andreamw96.moviecatalogue.data.source.remote.movie
 
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-data class Movies(
+data class MoviesResponse(
         @SerializedName("page")
         val page: Int,
-        @SerializedName("results")
-        val results: List<MovieResult>,
+        @SerializedName("resultResponses")
+        val resultResponses: List<MovieResultResponse>,
         @SerializedName("total_pages")
         val totalPages: Int,
         @SerializedName("total_results")
@@ -17,7 +17,7 @@ data class Movies(
 )
 
 @Parcelize
-data class MovieResult(
+data class MovieResultResponse(
         @SerializedName("backdrop_path")
         val backdropPath: String,
         @SerializedName("id")

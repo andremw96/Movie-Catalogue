@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.MovieResult
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer
@@ -18,11 +18,11 @@ class MovieAdapter(private val context: Context?,
                    private val mOnItemClickListener: OnItemClickListener,
                    private val requestManager: RequestManager) : RecyclerView.Adapter<MovieAdapter.CardViewViewHolder>() {
 
-    val listMovie: ArrayList<MovieResult> = arrayListOf()
+    val listMovieResponse: ArrayList<MovieResultResponse> = arrayListOf()
 
-    fun bindData(movies: List<MovieResult>) {
-        listMovie.clear()
-        listMovie.addAll(movies)
+    fun bindData(movieResponses: List<MovieResultResponse>) {
+        listMovieResponse.clear()
+        listMovieResponse.addAll(movieResponses)
         notifyDataSetChanged()
     }
 
@@ -32,20 +32,20 @@ class MovieAdapter(private val context: Context?,
     }
 
     override fun onBindViewHolder(cardViewViewHolder: CardViewViewHolder, i: Int) {
-        cardViewViewHolder.bindItem(listMovie[i])
+        cardViewViewHolder.bindItem(listMovieResponse[i])
     }
 
-    override fun getItemCount(): Int = listMovie.size
+    override fun getItemCount(): Int = listMovieResponse.size
 
     inner class CardViewViewHolder internal constructor(override val containerView: View, private var onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-        fun bindItem(movie: MovieResult) {
-            requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.backdropPath).toString())
+        fun bindItem(movieResponse: MovieResultResponse) {
+            requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movieResponse.backdropPath).toString())
                     .into(img_movie)
 
-            txt_movie_title.text = movie.title
-            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movie.releaseDate)
-            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movie.voteAverage)
+            txt_movie_title.text = movieResponse.title
+            txt_date.text = String.format("%s%s", context?.getString(R.string.releaseDateString), movieResponse.releaseDate)
+            txt_rating.text = String.format("%s%s", context?.getString(R.string.ratingString), movieResponse.voteAverage)
 
             itemView.setOnClickListener(this)
         }

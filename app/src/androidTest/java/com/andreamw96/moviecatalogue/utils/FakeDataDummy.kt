@@ -1,14 +1,14 @@
 package com.andreamw96.moviecatalogue.utils
 
-import com.andreamw96.moviecatalogue.data.MovieResult
-import com.andreamw96.moviecatalogue.data.Movies
-import com.andreamw96.moviecatalogue.data.TvResult
-import com.andreamw96.moviecatalogue.data.TvShows
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShows
 
 object FakeData {
 
-    fun generateDummyMovies(): Movies {
-        return Movies(
+    fun generateDummyMovies(): MoviesResponse {
+        return MoviesResponse(
                 1,
                 genereateDummyMovieResult(),
                 1,
@@ -16,11 +16,11 @@ object FakeData {
         )
     }
 
-    fun genereateRemoteMovieResult(): List<MovieResult> {
-        val movieResult = arrayListOf<MovieResult>()
+    fun genereateRemoteMovieResult(): List<MovieResultResponse> {
+        val movieResult = arrayListOf<MovieResultResponse>()
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "/77SSqcbjWooVLUndqjhGugA8eln.jpg",
                         322,
                         "The lives of three men who were childhood friends are shattered when one of them has a family tragedy.",
@@ -31,7 +31,7 @@ object FakeData {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg",
                         475557,
                         "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
@@ -44,11 +44,11 @@ object FakeData {
         return movieResult
     }
 
-    fun genereateDummyMovieResult(): List<MovieResult> {
-        val movieResult = arrayListOf<MovieResult>()
+    fun genereateDummyMovieResult(): List<MovieResultResponse> {
+        val movieResult = arrayListOf<MovieResultResponse>()
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop1",
                         1,
                         "overview1",
@@ -59,7 +59,7 @@ object FakeData {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop2",
                         2,
                         "overview2",
@@ -70,7 +70,7 @@ object FakeData {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop3",
                         3,
                         "overview3",
@@ -81,7 +81,7 @@ object FakeData {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop4",
                         4,
                         "overview4",
@@ -92,7 +92,7 @@ object FakeData {
         )
 
         movieResult.add(
-                MovieResult(
+                MovieResultResponse(
                         "backdrop5",
                         5,
                         "overview5",

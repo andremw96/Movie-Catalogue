@@ -3,8 +3,8 @@ package com.andreamw96.moviecatalogue.views.movies.list
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.MovieResult
-import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieRepository
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
+import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
@@ -31,12 +31,12 @@ class MovieViewModelTest {
     fun getMovies() {
         val dummyMovies = FakeDataDummy.genereateDummyMovieResult()
 
-        val movies = MutableLiveData<List<MovieResult>>()
+        val movies = MutableLiveData<List<MovieResultResponse>>()
         movies.value = dummyMovies
 
         `when`(movieRepository.getMoviesFromApi()).thenReturn(movies)
 
-        val observer = mock(Observer::class.java) as Observer<List<MovieResult>>
+        val observer = mock(Observer::class.java) as Observer<List<MovieResultResponse>>
 
         movieViewModel.getMovies().observeForever(observer)
 

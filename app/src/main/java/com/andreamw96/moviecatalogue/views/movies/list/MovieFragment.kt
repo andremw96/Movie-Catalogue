@@ -65,7 +65,7 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovie[position].id)
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovieResponse[position].id)
         startActivity(goToDetail)
     }
 }

@@ -2,7 +2,7 @@ package com.andreamw96.moviecatalogue.data.source.remote.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.MovieResult
+import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
 import com.andreamw96.moviecatalogue.utils.RxImmediateSchedulerRule
@@ -53,7 +53,7 @@ class MovieRepositoryTest {
         `when`(movieApi.getMovies(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
                 .thenReturn(Single.just(dummyMovies))
 
-        val observer = mock(Observer::class.java) as Observer<List<MovieResult>>
+        val observer = mock(Observer::class.java) as Observer<List<MovieResultResponse>>
 
         movieRepository.getMoviesFromApi().observeForever(observer)
         verify(observer).onChanged(dummyMovieResult)
@@ -71,7 +71,7 @@ class MovieRepositoryTest {
         `when`(movieApi.getDetailMovie(ArgumentMatchers.eq(clickedMovieId),
                 ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn(Single.just(clickedMovie))
 
-        val observer = mock(Observer::class.java) as Observer<MovieResult>
+        val observer = mock(Observer::class.java) as Observer<MovieResultResponse>
 
         movieRepository.getDetailMovieFromApi(clickedMovieId).observeForever(observer)
         verify(observer).onChanged(clickedMovie)

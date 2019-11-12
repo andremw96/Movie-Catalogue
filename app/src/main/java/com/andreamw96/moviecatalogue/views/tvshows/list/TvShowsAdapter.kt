@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.data.TvResult
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResult
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.bumptech.glide.RequestManager
 import kotlinx.android.extensions.LayoutContainer

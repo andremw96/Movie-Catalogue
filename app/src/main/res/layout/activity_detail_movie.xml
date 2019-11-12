@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/scrollview_detail_movie"
-    tools:context=".views.movies.detail.DetailMovieActivity">
+    tools:context=".views.movieResponses.detail.DetailMovieActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

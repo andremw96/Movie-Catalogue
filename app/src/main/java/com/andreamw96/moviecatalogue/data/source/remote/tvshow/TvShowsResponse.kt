@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.data
+package com.andreamw96.moviecatalogue.data.source.remote.tvshow
 
 
 import android.os.Parcelable
@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class TvShows(
         @SerializedName("page")
         val page: Int,
-        @SerializedName("results")
+        @SerializedName("resultResponses")
         val results: List<TvResult>,
         @SerializedName("total_pages")
         val totalPages: Int,

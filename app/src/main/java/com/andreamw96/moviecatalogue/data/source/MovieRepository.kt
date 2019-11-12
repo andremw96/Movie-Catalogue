@@ -1,9 +1,10 @@
-package com.andreamw96.moviecatalogue.data.source.remote.movie
+package com.andreamw96.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.data.MovieResult
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieApi
+import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
 import com.andreamw96.moviecatalogue.utils.isRunningEspressoTest
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,10 +15,10 @@ import javax.inject.Inject
 class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = MovieRepository::class.java.simpleName
-    private val listMovies = MutableLiveData<List<MovieResult>>()
-    private val detailMovie = MutableLiveData<MovieResult>()
+    private val listMovies = MutableLiveData<List<MovieResultResponse>>()
+    private val detailMovie = MutableLiveData<MovieResultResponse>()
 
-    fun getMoviesFromApi(): LiveData<List<MovieResult>> {
+    fun getMoviesFromApi(): LiveData<List<MovieResultResponse>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
@@ -27,7 +28,7 @@ class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, priva
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    listMovies.postValue(it.results)
+                    listMovies.postValue(it.resultResponses)
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
@@ -44,7 +45,7 @@ class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, priva
         return listMovies
     }
 
-    fun getDetailMovieFromApi(id: Int): LiveData<MovieResult> {
+    fun getDetailMovieFromApi(id: Int): LiveData<MovieResultResponse> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
