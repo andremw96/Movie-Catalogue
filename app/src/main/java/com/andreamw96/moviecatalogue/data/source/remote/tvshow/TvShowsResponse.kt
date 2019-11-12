@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class TvShowsResponse(
         @SerializedName("page")
         val page: Int,
-        @SerializedName("resultResponses")
+        @SerializedName("results")
         val results: List<TvResultResponse>,
         @SerializedName("total_pages")
         val totalPages: Int,

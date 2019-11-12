@@ -8,15 +8,18 @@ import androidx.room.Query
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
 
 @Dao
-abstract class MovieDao {
+interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(movieResult: List<MovieEntity>)
+    suspend fun insert(movieResult: List<MovieEntity>)
 
     @Query("SELECT * FROM moviesentity")
-    abstract fun getMoviesLocal(): LiveData<List<MovieEntity>>
+    fun getMoviesLocal(): LiveData<List<MovieEntity>>
+
+    @Query("SELECT * FROM moviesentity WHERE id = :id")
+    fun getMovieDetailLocal(id: Int) : LiveData<MovieEntity>
 
     @Query("DELETE FROM moviesentity")
-    abstract suspend fun deleteMovies()
+    suspend fun deleteMovies()
 
 }

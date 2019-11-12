@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
-import com.andreamw96.moviecatalogue.data.source.TvShowRepository
+import com.andreamw96.moviecatalogue.data.source.remote.TvShowRemoteRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import org.junit.Before
 import org.junit.Rule
@@ -17,7 +17,7 @@ class DetailTvShowViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var detailTvShowViewModel: DetailTvShowViewModel
-    private val tvShowRepository = mock(TvShowRepository::class.java)
+    private val tvShowRepository = mock(TvShowRemoteRepository::class.java)
 
     private val clickedTvShow = FakeDataDummy.genereateDummyTvResult()[0]
     private val clickedTvShowId = clickedTvShow.id

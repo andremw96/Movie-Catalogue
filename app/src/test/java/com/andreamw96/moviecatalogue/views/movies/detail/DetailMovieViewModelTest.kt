@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
-import com.andreamw96.moviecatalogue.data.source.MovieRepository
+import com.andreamw96.moviecatalogue.data.source.remote.MovieRemoteRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
@@ -19,7 +19,7 @@ class DetailMovieViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var detailMovieViewModel: DetailMovieViewModel
-    private val movieRepository = mock(MovieRepository::class.java)
+    private val movieRepository = mock(MovieRemoteRepository::class.java)
 
     private val clickedMovie = FakeDataDummy.genereateDummyMovieResult()[0]
     private val clickedMovieId = clickedMovie.id

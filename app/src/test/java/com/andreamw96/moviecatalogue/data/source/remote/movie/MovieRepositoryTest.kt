@@ -2,7 +2,7 @@ package com.andreamw96.moviecatalogue.data.source.remote.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.source.MovieRepository
+import com.andreamw96.moviecatalogue.data.source.remote.MovieRemoteRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
 import com.andreamw96.moviecatalogue.utils.RxImmediateSchedulerRule
@@ -31,7 +31,7 @@ class MovieRepositoryTest {
         val schedulers = RxImmediateSchedulerRule()
     }
 
-    private lateinit var movieRepository: MovieRepository
+    private lateinit var movieRepository: MovieRemoteRepository
 
     private val movieApi = mock(MovieApi::class.java)
     private val compositeDisposable = mock(CompositeDisposable::class.java)
@@ -44,7 +44,7 @@ class MovieRepositoryTest {
 
     @Before
     fun setUp() {
-        movieRepository = MovieRepository(movieApi, compositeDisposable)
+        movieRepository = MovieRemoteRepository(movieApi, compositeDisposable)
     }
 
 

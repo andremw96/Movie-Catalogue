@@ -1,40 +1,41 @@
-package com.andreamw96.moviecatalogue.data.source
+package com.andreamw96.moviecatalogue.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreamw96.moviecatalogue.BuildConfig
-import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieApi
-import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
+import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowApi
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
 import com.andreamw96.moviecatalogue.utils.isRunningEspressoTest
+import com.andreamw96.moviecatalogue.views.tvshows.list.TvShowViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, private val compositeDisposable: CompositeDisposable) {
+class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowApi, private val compositeDisposable: CompositeDisposable) {
 
-    private val TAG = MovieRepository::class.java.simpleName
-    private val listMovies = MutableLiveData<List<MovieResultResponse>>()
-    private val detailMovie = MutableLiveData<MovieResultResponse>()
+    private val TAG = TvShowViewModel::class.java.simpleName
+    private val listTvShows = MutableLiveData<List<TvResultResponse>>()
+    private val detailTvShow = MutableLiveData<TvResultResponse>()
 
-    fun getMoviesFromApi(): LiveData<List<MovieResultResponse>> {
+    fun getTvShowFromApi(): LiveData<List<TvResultResponse>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
 
-        compositeDisposable.add(mMovieApi
-                .getMovies(BuildConfig.API_KEY, "en-US")
+        compositeDisposable.add(mTvShowApi
+                .getTvShows(BuildConfig.API_KEY, "en-US")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    listMovies.postValue(it.resultResponses)
+                    listTvShows.postValue(it.results)
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 }, {
-                    listMovies.postValue(null)
+                    listTvShows.postValue(null)
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
@@ -42,26 +43,26 @@ class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, priva
                 })
         )
 
-        return listMovies
+        return listTvShows
     }
 
-    fun getDetailMovieFromApi(id: Int): LiveData<MovieResultResponse> {
+    fun getTvShowDetail(id: Int): LiveData<TvResultResponse> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
 
-        compositeDisposable.add(mMovieApi
-                .getDetailMovie(id, BuildConfig.API_KEY, "en-US")
+        compositeDisposable.add(mTvShowApi
+                .getDetailTvShow(id, BuildConfig.API_KEY, "en-US")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    detailMovie.postValue(it)
+                    detailTvShow.postValue(it)
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 }, {
-                    detailMovie.postValue(null)
+                    detailTvShow.postValue(null)
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
@@ -69,10 +70,11 @@ class MovieRepository @Inject constructor(private val mMovieApi: MovieApi, priva
                 })
         )
 
-        return detailMovie
+        return detailTvShow
     }
 
     fun clearComposite() {
         compositeDisposable.dispose()
     }
+
 }

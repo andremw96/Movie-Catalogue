@@ -2,7 +2,7 @@ package com.andreamw96.moviecatalogue.data.source.remote.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.source.TvShowRepository
+import com.andreamw96.moviecatalogue.data.source.remote.TvShowRemoteRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
 import com.andreamw96.moviecatalogue.utils.RxImmediateSchedulerRule
@@ -30,7 +30,7 @@ class TvShowRepositoryTest {
         val schedulers = RxImmediateSchedulerRule()
     }
 
-    private lateinit var tvShowRepository: TvShowRepository
+    private lateinit var tvShowRepository: TvShowRemoteRepository
     private val tvShowApi = mock(TvShowApi::class.java)
     private val compositeDisposable = mock(CompositeDisposable::class.java)
 
@@ -42,7 +42,7 @@ class TvShowRepositoryTest {
 
     @Before
     fun setUp() {
-        tvShowRepository = TvShowRepository(tvShowApi, compositeDisposable)
+        tvShowRepository = TvShowRemoteRepository(tvShowApi, compositeDisposable)
     }
 
     @Test

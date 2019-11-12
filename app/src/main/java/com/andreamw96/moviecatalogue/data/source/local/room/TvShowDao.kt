@@ -8,15 +8,18 @@ import androidx.room.Query
 import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 
 @Dao
-abstract class TvShowDao {
+interface TvShowDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(tvResult: List<TvShowEntity>)
+    suspend fun insert(tvResult: List<TvShowEntity>)
 
     @Query("SELECT * FROM tvshowsentity")
-    abstract fun getTVShowLocal(): LiveData<List<TvShowEntity>>
+    fun getTVShowLocal(): LiveData<List<TvShowEntity>>
+
+    @Query("SELECT * FROM tvshowsentity WHERE id = :id")
+    fun getTvShowDetailLocal(id: Int) : LiveData<TvShowEntity>
 
     @Query("DELETE FROM tvshowsentity")
-    abstract suspend fun deleteTvShows()
+    suspend fun deleteTvShows()
 
 }
