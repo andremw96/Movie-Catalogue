@@ -12,6 +12,7 @@ import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
+import com.andreamw96.moviecatalogue.views.common.Resource
 import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -46,26 +47,37 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun showMovie() {
-        showLoading()
 
         movieViewModel.getMovies().removeObservers(viewLifecycleOwner)
         movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
-            if (movies != null) {
-                movieAdapter.bindData(movies)
-            } else {
-                movieAdapter.bindData(emptyList())
 
-                showSnackbar(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_INDEFINITE,
-                        View.OnClickListener { showMovie() }, "Retry")
+            when(movies.status) {
+                Resource.Status.LOADING -> {
+                    showLoading()
+                }
+
+                Resource.Status.SUCCESS -> {
+                    movies.data?.let { movieAdapter.bindData(it) }
+
+                    hideLoading()
+                }
+
+                Resource.Status.ERROR -> {
+                    movieAdapter.bindData(emptyList())
+
+                    showSnackbar(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_INDEFINITE,
+                            View.OnClickListener { showMovie() }, "Retry")
+
+                    hideLoading()
+                }
+
             }
-
-            hideLoading()
         })
     }
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovieResponse[position].id)
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovieEntity[position].id)
         startActivity(goToDetail)
     }
 }

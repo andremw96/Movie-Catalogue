@@ -15,10 +15,10 @@ import javax.inject.Inject
 class MovieRemoteRepository @Inject constructor(private val mMovieApi: MovieApi, private val compositeDisposable: CompositeDisposable) {
 
     private val TAG = MovieRemoteRepository::class.java.simpleName
-    private val listMovies = MutableLiveData<List<MovieResultResponse>>()
+    private val listMovies = MutableLiveData<ApiResponse<List<MovieResultResponse>>>()
     private val detailMovie = MutableLiveData<MovieResultResponse>()
 
-    fun getMoviesFromApi(): LiveData<List<MovieResultResponse>> {
+    fun getMoviesFromApi(): LiveData<ApiResponse<List<MovieResultResponse>>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
@@ -28,13 +28,17 @@ class MovieRemoteRepository @Inject constructor(private val mMovieApi: MovieApi,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    listMovies.postValue(it.resultResponses)
+                    if (it.resultResponses.isNotEmpty()) {
+                        listMovies.postValue(ApiResponse.success(it.resultResponses))
+                    } else {
+                        listMovies.postValue(ApiResponse.empty("No Data", null))
+                    }
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 }, {
-                    listMovies.postValue(null)
+                    listMovies.postValue(ApiResponse.error("${it.stackTrace}", null))
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()

@@ -1,8 +1,11 @@
 package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
+import androidx.room.Room
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.source.local.room.MovieCatalogueDatabase
+import com.andreamw96.moviecatalogue.utils.AppExecutors
 import com.andreamw96.moviecatalogue.utils.GlideApp
 import com.andreamw96.moviecatalogue.views.common.LoadingDialog
 import com.bumptech.glide.RequestManager
@@ -44,6 +47,18 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun provideMovieCatalogueDatabase(application: Application): MovieCatalogueDatabase {
+        return Room.databaseBuilder(
+                application.applicationContext,
+                MovieCatalogueDatabase::class.java,
+                "movie_catalogue_database"
+        )
+                .fallbackToDestructiveMigration()
+                .build()
+    }
+
+    @Singleton
+    @Provides
     fun provideRequestOptions(): RequestOptions {
         return RequestOptions()
                 .placeholder(R.drawable.white_background)
@@ -62,5 +77,11 @@ class AppModule {
     @Provides
     fun provideLoadingDialog(): LoadingDialog {
         return LoadingDialog()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAppExecutors() : AppExecutors {
+        return AppExecutors()
     }
 }

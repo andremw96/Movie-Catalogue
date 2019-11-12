@@ -1,13 +1,10 @@
 package com.andreamw96.moviecatalogue.data.source
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
-import com.andreamw96.moviecatalogue.data.source.remote.ApiEmptyResponse
-import com.andreamw96.moviecatalogue.data.source.remote.ApiErrorResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
-import com.andreamw96.moviecatalogue.data.source.remote.ApiSuccessResponse
 import com.andreamw96.moviecatalogue.utils.AppExecutors
 import com.andreamw96.moviecatalogue.views.common.Resource
 
@@ -57,8 +54,8 @@ abstract class NetworkBoundResource<ResultType, RequestType>
         result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
             result.removeSource(dbSource)
-            when (response) {
-                is ApiSuccessResponse -> {
+            when (response.status) {
+                ApiResponse.StatusResponse.SUCCESS -> {
                     appExecutors.diskIO().execute {
                         saveCallResult(processResponse(response))
                         appExecutors.mainThread().execute {
@@ -71,7 +68,8 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                         }
                     }
                 }
-                is ApiEmptyResponse -> {
+
+                ApiResponse.StatusResponse.EMPTY -> {
                     appExecutors.mainThread().execute {
                         // reload from disk whatever we had
                         result.addSource(loadFromDb()) { newData ->
@@ -79,10 +77,11 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                         }
                     }
                 }
-                is ApiErrorResponse -> {
+
+                ApiResponse.StatusResponse.ERROR -> {
                     onFetchFailed()
                     result.addSource(dbSource) { newData ->
-                        setValue(Resource.error(response.errorMessage, newData))
+                        setValue(Resource.error(response.message, newData))
                     }
                 }
             }
@@ -94,10 +93,10 @@ abstract class NetworkBoundResource<ResultType, RequestType>
     fun asLiveData() = result as LiveData<Resource<ResultType>>
 
     @WorkerThread
-    protected open fun processResponse(response: ApiSuccessResponse<RequestType>) = response.body
+    protected open fun processResponse(response: ApiResponse<RequestType>) = response.body
 
     @WorkerThread
-    protected abstract fun saveCallResult(item: RequestType)
+    protected abstract fun saveCallResult(item: RequestType?)
 
     @MainThread
     protected abstract fun shouldFetch(data: ResultType?): Boolean
