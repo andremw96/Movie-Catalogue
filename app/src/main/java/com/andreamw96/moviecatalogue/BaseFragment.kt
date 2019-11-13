@@ -26,11 +26,20 @@ abstract class BaseFragment : DaggerFragment() {
     }
 
     fun showLoading() {
-        loadingDialog.showLoadingDialog(context)
+        var fragment = fragmentManager?.findFragmentByTag(LoadingDialog::class.java.canonicalName)
+        if (fragment == null) {
+            fragment = loadingDialog
+            fragmentManager?.beginTransaction()
+                    ?.add(fragment, LoadingDialog::class.java.canonicalName)
+                    ?.commitAllowingStateLoss()
+        }
     }
 
     fun hideLoading() {
-        loadingDialog.hideLoadingDialog()
+        val fragment = fragmentManager?.findFragmentByTag(LoadingDialog::class.java.canonicalName)
+        if (fragment != null) {
+            fragmentManager?.beginTransaction()?.remove(fragment)?.commitAllowingStateLoss()
+        }
     }
 
     abstract fun getLayout(): Int

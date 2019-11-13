@@ -18,11 +18,20 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     lateinit var requestManager: RequestManager
 
     fun showLoading() {
-        loadingDialog.showLoadingDialog(this)
+        var fragment = supportFragmentManager.findFragmentByTag(LoadingDialog::class.java.canonicalName)
+        if (fragment == null) {
+            fragment = LoadingDialog()
+            supportFragmentManager.beginTransaction()
+                    .add(fragment, LoadingDialog::class.java.canonicalName)
+                    .commitAllowingStateLoss()
+        }
     }
 
     fun hideLoading() {
-        loadingDialog.hideLoadingDialog()
+        val fragment = supportFragmentManager.findFragmentByTag(LoadingDialog::class.java.canonicalName)
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss()
+        }
     }
 
 }

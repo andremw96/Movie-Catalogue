@@ -1,7 +1,12 @@
 package com.andreamw96.moviecatalogue.views.common
 
 import android.app.Dialog
-import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import com.andreamw96.moviecatalogue.R
@@ -9,36 +14,51 @@ import com.andreamw96.moviecatalogue.utils.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
-import javax.inject.Inject
+import dagger.android.support.DaggerDialogFragment
+import javax.inject.Singleton
 
-class LoadingDialog @Inject constructor() {
 
-    private var dialog: Dialog? = null
 
-    fun showLoadingDialog(context: Context?) {
-        dialog = context?.let { Dialog(it) }
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.setContentView(R.layout.loading_dialog)
-        dialog?.setCancelable(false)
+@Singleton
+class LoadingDialog : DaggerDialogFragment() {
 
-        val gifImageView = dialog?.findViewById<ImageView>(R.id.custom_loading_imageView)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        context?.let {
-            GlideApp.with(it)
-                    .load(R.drawable.loading)
-                    .placeholder(R.drawable.loading)
-                    .centerCrop()
-                    .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
-                    .into(DrawableImageViewTarget(gifImageView))
-        }
-
-        dialog?.show()
+        isCancelable = false
     }
 
-    fun hideLoadingDialog() {
-        if (dialog != null) {
-            dialog?.dismiss()
-            dialog = null
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.loading_dialog, container, false)
+
+        if (rootView != null) {
+            val gifImageView = rootView.findViewById<ImageView>(R.id.custom_loading_imageView)
+
+            context?.let {
+                GlideApp.with(it)
+                        .load(R.drawable.loading)
+                        .placeholder(R.drawable.loading)
+                        .centerCrop()
+                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
+                        .into(DrawableImageViewTarget(gifImageView))
+            }
+        }
+        return rootView
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog
+        if(dialog != null) {
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         }
     }
 }

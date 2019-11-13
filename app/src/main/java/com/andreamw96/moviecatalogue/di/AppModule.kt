@@ -1,7 +1,6 @@
 package com.andreamw96.moviecatalogue.di
 
 import android.app.Application
-import android.app.Dialog
 import androidx.room.Room
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
@@ -74,7 +73,7 @@ class AppModule {
                 .setDefaultRequestOptions(requestOptions)
     }
 
-    //@Singleton
+    @Singleton
     @Provides
     fun provideLoadingDialog(): LoadingDialog {
         return LoadingDialog()

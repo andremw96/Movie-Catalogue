@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.di
 
+import com.andreamw96.moviecatalogue.di.main.LoadingDialogFragmentBuildersModule
 import com.andreamw96.moviecatalogue.di.main.MainFragmentBuildersModule
 import com.andreamw96.moviecatalogue.di.movie.DetailMovieViewModelModule
 import com.andreamw96.moviecatalogue.di.tvshow.DetailTvShowViewModelModule
@@ -15,28 +16,32 @@ abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
             modules = [
-                MainFragmentBuildersModule::class
+                MainFragmentBuildersModule::class,
+                LoadingDialogFragmentBuildersModule::class
             ]
     )
     abstract fun contributeMainActivity(): MainActivity
 
     @ContributesAndroidInjector(
             modules = [
-                DetailMovieViewModelModule::class
+                DetailMovieViewModelModule::class,
+                LoadingDialogFragmentBuildersModule::class
             ]
     )
     abstract fun contributeDetailMovieActivity(): DetailMovieActivity
 
     @ContributesAndroidInjector(
             modules = [
-                DetailTvShowViewModelModule::class
+                DetailTvShowViewModelModule::class,
+                LoadingDialogFragmentBuildersModule::class
             ]
     )
     abstract fun contributeDetailTvShowActivity(): DetailTvShowActivity
 
     @ContributesAndroidInjector(
             modules = [
-                MainFragmentBuildersModule::class
+                MainFragmentBuildersModule::class,
+                LoadingDialogFragmentBuildersModule::class
             ]
     )
     abstract fun contributeSingleFragmentActivity(): SingleFragmentActivity
