@@ -1,13 +1,28 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.andreamw96.moviecatalogue.views.favorites.list.FavoritesFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.andreamw96.moviecatalogue.views.favorites.FavoritesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_fav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimarySoft"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/tabIndicatorFavColor"
+        app:tabMode="fixed"
+        app:tabTextColor="@color/tabTextFavColor">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_fav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@+id/tab_layout_fav">
 
-</FrameLayout>
+    </androidx.viewpager.widget.ViewPager>
+
+</RelativeLayout>

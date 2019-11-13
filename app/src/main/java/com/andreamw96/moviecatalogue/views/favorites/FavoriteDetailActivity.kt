@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.favorites.detail
+package com.andreamw96.moviecatalogue.views.favorites
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

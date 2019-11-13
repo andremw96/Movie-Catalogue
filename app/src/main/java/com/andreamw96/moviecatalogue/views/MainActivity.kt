@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.views.favorites.list.FavoritesFragment
+import com.andreamw96.moviecatalogue.views.favorites.FavoritesFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
