@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.views.favorites.list.FavoritesFragment
 import com.andreamw96.moviecatalogue.views.movies.list.MovieFragment
 import com.andreamw96.moviecatalogue.views.tvshows.list.TVShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +31,14 @@ class MainActivity : DaggerAppCompatActivity() {
             R.id.navigation_tv_shows -> {
 
                 fragment = TVShowFragment()
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container_layout, fragment, fragment.javaClass.simpleName)
+                        .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_favorite -> {
+
+                fragment = FavoritesFragment()
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.container_layout, fragment, fragment.javaClass.simpleName)
                         .commit()
