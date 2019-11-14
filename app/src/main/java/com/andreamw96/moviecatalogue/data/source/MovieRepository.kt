@@ -53,4 +53,26 @@ class MovieRepository @Inject constructor(
         }.asLiveData()
     }
 
+    fun getMovieDetail(id: Int) : LiveData<Resource<MovieEntity>> {
+        return object : NetworkBoundResource<MovieEntity, MovieResultResponse>(appExecutors) {
+
+            override fun saveCallResult(item: MovieResultResponse?) {
+
+            }
+
+            override fun shouldFetch(data: MovieEntity?): Boolean {
+                return true
+            }
+
+            override fun loadFromDb(): LiveData<MovieEntity> {
+                return movieLocalRepository.getDetailMovieFromLocal(id)
+            }
+
+            override fun createCall(): LiveData<ApiResponse<MovieResultResponse>> {
+                return movieRemoteRepository.getDetailMovieFromApi(id)
+            }
+
+        }.asLiveData()
+    }
+
 }

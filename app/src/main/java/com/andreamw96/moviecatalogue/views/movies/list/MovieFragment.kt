@@ -68,7 +68,6 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
 
                     hideLoading()
                 }
-
             }
         })
     }
