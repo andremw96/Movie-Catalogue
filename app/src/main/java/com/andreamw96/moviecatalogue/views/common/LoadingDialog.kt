@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.views.common
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -18,8 +19,6 @@ import dagger.android.support.DaggerDialogFragment
 import javax.inject.Singleton
 
 
-
-@Singleton
 class LoadingDialog : DaggerDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +57,11 @@ class LoadingDialog : DaggerDialogFragment() {
         if(dialog != null) {
             dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        dialog.dismiss()
     }
 }

@@ -38,8 +38,8 @@ class TVShowFragment : BaseFragment(), OnItemClickListener {
         tvShowsAdapter = TvShowsAdapter(activity, this, requestManager)
         rv_tv_show.apply {
             setHasFixedSize(true)
-            rv_tv_show.layoutManager = LinearLayoutManager(activity)
-            rv_tv_show.adapter = tvShowsAdapter
+            layoutManager = LinearLayoutManager(activity)
+            adapter = tvShowsAdapter
         }
 
         showTvShows()

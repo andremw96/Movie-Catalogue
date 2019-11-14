@@ -73,7 +73,6 @@ class AppModule {
                 .setDefaultRequestOptions(requestOptions)
     }
 
-    @Singleton
     @Provides
     fun provideLoadingDialog(): LoadingDialog {
         return LoadingDialog()
