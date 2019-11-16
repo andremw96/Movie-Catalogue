@@ -86,6 +86,9 @@ dependencies {
     kapt "androidx.room:room-compiler:2.2.1"
     androidTestImplementation "androidx.room:room-testing:2.2.1"
 
+    //paging
+    implementation 'androidx.paging:paging-runtime:2.1.0'
+
     // Dependencies for local unit tests
     testImplementation "junit:junit:4.12"
     testImplementation "org.hamcrest:hamcrest-all:1.3"
