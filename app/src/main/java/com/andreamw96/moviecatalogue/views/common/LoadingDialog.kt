@@ -9,14 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ImageView
 import com.andreamw96.moviecatalogue.R
-import com.andreamw96.moviecatalogue.utils.GlideApp
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.DrawableImageViewTarget
 import dagger.android.support.DaggerDialogFragment
-import javax.inject.Singleton
+import pl.droidsonroids.gif.GifImageView
 
 
 class LoadingDialog : DaggerDialogFragment() {
@@ -31,16 +26,8 @@ class LoadingDialog : DaggerDialogFragment() {
         val rootView = inflater.inflate(R.layout.loading_dialog, container, false)
 
         if (rootView != null) {
-            val gifImageView = rootView.findViewById<ImageView>(R.id.custom_loading_imageView)
+            val gifImageView = rootView.findViewById<GifImageView>(R.id.custom_loading_imageView)
 
-            context?.let {
-                GlideApp.with(it)
-                        .load(R.drawable.loading)
-                        .placeholder(R.drawable.loading)
-                        .centerCrop()
-                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
-                        .into(DrawableImageViewTarget(gifImageView))
-            }
         }
         return rootView
     }

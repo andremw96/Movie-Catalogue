@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
+import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +22,9 @@ class DetailTvShowActivity : BaseActivity() {
     }
 
     private lateinit var detailTvShowViewModel: DetailTvShowViewModel
+    private var tvShowEntity : TvShowEntity? = null
+
+    private var isFavorites = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +34,57 @@ class DetailTvShowActivity : BaseActivity() {
 
         val tvShowId = intent.getIntExtra(INTENT_TV_SHOW, 0)
         detailTvShowViewModel.id = tvShowId
+        detailTvShowViewModel.setIsFavorite(tvShowId)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        fav_button_tvshow.setOnClickListener {
+            if(!isFavorites) {
+                val fav = FavoriteEntity(
+                        tvShowId,
+                        tvShowEntity?.backdropPath.toString(),
+                        tvShowEntity?.overview.toString(),
+                        tvShowEntity?.firstAirDate.toString(),
+                        tvShowEntity?.name.toString(),
+                        tvShowEntity?.voteAverage,
+                        false
+                )
+                detailTvShowViewModel.insertFav(fav)
+
+                showSnackbar(scrollview_detail_tvshow, "Added to favorite", Snackbar.LENGTH_SHORT)
+            } else {
+                detailTvShowViewModel.deleteFav(tvShowId)
+
+                showSnackbar(scrollview_detail_tvshow, "Deleted from favorite", Snackbar.LENGTH_SHORT)
+            }
+
+            detailTvShowViewModel.setIsFavorite(tvShowId)
+        }
+
+        observeFavorites()
         showDetailTvShow()
+    }
+
+    private fun observeFavorites() {
+        detailTvShowViewModel.favorite.removeObservers(this)
+        detailTvShowViewModel.favorite.observe(this, Observer { isfav ->
+            if(isfav != null) {
+                isFavorites = isfav.isNotEmpty()
+
+                favoriteState()
+            }
+        })
+    }
+
+    private fun favoriteState() {
+        if(!isFavorites) {
+            fav_button_tvshow.apply {
+                progress = 0f
+                pauseAnimation()
+            }
+        } else {
+            fav_button_tvshow.playAnimation()
+        }
     }
 
     private fun showDetailTvShow() {
@@ -44,6 +96,8 @@ class DetailTvShowActivity : BaseActivity() {
                 }
 
                 Resource.Status.SUCCESS -> {
+                    tvShowEntity = tvShow.data
+
                     requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(tvShow.data?.backdropPath).toString())
                             .into(detail_image_tvshow)
                     detail_title_tvshow.text = tvShow.data?.name

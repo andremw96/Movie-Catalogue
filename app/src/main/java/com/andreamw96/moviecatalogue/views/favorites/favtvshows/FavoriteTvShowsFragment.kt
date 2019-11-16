@@ -14,7 +14,7 @@ import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.OnItemClickListener
 import com.andreamw96.moviecatalogue.views.favorites.FavoritesAdapter
 import com.andreamw96.moviecatalogue.views.favorites.FavoritesViewModel
-import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
+import com.andreamw96.moviecatalogue.views.tvshows.detail.DetailTvShowActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_favorite_tv_shows.*
 
@@ -65,8 +65,8 @@ class FavoriteTvShowsFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onItemClicked(position: Int) {
-        val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, favoritesAdapter.listFavorite[position].id)
+        val goToDetail = Intent(activity, DetailTvShowActivity::class.java)
+        goToDetail.putExtra(DetailTvShowActivity.INTENT_TV_SHOW, favoritesAdapter.listFavorite[position].id)
         startActivity(goToDetail)
     }
 

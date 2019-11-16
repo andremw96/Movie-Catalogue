@@ -11,28 +11,27 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "favoriteentity")
 data class FavoriteEntity(
 
-        @ColumnInfo(name = "backdropPath")
-        val backdropPath: String,
-
-        @ColumnInfo(name = "overview")
-        val overview: String,
-
-        @ColumnInfo(name = "releaseDate")
-        val releaseDate: String,
-
-        @ColumnInfo(name = "title")
-        val title: String,
-
-        @ColumnInfo(name = "voteAverage")
-        val voteAverage: Double,
-
-        @ColumnInfo(name = "isMovie")
-        val isMovie: Boolean
-
-) : Parcelable {
-
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
         @NonNull
         @ColumnInfo(name = "id")
-        var id: Int = 0
-}
+        val id: Int,
+
+        @ColumnInfo(name = "backdropPath")
+        val backdropPath: String? = null,
+
+        @ColumnInfo(name = "overview")
+        val overview: String? = null,
+
+        @ColumnInfo(name = "releaseDate")
+        val releaseDate: String? = null,
+
+        @ColumnInfo(name = "title")
+        val title: String? = null,
+
+        @ColumnInfo(name = "voteAverage")
+        val voteAverage: Double? = null,
+
+        @ColumnInfo(name = "isMovie")
+        val isMovie: Boolean? = null
+
+) : Parcelable

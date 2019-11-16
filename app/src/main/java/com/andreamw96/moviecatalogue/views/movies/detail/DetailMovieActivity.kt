@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.andreamw96.moviecatalogue.BaseActivity
 import com.andreamw96.moviecatalogue.BuildConfig
 import com.andreamw96.moviecatalogue.R
+import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
+import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
 import com.andreamw96.moviecatalogue.utils.showSnackbar
 import com.andreamw96.moviecatalogue.views.common.Resource
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +22,10 @@ class DetailMovieActivity : BaseActivity() {
     }
 
     private lateinit var detailMovieViewModel: DetailMovieViewModel
+    private var movieEntity: MovieEntity? = null
+    private var movieId = 0
+
+    private var isFavorites = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +33,59 @@ class DetailMovieActivity : BaseActivity() {
 
         detailMovieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(DetailMovieViewModel::class.java)
 
-        val movieId = intent.getIntExtra(INTENT_MOVIE, 0)
+        movieId = intent.getIntExtra(INTENT_MOVIE, 0)
         detailMovieViewModel.movieId = movieId
+        detailMovieViewModel.setIsFavorite(movieId)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        fav_button_movie.setOnClickListener {
+            if(!isFavorites) {
+                val fav = FavoriteEntity(
+                        movieId,
+                        movieEntity?.backdropPath.toString(),
+                        movieEntity?.overview.toString(),
+                        movieEntity?.releaseDate.toString(),
+                        movieEntity?.title.toString(),
+                        movieEntity?.voteAverage,
+                        true
+                )
+                detailMovieViewModel.insertFav(fav)
+
+                showSnackbar(scrollview_detail_movie, "Added to favorite", Snackbar.LENGTH_SHORT)
+            } else {
+                detailMovieViewModel.deleteFav(movieId)
+
+                showSnackbar(scrollview_detail_movie, "Deleted from favorite", Snackbar.LENGTH_SHORT)
+            }
+
+            detailMovieViewModel.setIsFavorite(movieId)
+        }
+
+        observeFavorites()
         showDetailMovie()
+    }
+
+    private fun favoriteState() {
+        if(!isFavorites) {
+            fav_button_movie.apply {
+                progress = 0f
+                pauseAnimation()
+            }
+        } else {
+            fav_button_movie.playAnimation()
+        }
+    }
+
+    private fun observeFavorites() {
+        detailMovieViewModel.favorite.removeObservers(this)
+        detailMovieViewModel.favorite.observe(this, Observer { isfav ->
+            if(isfav != null) {
+                isFavorites = isfav.isNotEmpty()
+
+                favoriteState()
+            }
+        })
     }
 
     private fun showDetailMovie() {
@@ -44,6 +97,8 @@ class DetailMovieActivity : BaseActivity() {
                 }
 
                 Resource.Status.SUCCESS -> {
+                    movieEntity = movie.data
+
                     requestManager.load(StringBuilder().append(BuildConfig.IMAGE_BASE_URL).append(movie.data?.backdropPath).toString())
                             .into(detail_image_movie)
                     detail_title_movie.text = movie.data?.title

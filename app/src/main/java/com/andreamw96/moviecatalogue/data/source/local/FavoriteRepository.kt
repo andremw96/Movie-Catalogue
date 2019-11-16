@@ -19,7 +19,7 @@ class FavoriteRepository @Inject constructor(private val favoriteDao: FavoriteDa
     }
 
     @WorkerThread
-    suspend fun isFavorite(idMovie: Int): List<FavoriteEntity> {
+    fun isFavorite(idMovie: Int): LiveData<List<FavoriteEntity>> {
         return favoriteDao.isFavorite(idMovie)
     }
 
