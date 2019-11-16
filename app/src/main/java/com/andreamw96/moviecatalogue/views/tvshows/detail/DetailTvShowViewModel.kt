@@ -1,22 +1,23 @@
 package com.andreamw96.moviecatalogue.views.tvshows.detail
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
-import com.andreamw96.moviecatalogue.data.source.remote.TvShowRemoteRepository
+import com.andreamw96.moviecatalogue.data.source.TvShowRepository
+import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
+import com.andreamw96.moviecatalogue.views.common.Resource
 import javax.inject.Inject
 
-class DetailTvShowViewModel @Inject constructor(private val tvShowRepository: TvShowRemoteRepository) : ViewModel() {
+class DetailTvShowViewModel @Inject constructor(private val tvShowRepository: TvShowRepository,
+                                                application: Application) : AndroidViewModel(application) {
 
     var id = 0
 
-    fun getTvShowDetail(): LiveData<TvResultResponse> {
-        return tvShowRepository.getTvShowDetail(id)
+    private val context = getApplication<Application>().applicationContext
+
+    fun getTvShowDetail(): LiveData<Resource<TvShowEntity>> {
+        return tvShowRepository.getDetailTvShows(id, context)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        tvShowRepository.clearComposite()
-    }
 
 }

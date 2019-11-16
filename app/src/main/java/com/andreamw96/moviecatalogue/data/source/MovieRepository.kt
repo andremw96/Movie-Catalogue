@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.data.source
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.data.source.local.MovieLocalRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
@@ -7,6 +8,7 @@ import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
 import com.andreamw96.moviecatalogue.data.source.remote.MovieRemoteRepository
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.utils.AppExecutors
+import com.andreamw96.moviecatalogue.utils.isConnectInternet
 import com.andreamw96.moviecatalogue.views.common.Resource
 import javax.inject.Inject
 
@@ -53,7 +55,7 @@ class MovieRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun getMovieDetail(id: Int) : LiveData<Resource<MovieEntity>> {
+    fun getMovieDetail(id: Int, context: Context) : LiveData<Resource<MovieEntity>> {
         return object : NetworkBoundResource<MovieEntity, MovieResultResponse>(appExecutors) {
 
             override fun saveCallResult(item: MovieResultResponse?) {
@@ -61,7 +63,7 @@ class MovieRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: MovieEntity?): Boolean {
-                return true
+                return isConnectInternet(context)
             }
 
             override fun loadFromDb(): LiveData<MovieEntity> {

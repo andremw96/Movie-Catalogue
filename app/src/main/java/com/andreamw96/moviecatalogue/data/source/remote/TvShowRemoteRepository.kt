@@ -17,7 +17,7 @@ class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowA
 
     private val TAG = TvShowViewModel::class.java.simpleName
     private val listTvShows = MutableLiveData<ApiResponse<List<TvResultResponse>>>()
-    private val detailTvShow = MutableLiveData<TvResultResponse>()
+    private val detailTvShow = MutableLiveData<ApiResponse<TvResultResponse>>()
 
     fun getTvShowFromApi(): LiveData<ApiResponse<List<TvResultResponse>>> {
         if (isRunningEspressoTest) {
@@ -51,7 +51,7 @@ class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowA
         return listTvShows
     }
 
-    fun getTvShowDetail(id: Int): LiveData<TvResultResponse> {
+    fun getTvShowDetail(id: Int): LiveData<ApiResponse<TvResultResponse>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
@@ -61,13 +61,17 @@ class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowA
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    detailTvShow.postValue(it)
+                    if (it != null) {
+                        detailTvShow.postValue(ApiResponse.success(it))
+                    } else {
+                        detailTvShow.postValue(ApiResponse.empty("No Data", null))
+                    }
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()
                     }
                 }, {
-                    detailTvShow.postValue(null)
+                    detailTvShow.postValue(ApiResponse.error("${it.stackTrace}", null))
 
                     if (isRunningEspressoTest) {
                         EspressoIdlingResource.decrement()

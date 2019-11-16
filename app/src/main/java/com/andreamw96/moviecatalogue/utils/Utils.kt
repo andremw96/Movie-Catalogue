@@ -1,5 +1,8 @@
 package com.andreamw96.moviecatalogue.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
@@ -26,3 +29,9 @@ val isRunningEspressoTest: Boolean by lazy {
     }
 }
 
+fun isConnectInternet(context: Context) : Boolean{
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+
+    return activeNetwork?.isConnectedOrConnecting == true
+}

@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.data.source
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.andreamw96.moviecatalogue.data.source.local.TvShowLocalRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
@@ -7,6 +8,7 @@ import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
 import com.andreamw96.moviecatalogue.data.source.remote.TvShowRemoteRepository
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
 import com.andreamw96.moviecatalogue.utils.AppExecutors
+import com.andreamw96.moviecatalogue.utils.isConnectInternet
 import com.andreamw96.moviecatalogue.views.common.Resource
 import javax.inject.Inject
 
@@ -49,6 +51,28 @@ class TvShowRepository @Inject constructor(
             override fun createCall(): LiveData<ApiResponse<List<TvResultResponse>>> {
                 return tvShowRemoteRepository.getTvShowFromApi()
             }
+        }.asLiveData()
+    }
+
+    fun getDetailTvShows(id: Int, context: Context) : LiveData<Resource<TvShowEntity>> {
+        return object : NetworkBoundResource<TvShowEntity, TvResultResponse>(appExecutors) {
+            override fun saveCallResult(item: TvResultResponse?) {
+
+            }
+
+            override fun shouldFetch(data: TvShowEntity?): Boolean {
+                return isConnectInternet(context)
+            }
+
+            override fun loadFromDb(): LiveData<TvShowEntity> {
+                return tvShowLocalRepository.getTvShowDetailFromLocal(id)
+            }
+
+            override fun createCall(): LiveData<ApiResponse<TvResultResponse>> {
+                return tvShowRemoteRepository.getTvShowDetail(id)
+            }
+
+
         }.asLiveData()
     }
 
