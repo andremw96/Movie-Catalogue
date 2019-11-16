@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.andreamw96.moviecatalogue.data.source.sharedpreference.MySharedPreference
 import com.andreamw96.moviecatalogue.di.viewmodel.ViewModelProvidersFactory
 import com.andreamw96.moviecatalogue.views.common.LoadingDialog
 import com.bumptech.glide.RequestManager
@@ -20,6 +21,9 @@ abstract class BaseFragment : DaggerFragment() {
 
     @Inject
     lateinit var requestManager: RequestManager
+
+    @Inject
+    lateinit var mySharedPreference: MySharedPreference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayout(), container, false)

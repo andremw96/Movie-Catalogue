@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.andreamw96.moviecatalogue.BaseFragment
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.utils.showSnackbar
@@ -24,8 +25,9 @@ import kotlinx.android.synthetic.main.fragment_movie.*
 class MovieFragment : BaseFragment(), OnItemClickListener {
 
     private lateinit var movieViewModel: MovieViewModel
+    private lateinit var movieAdapter: MoviePagedAdapter
 
-    private lateinit var movieAdapter: MovieAdapter
+    private var page = 0
 
     override fun getLayout(): Int {
         return R.layout.fragment_movie
@@ -34,34 +36,58 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(MovieViewModel::class.java)
+        page = mySharedPreference.getLastLoadedPageMovies()
 
-        movieAdapter = MovieAdapter(context, this, requestManager)
+        movieViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(MovieViewModel::class.java)
+        movieViewModel.setPage(page)
+
+        movieAdapter = MoviePagedAdapter(context, this, requestManager)
         rv_movie.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
         }
+
+        rv_movie.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    mySharedPreference.setLastLoadedPageMovies(page++)
+                    movieViewModel.setPage(page)
+                }
+
+            }
+        })
+
+        movieAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                rv_movie.scrollToPosition(0)
+            }
+        })
 
         showMovie()
     }
 
     private fun showMovie() {
-        movieViewModel.getMovies().removeObservers(viewLifecycleOwner)
-        movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
+        movieViewModel.movies.removeObservers(viewLifecycleOwner)
+        movieViewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
             when(movies.status) {
                 Resource.Status.LOADING -> {
                     showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
-                    movies.data?.let { movieAdapter.bindData(it) }
+                    movies.data?.let {
+                        movieAdapter.submitList(it)
+                        movieAdapter.notifyDataSetChanged()
+                    }
 
                     hideLoading()
                 }
 
                 Resource.Status.ERROR -> {
-                    movieAdapter.bindData(emptyList())
+                    movieAdapter.submitList(null)
 
                     showSnackbar(fragment_movie, "Gagal memuat list movies", Snackbar.LENGTH_INDEFINITE,
                             View.OnClickListener { showMovie() }, "Retry")
@@ -74,7 +100,9 @@ class MovieFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClicked(position: Int) {
         val goToDetail = Intent(activity, DetailMovieActivity::class.java)
-        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.listMovieEntity[position].id)
+        goToDetail.putExtra(DetailMovieActivity.INTENT_MOVIE, movieAdapter.getItemById(position)?.id)
         startActivity(goToDetail)
     }
+
+
 }

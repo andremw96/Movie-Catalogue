@@ -19,13 +19,13 @@ class TvShowRemoteRepository @Inject constructor(private val mTvShowApi: TvShowA
     private val listTvShows = MutableLiveData<ApiResponse<List<TvResultResponse>>>()
     private val detailTvShow = MutableLiveData<ApiResponse<TvResultResponse>>()
 
-    fun getTvShowFromApi(): LiveData<ApiResponse<List<TvResultResponse>>> {
+    fun getTvShowFromApi(page: Int): LiveData<ApiResponse<List<TvResultResponse>>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
 
         compositeDisposable.add(mTvShowApi
-                .getTvShows(BuildConfig.API_KEY, "en-US")
+                .getTvShows(page, BuildConfig.API_KEY, "en-US")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

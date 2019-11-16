@@ -9,6 +9,7 @@ interface MovieApi {
 
     @GET("discover/movie")
     fun getMovies(
+            @Query("page") page: Int,
             @Query("api_key") apiKey: String,
             @Query("language") language: String
     ): Single<MoviesResponse>

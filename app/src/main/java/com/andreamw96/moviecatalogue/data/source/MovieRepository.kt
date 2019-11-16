@@ -2,6 +2,8 @@ package com.andreamw96.moviecatalogue.data.source
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.andreamw96.moviecatalogue.data.source.local.MovieLocalRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
 import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
@@ -18,8 +20,8 @@ class MovieRepository @Inject constructor(
         private val appExecutors: AppExecutors
 ) {
 
-    fun getMovies() : LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, List<MovieResultResponse>>(appExecutors) {
+    fun getMovies(page: Int) : LiveData<Resource<PagedList<MovieEntity>>> {
+        return object : NetworkBoundResource<PagedList<MovieEntity>, List<MovieResultResponse>>(appExecutors) {
             override fun saveCallResult(item: List<MovieResultResponse>?) {
                 val listMovieEntity = ArrayList<MovieEntity>()
 
@@ -39,16 +41,16 @@ class MovieRepository @Inject constructor(
                 movieLocalRepository.insertResponseMovieToDB(listMovieEntity)
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
-                return data == null || data.isEmpty()
+            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean {
+                return data == null || data.isEmpty() || ((page*20) > data.size)
             }
 
-            override fun loadFromDb(): LiveData<List<MovieEntity>> {
-                return movieLocalRepository.getMoviesFromLocal()
+            override fun loadFromDb(): LiveData<PagedList<MovieEntity>> {
+                return LivePagedListBuilder<Int, MovieEntity>(movieLocalRepository.getMoviesFromLocalPaged(), 20).build()
             }
 
             override fun createCall(): LiveData<ApiResponse<List<MovieResultResponse>>> {
-                return movieRemoteRepository.getMoviesFromApi()
+                return movieRemoteRepository.getMoviesFromApi(page)
             }
 
 

@@ -2,6 +2,8 @@ package com.andreamw96.moviecatalogue.data.source
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.andreamw96.moviecatalogue.data.source.local.TvShowLocalRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
@@ -18,8 +20,8 @@ class TvShowRepository @Inject constructor(
         private val appExecutors: AppExecutors
 ){
 
-    fun getTvShows() : LiveData<Resource<List<TvShowEntity>>> {
-        return object : NetworkBoundResource<List<TvShowEntity>, List<TvResultResponse>>(appExecutors) {
+    fun getTvShows(page: Int) : LiveData<Resource<PagedList<TvShowEntity>>> {
+        return object : NetworkBoundResource<PagedList<TvShowEntity>, List<TvResultResponse>>(appExecutors) {
 
             override fun saveCallResult(item: List<TvResultResponse>?) {
                 val tvShows = ArrayList<TvShowEntity>()
@@ -40,16 +42,16 @@ class TvShowRepository @Inject constructor(
                 tvShowLocalRepository.insertTvShowResponseToDB(tvShows)
             }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
-                return data == null || data.isEmpty()
+            override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean {
+                return data == null || data.isEmpty() || ((page*20) > data.size)
             }
 
-            override fun loadFromDb(): LiveData<List<TvShowEntity>> {
-                return tvShowLocalRepository.getTvShowFromLocal()
+            override fun loadFromDb(): LiveData<PagedList<TvShowEntity>> {
+                return LivePagedListBuilder<Int, TvShowEntity>(tvShowLocalRepository.getTvShowsFromLocalPaged(), 20).build()
             }
 
             override fun createCall(): LiveData<ApiResponse<List<TvResultResponse>>> {
-                return tvShowRemoteRepository.getTvShowFromApi()
+                return tvShowRemoteRepository.getTvShowFromApi(page)
             }
         }.asLiveData()
     }

@@ -18,13 +18,13 @@ class MovieRemoteRepository @Inject constructor(private val mMovieApi: MovieApi,
     private val listMovies = MutableLiveData<ApiResponse<List<MovieResultResponse>>>()
     private val detailMovie = MutableLiveData<ApiResponse<MovieResultResponse>>()
 
-    fun getMoviesFromApi(): LiveData<ApiResponse<List<MovieResultResponse>>> {
+    fun getMoviesFromApi(page: Int): LiveData<ApiResponse<List<MovieResultResponse>>> {
         if (isRunningEspressoTest) {
             EspressoIdlingResource.increment()
         }
 
         compositeDisposable.add(mMovieApi
-                .getMovies(BuildConfig.API_KEY, "en-US")
+                .getMovies(page, BuildConfig.API_KEY, "en-US")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

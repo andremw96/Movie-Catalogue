@@ -1,6 +1,7 @@
 package com.andreamw96.moviecatalogue.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,6 +16,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM moviesentity")
     fun getMoviesLocal(): LiveData<List<MovieEntity>>
+
+    @Query("SELECT * FROM moviesentity ORDER BY autoId ASC")
+    fun getMoviesLocalPaged(): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM moviesentity WHERE id = :id")
     fun getMovieDetailLocal(id: Int) : LiveData<MovieEntity>

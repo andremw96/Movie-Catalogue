@@ -1,11 +1,13 @@
 package com.andreamw96.moviecatalogue.di
 
+import android.app.Application
 import com.andreamw96.moviecatalogue.data.source.local.room.FavoriteDao
 import com.andreamw96.moviecatalogue.data.source.local.room.MovieCatalogueDatabase
 import com.andreamw96.moviecatalogue.data.source.local.room.MovieDao
 import com.andreamw96.moviecatalogue.data.source.local.room.TvShowDao
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieApi
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvShowApi
+import com.andreamw96.moviecatalogue.data.source.sharedpreference.MySharedPreference
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -42,6 +44,11 @@ class DataModule {
     @Provides
     fun provideFavoriteDao(movieCatalogueDatabase: MovieCatalogueDatabase) : FavoriteDao {
         return movieCatalogueDatabase.favDao()
+    }
+
+    @Provides
+    fun provideMySharedPreference(application: Application) : MySharedPreference {
+        return MySharedPreference(application.applicationContext)
     }
 
 }

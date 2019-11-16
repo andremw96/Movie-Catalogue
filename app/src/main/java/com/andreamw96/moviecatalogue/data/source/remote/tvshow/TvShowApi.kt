@@ -9,6 +9,7 @@ interface TvShowApi {
 
     @GET("discover/tv")
     fun getTvShows(
+            @Query("page") page: Int,
             @Query("api_key") apiKey: String,
             @Query("language") language: String
     ): Single<TvShowsResponse>
