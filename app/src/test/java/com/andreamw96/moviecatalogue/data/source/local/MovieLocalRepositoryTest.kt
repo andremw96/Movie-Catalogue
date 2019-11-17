@@ -30,7 +30,6 @@ class MovieLocalRepositoryTest {
     private lateinit var movieLocalRepository: MovieLocalRepository
 
     private val dummyMoviesEntity = FakeDataDummy.genereateDummyMovieEntity()
-
     private val clickedMovie = dummyMoviesEntity[0]
     private val clickedMovieId = clickedMovie.id
 

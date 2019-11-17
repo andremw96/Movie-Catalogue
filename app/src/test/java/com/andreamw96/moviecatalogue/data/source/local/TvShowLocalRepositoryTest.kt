@@ -30,7 +30,6 @@ class TvShowLocalRepositoryTest {
     private lateinit var tvShowLocalRepository: TvShowLocalRepository
 
     private val dummyTvShowsEntity = FakeDataDummy.genereateDummyTvEntity()
-
     private val clickedTvShow = dummyTvShowsEntity[0]
     private val clickedTvShowId = clickedTvShow.id
 
