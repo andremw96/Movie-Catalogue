@@ -1,5 +1,7 @@
 package com.andreamw96.moviecatalogue.utils
 
+import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
+import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
@@ -77,6 +79,68 @@ object FakeDataDummy {
         return movieResult
     }
 
+    fun genereateDummyMovieEntity(): List<MovieEntity> {
+
+        val movieEntity = arrayListOf<MovieEntity>()
+
+        movieEntity.add(
+                MovieEntity(
+                        1,
+                        "backdrop1",
+                        "overview1",
+                        "releaseDate1",
+                        "title1",
+                        1.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        2,
+                        "backdrop2",
+                        "overview2",
+                        "releaseDate2",
+                        "title2",
+                        2.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        3,
+                        "backdrop3",
+                        "overview3",
+                        "releaseDate3",
+                        "title3",
+                        3.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        4,
+                        "backdrop4",
+                        "overview4",
+                        "releaseDate4",
+                        "title4",
+                        4.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        5,
+                        "backdrop5",
+                        "overview5",
+                        "releaseDate5",
+                        "title5",
+                        5.0
+                )
+        )
+
+        return movieEntity
+    }
+
     fun generateDummyTvShows(): TvShowsResponse {
         return TvShowsResponse(
                 1,
@@ -145,6 +209,67 @@ object FakeDataDummy {
         )
 
         return tvResult
+    }
+
+    fun genereateDummyTvEntity(): List<TvShowEntity> {
+        val tvEntity = arrayListOf<TvShowEntity>()
+
+        tvEntity.add(
+                TvShowEntity(
+                        1,
+                        "backdrop1",
+                        "overview1",
+                        "firstAirDate1",
+                        "name1",
+                        1.0
+                )
+        )
+
+        tvEntity.add(
+                TvShowEntity(
+                        2,
+                        "backdrop2",
+                        "overview2",
+                        "firstAirDate2",
+                        "name2",
+                        2.0
+                )
+        )
+
+        tvEntity.add(
+                TvShowEntity(
+                        3,
+                        "backdrop3",
+                        "overview3",
+                        "firstAirDate3",
+                        "name3",
+                        3.0
+                )
+        )
+
+        tvEntity.add(
+                TvShowEntity(
+                        4,
+                        "backdrop4",
+                        "overview4",
+                        "firstAirDate4",
+                        "name4",
+                        4.0
+                )
+        )
+
+        tvEntity.add(
+                TvShowEntity(
+                        5,
+                        "backdrop5",
+                        "overview5",
+                        "firstAirDate5",
+                        "name5",
+                        5.0
+                )
+        )
+
+        return tvEntity
     }
 
 }

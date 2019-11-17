@@ -12,10 +12,6 @@ class TvShowLocalRepository @Inject constructor(private val tvShowDao: TvShowDao
         tvShowDao.insert(tvshows)
     }
 
-    fun getTvShowFromLocal(): LiveData<List<TvShowEntity>> {
-        return tvShowDao.getTVShowLocal()
-    }
-
     fun getTvShowsFromLocalPaged(): DataSource.Factory<Int, TvShowEntity> {
         return tvShowDao.getTvShowsLocalPaged()
     }

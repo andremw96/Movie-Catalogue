@@ -63,7 +63,7 @@ class TvShowRemoteRepositoryTest {
         verify(tvShowApi, atLeastOnce()).getTvShows(ArgumentMatchers.eq(tvShowsDummy.page), ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
 
         assertNotNull(result)
-        assertEquals(result.body?.size, tvShowResults.size)
+        assertEquals(tvShowResults.size, result.body?.size)
     }
 
     @Test
@@ -84,11 +84,11 @@ class TvShowRemoteRepositoryTest {
                 ArgumentMatchers.anyString())
 
         assertNotNull(result)
-        assertEquals(result.body?.id, clickedTvShow.id)
-        assertEquals(result.body?.backdropPath, clickedTvShow.backdropPath)
-        assertEquals(result.body?.firstAirDate, clickedTvShow.firstAirDate)
-        assertEquals(result.body?.name, clickedTvShow.name)
-        assertEquals(result.body?.overview, clickedTvShow.overview)
-        assertEquals(result.body?.voteAverage, clickedTvShow.voteAverage)
+        assertEquals(clickedTvShow.id, result.body?.id)
+        assertEquals(clickedTvShow.backdropPath, result.body?.backdropPath)
+        assertEquals(clickedTvShow.firstAirDate, result.body?.firstAirDate)
+        assertEquals(clickedTvShow.name, result.body?.name)
+        assertEquals(clickedTvShow.overview, result.body?.overview)
+        assertEquals(clickedTvShow.voteAverage, result.body?.voteAverage)
     }
 }

@@ -14,10 +14,6 @@ class MovieLocalRepository @Inject constructor(private val movieDao: MovieDao) {
         movieDao.insert(movies)
     }
 
-    fun getMoviesFromLocal(): LiveData<List<MovieEntity>> {
-        return movieDao.getMoviesLocal()
-    }
-
     fun getMoviesFromLocalPaged(): DataSource.Factory<Int, MovieEntity> {
         return movieDao.getMoviesLocalPaged()
     }

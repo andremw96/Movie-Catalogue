@@ -66,7 +66,7 @@ class MovieRemoteRepositoryTest {
         verify(movieApi, atLeastOnce()).getMovies(eq(dummyMovies.page), anyString(), anyString())
 
         assertNotNull(result)
-        assertEquals(result.body?.size, dummyMovieResult.size)
+        assertEquals(dummyMovieResult.size, result.body?.size)
     }
 
     @Test
@@ -86,11 +86,11 @@ class MovieRemoteRepositoryTest {
                 ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
 
         assertNotNull(result)
-        assertEquals(result.body?.id, clickedMovie.id)
-        assertEquals(result.body?.backdropPath, clickedMovie.backdropPath)
-        assertEquals(result.body?.overview, clickedMovie.overview)
-        assertEquals(result.body?.releaseDate, clickedMovie.releaseDate)
-        assertEquals(result.body?.title, clickedMovie.title)
-        assertEquals(result.body?.voteAverage, clickedMovie.voteAverage)
+        assertEquals(clickedMovie.id, result.body?.id)
+        assertEquals(clickedMovie.backdropPath, result.body?.backdropPath)
+        assertEquals(clickedMovie.overview, result.body?.overview)
+        assertEquals(clickedMovie.releaseDate, result.body?.releaseDate)
+        assertEquals(clickedMovie.title, result.body?.title)
+        assertEquals(clickedMovie.voteAverage, result.body?.voteAverage)
     }
 }
