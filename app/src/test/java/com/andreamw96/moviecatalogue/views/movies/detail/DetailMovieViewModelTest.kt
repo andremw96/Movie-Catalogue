@@ -1,3 +1,4 @@
+/*
 package com.andreamw96.moviecatalogue.views.movies.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -43,4 +44,4 @@ class DetailMovieViewModelTest {
 
         verify(observer).onChanged(clickedMovie)
     }
-}
+}*/

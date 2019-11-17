@@ -2,6 +2,7 @@ package com.andreamw96.moviecatalogue.data.source.remote.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
 import com.andreamw96.moviecatalogue.data.source.remote.TvShowRemoteRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
@@ -18,7 +19,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
 
-class TvShowRepositoryTest {
+class TvShowRemoteRepositoryTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,7 +31,7 @@ class TvShowRepositoryTest {
         val schedulers = RxImmediateSchedulerRule()
     }
 
-    private lateinit var tvShowRepository: TvShowRemoteRepository
+    private lateinit var tvShowRemoteRepository: TvShowRemoteRepository
     private val tvShowApi = mock(TvShowApi::class.java)
     private val compositeDisposable = mock(CompositeDisposable::class.java)
 
@@ -42,48 +43,52 @@ class TvShowRepositoryTest {
 
     @Before
     fun setUp() {
-        tvShowRepository = TvShowRemoteRepository(tvShowApi, compositeDisposable)
+        tvShowRemoteRepository = TvShowRemoteRepository(tvShowApi, compositeDisposable)
     }
 
     @Test
     fun getTvShowFromApi() {
-        `when`(tvShowApi.getTvShows(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
+        val apiResponse = ApiResponse.success(tvShowResults)
+
+        `when`(tvShowApi.getTvShows(ArgumentMatchers.eq(tvShowsDummy.page), ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
                 .thenReturn(Single.just(tvShowsDummy))
 
-        val observer = mock(Observer::class.java) as Observer<List<TvResultResponse>>
+        val observer = mock(Observer::class.java) as Observer<ApiResponse<List<TvResultResponse>>>
 
-        tvShowRepository.getTvShowFromApi().observeForever(observer)
-        verify(observer).onChanged(tvShowResults)
+        tvShowRemoteRepository.getTvShowFromApi(tvShowsDummy.page).observeForever(observer)
+        verify(observer).onChanged(ArgumentMatchers.refEq(apiResponse))
 
-        val result = LiveDataTestUtil.getValue(tvShowRepository.getTvShowFromApi())
+        val result = LiveDataTestUtil.getValue(tvShowRemoteRepository.getTvShowFromApi(tvShowsDummy.page))
 
-        verify(tvShowApi, atLeastOnce()).getTvShows(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
+        verify(tvShowApi, atLeastOnce()).getTvShows(ArgumentMatchers.eq(tvShowsDummy.page), ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
 
         assertNotNull(result)
-        assertEquals(result.size, tvShowResults.size)
+        assertEquals(result.body?.size, tvShowResults.size)
     }
 
     @Test
     fun getTvShowDetail() {
+        val apiResponse = ApiResponse.success(clickedTvShow)
+
         `when`(tvShowApi.getDetailTvShow(ArgumentMatchers.eq(clickedTvShowId), ArgumentMatchers.anyString(),
                 ArgumentMatchers.anyString())).thenReturn(Single.just(clickedTvShow))
 
-        val observer = mock(Observer::class.java) as Observer<TvResultResponse>
+        val observer = mock(Observer::class.java) as Observer<ApiResponse<TvResultResponse>>
 
-        tvShowRepository.getTvShowDetail(clickedTvShowId).observeForever(observer)
-        verify(observer).onChanged(clickedTvShow)
+        tvShowRemoteRepository.getTvShowDetail(clickedTvShowId).observeForever(observer)
+        verify(observer).onChanged(ArgumentMatchers.refEq(apiResponse))
 
-        val result = LiveDataTestUtil.getValue(tvShowRepository.getTvShowDetail(clickedTvShowId))
+        val result = LiveDataTestUtil.getValue(tvShowRemoteRepository.getTvShowDetail(clickedTvShowId))
 
         verify(tvShowApi, atLeastOnce()).getDetailTvShow(ArgumentMatchers.eq(clickedTvShowId), ArgumentMatchers.anyString(),
                 ArgumentMatchers.anyString())
 
         assertNotNull(result)
-        assertEquals(result.id, clickedTvShow.id)
-        assertEquals(result.backdropPath, clickedTvShow.backdropPath)
-        assertEquals(result.firstAirDate, clickedTvShow.firstAirDate)
-        assertEquals(result.name, clickedTvShow.name)
-        assertEquals(result.overview, clickedTvShow.overview)
-        assertEquals(result.voteAverage, clickedTvShow.voteAverage)
+        assertEquals(result.body?.id, clickedTvShow.id)
+        assertEquals(result.body?.backdropPath, clickedTvShow.backdropPath)
+        assertEquals(result.body?.firstAirDate, clickedTvShow.firstAirDate)
+        assertEquals(result.body?.name, clickedTvShow.name)
+        assertEquals(result.body?.overview, clickedTvShow.overview)
+        assertEquals(result.body?.voteAverage, clickedTvShow.voteAverage)
     }
 }

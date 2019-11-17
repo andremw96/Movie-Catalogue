@@ -1,3 +1,4 @@
+/*
 package com.andreamw96.moviecatalogue.views.tvshows.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -40,4 +41,4 @@ class TvShowViewModelTest {
 
         verify(observer).onChanged(dummyTvShow)
     }
-}
+}*/

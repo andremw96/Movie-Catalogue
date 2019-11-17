@@ -2,6 +2,7 @@ package com.andreamw96.moviecatalogue.data.source.remote.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
 import com.andreamw96.moviecatalogue.data.source.remote.MovieRemoteRepository
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
@@ -19,7 +20,7 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
 
 
-class MovieRepositoryTest {
+class MovieRemoteRepositoryTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -31,7 +32,7 @@ class MovieRepositoryTest {
         val schedulers = RxImmediateSchedulerRule()
     }
 
-    private lateinit var movieRepository: MovieRemoteRepository
+    private lateinit var movieRemoteRepository: MovieRemoteRepository
 
     private val movieApi = mock(MovieApi::class.java)
     private val compositeDisposable = mock(CompositeDisposable::class.java)
@@ -44,49 +45,52 @@ class MovieRepositoryTest {
 
     @Before
     fun setUp() {
-        movieRepository = MovieRemoteRepository(movieApi, compositeDisposable)
+        movieRemoteRepository = MovieRemoteRepository(movieApi, compositeDisposable)
     }
 
 
     @Test
     fun getMoviesFromApi() {
-        `when`(movieApi.getMovies(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
+        val apiResponse = ApiResponse.success(dummyMovieResult)
+
+        `when`(movieApi.getMovies(eq(dummyMovies.page), anyString(), anyString()))
                 .thenReturn(Single.just(dummyMovies))
 
-        val observer = mock(Observer::class.java) as Observer<List<MovieResultResponse>>
+        val observer = mock(Observer::class.java) as Observer<ApiResponse<List<MovieResultResponse>>>
 
-        movieRepository.getMoviesFromApi().observeForever(observer)
-        verify(observer).onChanged(dummyMovieResult)
+        movieRemoteRepository.getMoviesFromApi(dummyMovies.page).observeForever(observer)
+        verify(observer).onChanged(ArgumentMatchers.refEq(apiResponse))
 
-        val result = LiveDataTestUtil.getValue(movieRepository.getMoviesFromApi())
+        val result = LiveDataTestUtil.getValue(movieRemoteRepository.getMoviesFromApi(dummyMovies.page))
 
-        verify(movieApi, atLeastOnce()).getMovies(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
+        verify(movieApi, atLeastOnce()).getMovies(eq(dummyMovies.page), anyString(), anyString())
 
         assertNotNull(result)
-        assertEquals(result.size, dummyMovieResult.size)
+        assertEquals(result.body?.size, dummyMovieResult.size)
     }
 
     @Test
     fun getDetailMovieFromApi() {
+        val apiResponse = ApiResponse.success(clickedMovie)
         `when`(movieApi.getDetailMovie(ArgumentMatchers.eq(clickedMovieId),
                 ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn(Single.just(clickedMovie))
 
-        val observer = mock(Observer::class.java) as Observer<MovieResultResponse>
+        val observer = mock(Observer::class.java) as Observer<ApiResponse<MovieResultResponse>>
 
-        movieRepository.getDetailMovieFromApi(clickedMovieId).observeForever(observer)
-        verify(observer).onChanged(clickedMovie)
+        movieRemoteRepository.getDetailMovieFromApi(clickedMovieId).observeForever(observer)
+        verify(observer).onChanged(ArgumentMatchers.refEq(apiResponse))
 
-        val result = LiveDataTestUtil.getValue(movieRepository.getDetailMovieFromApi(clickedMovieId))
+        val result = LiveDataTestUtil.getValue(movieRemoteRepository.getDetailMovieFromApi(clickedMovieId))
 
         verify(movieApi, atLeastOnce()).getDetailMovie(ArgumentMatchers.eq(clickedMovieId),
                 ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
 
         assertNotNull(result)
-        assertEquals(result.id, clickedMovie.id)
-        assertEquals(result.backdropPath, clickedMovie.backdropPath)
-        assertEquals(result.overview, clickedMovie.overview)
-        assertEquals(result.releaseDate, clickedMovie.releaseDate)
-        assertEquals(result.title, clickedMovie.title)
-        assertEquals(result.voteAverage, clickedMovie.voteAverage)
+        assertEquals(result.body?.id, clickedMovie.id)
+        assertEquals(result.body?.backdropPath, clickedMovie.backdropPath)
+        assertEquals(result.body?.overview, clickedMovie.overview)
+        assertEquals(result.body?.releaseDate, clickedMovie.releaseDate)
+        assertEquals(result.body?.title, clickedMovie.title)
+        assertEquals(result.body?.voteAverage, clickedMovie.voteAverage)
     }
 }
