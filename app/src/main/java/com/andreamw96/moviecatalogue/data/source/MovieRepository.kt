@@ -11,7 +11,8 @@ import com.andreamw96.moviecatalogue.data.source.remote.MovieRemoteRepository
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.utils.AppExecutors
 import com.andreamw96.moviecatalogue.utils.isConnectInternet
-import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.vo.NetworkBoundResource
+import com.andreamw96.moviecatalogue.vo.Resource
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(

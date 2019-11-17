@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.views.common
+package com.andreamw96.moviecatalogue.vo
 
 class Resource<T>(var status: Status, var data: T?, var message: String?) {
 

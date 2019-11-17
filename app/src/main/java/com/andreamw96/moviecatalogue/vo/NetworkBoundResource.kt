@@ -1,4 +1,4 @@
-package com.andreamw96.moviecatalogue.data.source
+package com.andreamw96.moviecatalogue.vo
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.andreamw96.moviecatalogue.data.source.remote.ApiResponse
 import com.andreamw96.moviecatalogue.utils.AppExecutors
-import com.andreamw96.moviecatalogue.views.common.Resource
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.

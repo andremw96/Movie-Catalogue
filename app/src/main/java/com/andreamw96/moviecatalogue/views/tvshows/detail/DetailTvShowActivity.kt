@@ -11,7 +11,7 @@ import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
 import com.andreamw96.moviecatalogue.utils.showSnackbar
-import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.vo.Resource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 

@@ -6,7 +6,7 @@ import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import com.andreamw96.moviecatalogue.data.source.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
-import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.vo.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

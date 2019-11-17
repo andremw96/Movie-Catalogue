@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
-import com.andreamw96.moviecatalogue.views.common.Resource
+import com.andreamw96.moviecatalogue.vo.Resource
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
