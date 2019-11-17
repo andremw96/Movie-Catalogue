@@ -26,22 +26,21 @@ class MovieViewModelTest {
     @Before
     fun setUp() {
         movieViewModel = MovieViewModel(movieRepository)
-        movieViewModel.setPage(1)
     }
 
     @Test
     fun getMovies() {
+        val observer = mock(Observer::class.java) as Observer<Resource<PagedList<MovieEntity>>>
+        movieViewModel.movies.observeForever(observer)
+
         val dummyMovies = MutableLiveData<Resource<PagedList<MovieEntity>>>()
         val pagedList = mock(PagedList::class.java) as PagedList<MovieEntity>
-
         dummyMovies.value = Resource.success(pagedList)
 
-        `when`(movieRepository.getMovies(1)).thenReturn(dummyMovies)
+        `when`(movieRepository.getMovies(ArgumentMatchers.eq(1))).thenReturn(dummyMovies)
+        movieViewModel.setPage(1)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<PagedList<MovieEntity>>>
-
-        movieViewModel.movies.observeForever(ArgumentMatchers.refEq(observer))
-
-        verify(observer).onChanged(Resource.success(pagedList))
+        verify(observer).onChanged(ArgumentMatchers.refEq(Resource.success(pagedList)))
+        verify(movieRepository).getMovies(ArgumentMatchers.eq(1))
     }
 }

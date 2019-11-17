@@ -1,15 +1,16 @@
-/*
 package com.andreamw96.moviecatalogue.views.tvshows.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
-import com.andreamw96.moviecatalogue.data.source.remote.TvShowRemoteRepository
-import com.andreamw96.moviecatalogue.utils.FakeDataDummy
+import androidx.paging.PagedList
+import com.andreamw96.moviecatalogue.data.source.TvShowRepository
+import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
+import com.andreamw96.moviecatalogue.vo.Resource
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
 
 class TvShowViewModelTest {
@@ -18,7 +19,7 @@ class TvShowViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var tvShowViewModel: TvShowViewModel
-    private val tvShowRepository = mock(TvShowRemoteRepository::class.java)
+    private val tvShowRepository = mock(TvShowRepository::class.java)
 
 
     @Before
@@ -28,17 +29,17 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShows() {
-        val dummyTvShow = FakeDataDummy.genereateDummyTvResult()
+        val observer = mock(Observer::class.java) as Observer<Resource<PagedList<TvShowEntity>>>
+        tvShowViewModel.tvshows.observeForever(observer)
 
-        val tvShow = MutableLiveData<List<TvResultResponse>>()
-        tvShow.value = dummyTvShow
+        val dummyTvShows = MutableLiveData<Resource<PagedList<TvShowEntity>>>()
+        val pagedList = mock(PagedList::class.java) as PagedList<TvShowEntity>
+        dummyTvShows.value = Resource.success(pagedList)
 
-        `when`(tvShowRepository.getTvShowFromApi()).thenReturn(tvShow)
+        `when`(tvShowRepository.getTvShows(ArgumentMatchers.eq(1))).thenReturn(dummyTvShows)
+        tvShowViewModel.setPage(1)
 
-        val observer = mock(Observer::class.java) as Observer<List<TvResultResponse>>
-
-        tvShowViewModel.getTvShows().observeForever(observer)
-
-        verify(observer).onChanged(dummyTvShow)
+        verify(observer).onChanged(ArgumentMatchers.refEq(Resource.success(pagedList)))
+        verify(tvShowRepository).getTvShows(ArgumentMatchers.eq(1))
     }
-}*/
+}
