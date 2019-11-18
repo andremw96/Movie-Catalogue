@@ -3,11 +3,8 @@ package com.andreamw96.moviecatalogue.data.source.local
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.DataSource
-import androidx.room.Room
-import androidx.test.platform.app.InstrumentationRegistry
 import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import com.andreamw96.moviecatalogue.data.source.local.room.FavoriteDao
-import com.andreamw96.moviecatalogue.data.source.local.room.MovieCatalogueDatabase
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.LiveDataTestUtil
 import com.andreamw96.moviecatalogue.utils.PagedListUtil
@@ -16,7 +13,6 @@ import com.nhaarman.mockitokotlin2.verify
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,8 +23,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class FavoriteRepositoryTest {
 
-    private lateinit var movieCatalogueDatabase: MovieCatalogueDatabase
-    private lateinit var favoriteDao: FavoriteDao
+    private val favoriteDao: FavoriteDao = mock(FavoriteDao::class.java)
     private lateinit var favoriteRepository: FavoriteRepository
 
     private val dummyMoviesEntity = FakeDataDummy.genereateDummyMovieEntity()
@@ -63,20 +58,10 @@ class FavoriteRepositoryTest {
 
     @Before
     fun setUp() {
-        movieCatalogueDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
-                MovieCatalogueDatabase::class.java).build()
-
-        favoriteDao = movieCatalogueDatabase.favDao()
-
         favoriteRepository = FavoriteRepository(favoriteDao)
 
         listFavMovies.add(favoriteMovie)
         listFavTvShows.add(favoriteTv)
-    }
-
-    @After
-    fun tearDown() {
-        movieCatalogueDatabase.close()
     }
 
     @Test
