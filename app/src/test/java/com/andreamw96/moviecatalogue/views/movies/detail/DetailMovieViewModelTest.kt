@@ -10,6 +10,7 @@ import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import com.andreamw96.moviecatalogue.data.source.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
+import com.andreamw96.moviecatalogue.data.source.local.room.FavoriteDao
 import com.andreamw96.moviecatalogue.data.source.local.room.MovieCatalogueDatabase
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.utils.RxImmediateSchedulerRule
@@ -38,7 +39,8 @@ class DetailMovieViewModelTest {
 
     private lateinit var detailMovieViewModel: DetailMovieViewModel
     private val movieRepository = mock(MovieRepository::class.java)
-    private val favoriteRepository = mock(FavoriteRepository::class.java)
+    private lateinit var favoriteRepository: FavoriteRepository
+    private lateinit var favoriteDao: FavoriteDao
 
     private val clickedMovieEntity = FakeDataDummy.genereateDummyMovieEntity()[0]
     private val clickedMovieId = clickedMovieEntity.id
@@ -57,11 +59,16 @@ class DetailMovieViewModelTest {
 
     @Before
     fun setUp() {
+        movieCatalogueDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
+                MovieCatalogueDatabase::class.java).build()
+
+        favoriteDao = movieCatalogueDatabase.favDao()
+
+        favoriteRepository = FavoriteRepository(favoriteDao)
+
         detailMovieViewModel = DetailMovieViewModel(movieRepository, favoriteRepository, ApplicationProvider.getApplicationContext())
         detailMovieViewModel.movieId = clickedMovieId
 
-        movieCatalogueDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
-                MovieCatalogueDatabase::class.java).build()
     }
 
     @After
@@ -87,15 +94,18 @@ class DetailMovieViewModelTest {
     fun insertDetailMovieToFavorite() = runBlocking {
         detailMovieViewModel.insertFav(favoriteMovie)
         verify(favoriteRepository).insert(favoriteMovie)
+        verify(favoriteDao).insert(favoriteMovie)
     }
 
     @Test
     fun deleteFavoriteMovie() = runBlocking {
         detailMovieViewModel.insertFav(favoriteMovie)
         verify(favoriteRepository).insert(favoriteMovie)
+        verify(favoriteDao).insert(favoriteMovie)
 
         detailMovieViewModel.deleteFav(favoriteMovie.id)
         verify(favoriteRepository).deleteFavorites(favoriteMovie.id)
+        verify(favoriteDao).deleteFavorites(favoriteMovie.id)
     }
 
     @Test

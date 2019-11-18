@@ -28,7 +28,7 @@ import org.robolectric.RobolectricTestRunner
 class FavoriteRepositoryTest {
 
     private lateinit var movieCatalogueDatabase: MovieCatalogueDatabase
-    private val favoriteDao = mock(FavoriteDao::class.java)
+    private lateinit var favoriteDao: FavoriteDao
     private lateinit var favoriteRepository: FavoriteRepository
 
     private val dummyMoviesEntity = FakeDataDummy.genereateDummyMovieEntity()
@@ -65,6 +65,8 @@ class FavoriteRepositoryTest {
     fun setUp() {
         movieCatalogueDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
                 MovieCatalogueDatabase::class.java).build()
+
+        favoriteDao = movieCatalogueDatabase.favDao()
 
         favoriteRepository = FavoriteRepository(favoriteDao)
 

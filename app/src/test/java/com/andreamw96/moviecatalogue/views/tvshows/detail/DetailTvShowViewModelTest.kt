@@ -10,6 +10,7 @@ import com.andreamw96.moviecatalogue.data.source.TvShowRepository
 import com.andreamw96.moviecatalogue.data.source.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import com.andreamw96.moviecatalogue.data.source.local.entity.TvShowEntity
+import com.andreamw96.moviecatalogue.data.source.local.room.FavoriteDao
 import com.andreamw96.moviecatalogue.data.source.local.room.MovieCatalogueDatabase
 import com.andreamw96.moviecatalogue.utils.FakeDataDummy
 import com.andreamw96.moviecatalogue.vo.Resource
@@ -31,7 +32,8 @@ class DetailTvShowViewModelTest {
 
     private lateinit var detailTvShowViewModel: DetailTvShowViewModel
     private val tvShowRepository = mock(TvShowRepository::class.java)
-    private val favoriteRepository = mock(FavoriteRepository::class.java)
+    private lateinit var favoriteRepository : FavoriteRepository
+    private lateinit var favoriteDao: FavoriteDao
 
     private val clickedTvShowEntity = FakeDataDummy.genereateDummyTvEntity()[0]
     private val clickedTvShowId = clickedTvShowEntity.id
@@ -50,11 +52,15 @@ class DetailTvShowViewModelTest {
 
     @Before
     fun setUp() {
-        detailTvShowViewModel = DetailTvShowViewModel(tvShowRepository, favoriteRepository, ApplicationProvider.getApplicationContext())
-        detailTvShowViewModel.id = clickedTvShowId
-
         movieCatalogueDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
                 MovieCatalogueDatabase::class.java).build()
+
+        favoriteDao = movieCatalogueDatabase.favDao()
+
+        favoriteRepository = FavoriteRepository(favoriteDao)
+
+        detailTvShowViewModel = DetailTvShowViewModel(tvShowRepository, favoriteRepository, ApplicationProvider.getApplicationContext())
+        detailTvShowViewModel.id = clickedTvShowId
     }
 
     @After
@@ -80,15 +86,18 @@ class DetailTvShowViewModelTest {
     fun insertDetailMovieToFavorite() = runBlocking {
         detailTvShowViewModel.insertFav(favoriteTvShow)
         verify(favoriteRepository).insert(favoriteTvShow)
+        verify(favoriteDao).insert(favoriteTvShow)
     }
 
     @Test
     fun deleteFavoriteMovie() = runBlocking {
         detailTvShowViewModel.insertFav(favoriteTvShow)
         verify(favoriteRepository).insert(favoriteTvShow)
+        verify(favoriteDao).insert(favoriteTvShow)
 
         detailTvShowViewModel.deleteFav(favoriteTvShow.id)
         verify(favoriteRepository).deleteFavorites(favoriteTvShow.id)
+        verify(favoriteDao).deleteFavorites(favoriteTvShow.id)
     }
 
     @Test
