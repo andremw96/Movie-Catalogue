@@ -7,7 +7,7 @@ import com.andreamw96.moviecatalogue.data.source.MovieRepository
 import javax.inject.Inject
 
 
-class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
+open class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
 
     private var _page = MutableLiveData<Int>()
 

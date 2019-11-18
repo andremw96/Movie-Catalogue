@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.utils
 
+import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
 import com.andreamw96.moviecatalogue.data.source.remote.tvshow.TvResultResponse
@@ -37,7 +38,7 @@ object FakeData {
                         "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
                         "2019-10-02",
                         "Joker",
-                        8.5
+                        8.4
                 )
         )
 
@@ -103,6 +104,68 @@ object FakeData {
         )
 
         return movieResult
+    }
+
+    fun genereateDummyMovieEntity(): List<MovieEntity> {
+
+        val movieEntity = arrayListOf<MovieEntity>()
+
+        movieEntity.add(
+                MovieEntity(
+                        1,
+                        "backdrop1",
+                        "overview1",
+                        "releaseDate1",
+                        "title1",
+                        1.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        2,
+                        "backdrop2",
+                        "overview2",
+                        "releaseDate2",
+                        "title2",
+                        2.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        3,
+                        "backdrop3",
+                        "overview3",
+                        "releaseDate3",
+                        "title3",
+                        3.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        4,
+                        "backdrop4",
+                        "overview4",
+                        "releaseDate4",
+                        "title4",
+                        4.0
+                )
+        )
+
+        movieEntity.add(
+                MovieEntity(
+                        5,
+                        "backdrop5",
+                        "overview5",
+                        "releaseDate5",
+                        "title5",
+                        5.0
+                )
+        )
+
+        return movieEntity
     }
 
     fun generateDummyTvShows(): TvShowsResponse {

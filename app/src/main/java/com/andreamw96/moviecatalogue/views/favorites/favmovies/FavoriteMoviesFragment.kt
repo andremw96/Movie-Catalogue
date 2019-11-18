@@ -21,9 +21,6 @@ import com.andreamw96.moviecatalogue.views.movies.detail.DetailMovieActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_favorite_movies.*
 
-
-
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -61,7 +58,7 @@ class FavoriteMoviesFragment : BaseFragment(), OnItemClickListener, OnRecyclerVi
 
         favoritesViewModel.favorites.removeObservers(viewLifecycleOwner)
         favoritesViewModel.favorites.observe(viewLifecycleOwner, Observer {
-            if(it != null) {
+            if (it != null) {
                 favoritesPagedAdapter.submitList(it)
                 favoritesPagedAdapter.notifyDataSetChanged()
             } else {
