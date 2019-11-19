@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.views.movies.detail
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -45,6 +46,7 @@ class DetailMovieActivityTest {
 
         // Initialize UiDevice instance
         uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+
     }
 
     @After
@@ -78,5 +80,19 @@ class DetailMovieActivityTest {
         onView(withId(R.id.detail_date_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.detail_date_movie)).check(matches(withText(releaseDate + selectedMovie.releaseDate)))
 
+    }
+
+    @Test
+    fun favoriteMovie() {
+        val loading = uiDevice.findObject(UiSelector().text("LOADING...."))
+        if (loading.exists()) {
+            loading.waitUntilGone(100)
+        }
+
+        onView(withId(R.id.fav_button_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.fav_button_movie)).perform(click())
+
+        onView(withId(R.id.fav_button_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.fav_button_movie)).perform(click())
     }
 }

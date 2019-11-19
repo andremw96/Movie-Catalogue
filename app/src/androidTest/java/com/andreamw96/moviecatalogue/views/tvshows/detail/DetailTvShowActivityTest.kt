@@ -3,6 +3,7 @@ package com.andreamw96.moviecatalogue.views.tvshows.detail
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -74,5 +75,19 @@ class DetailTvShowActivityTest {
         onView(withId(R.id.detail_date_tvshow)).check(matches(isDisplayed()))
         onView(withId(R.id.detail_date_tvshow)).check(matches(withText("$releaseDate${selectedTvShow.firstAirDate}")))
 
+    }
+
+    @Test
+    fun favoriteTvShows() {
+        val loading = uiDevice.findObject(UiSelector().text("LOADING...."))
+        if (loading.exists()) {
+            loading.waitUntilGone(100)
+        }
+
+        onView(withId(R.id.fav_button_tvshow)).check(matches(isDisplayed()))
+        onView(withId(R.id.fav_button_tvshow)).perform(ViewActions.click())
+
+        onView(withId(R.id.fav_button_tvshow)).check(matches(isDisplayed()))
+        onView(withId(R.id.fav_button_tvshow)).perform(ViewActions.click())
     }
 }

@@ -1,5 +1,6 @@
 package com.andreamw96.moviecatalogue.utils
 
+import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import com.andreamw96.moviecatalogue.data.source.local.entity.MovieEntity
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MovieResultResponse
 import com.andreamw96.moviecatalogue.data.source.remote.movie.MoviesResponse
@@ -263,7 +264,64 @@ object FakeData {
                 )
         )
 
+        tvResult.add(
+                TvResultResponse(
+                        "/mzzHr6g1yvZ05Mc7hNj3tUdy2bM.jpg",
+                        "2013-12-02",
+                        60625,
+                        "Rick and Morty",
+                        "Rick is a mentally-unbalanced but scientifically-gifted old man who has recently reconnected with his family. He spends most of his time involving his young grandson Morty in dangerous, outlandish adventures throughout space and alternate universes. Compounded with Morty's already unstable family life, these events cause Morty much distress at home and school.",
+                        8.6
+                )
+        )
+
         return tvResult
     }
+
+    fun genereateDummyFavMovieEntity(): List<FavoriteEntity> {
+
+        val favmovieEntity = arrayListOf<FavoriteEntity>()
+
+        favmovieEntity.add(
+                FavoriteEntity(
+                        1,
+                        "backdrop1",
+                        "overview1",
+                        "releaseDate1",
+                        "title1",
+                        1.0,
+                        true
+                )
+        )
+
+        favmovieEntity.add(
+                FavoriteEntity(
+                        2,
+                        "backdrop2",
+                        "overview2",
+                        "releaseDate2",
+                        "title2",
+                        2.0,
+                        true
+                )
+        )
+
+        favmovieEntity.add(
+                FavoriteEntity(
+                        3,
+                        "backdrop3",
+                        "overview3",
+                        "releaseDate3",
+                        "title3",
+                        3.0,
+                        true
+                )
+        )
+
+
+
+        return favmovieEntity
+    }
+
 
 }
