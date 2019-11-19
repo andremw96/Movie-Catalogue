@@ -12,7 +12,6 @@ import androidx.test.uiautomator.UiSelector
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.testing.SingleFragmentActivity
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
-import com.andreamw96.moviecatalogue.utils.Helper
 import com.andreamw96.moviecatalogue.utils.RecyclerViewItemCountAssertion
 import org.junit.After
 import org.junit.Before

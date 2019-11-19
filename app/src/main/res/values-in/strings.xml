@@ -13,4 +13,5 @@
 
     <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
     <string name="favorites">Disukai</string>
+    <string name="loading">LOADING....</string>
 </resources>

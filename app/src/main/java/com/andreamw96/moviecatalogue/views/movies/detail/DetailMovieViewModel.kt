@@ -33,7 +33,7 @@ class DetailMovieViewModel @Inject constructor(private val movieRepository: Movi
 
     private var _idMovie = MutableLiveData<Int>()
 
-    val favorite = Transformations.switchMap(_idMovie) { idMovie ->
+    val favorite: LiveData<List<FavoriteEntity>> = Transformations.switchMap(_idMovie) { idMovie ->
         favoriteRepository.isFavorite(idMovie)
     }
 

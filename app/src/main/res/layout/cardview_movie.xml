@@ -25,7 +25,6 @@
             android:contentDescription="@string/imageviewmovie" />
 
         <TextView
-            android:layout_toRightOf="@id/img_movie"
             android:layout_toEndOf="@id/img_movie"
             android:id="@+id/txt_movie_title"
             android:layout_width="match_parent"
@@ -40,7 +39,6 @@
 
         <TextView
             android:layout_below="@id/txt_movie_title"
-            android:layout_toRightOf="@id/img_movie"
             android:layout_toEndOf="@id/img_movie"
             android:id="@+id/txt_rating"
             android:layout_width="match_parent"
@@ -52,7 +50,6 @@
 
         <TextView
             android:layout_below="@id/txt_rating"
-            android:layout_toRightOf="@id/img_movie"
             android:layout_toEndOf="@id/img_movie"
             android:id="@+id/txt_date"
             android:layout_width="match_parent"

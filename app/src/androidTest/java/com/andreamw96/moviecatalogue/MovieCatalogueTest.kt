@@ -3,7 +3,6 @@ package com.andreamw96.moviecatalogue
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -15,6 +14,7 @@ import androidx.test.uiautomator.UiSelector
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
 import com.andreamw96.moviecatalogue.utils.FakeData
 import com.andreamw96.moviecatalogue.utils.Helper
+import com.andreamw96.moviecatalogue.utils.TabLayoutUtils.selectTabAtPosition
 import com.andreamw96.moviecatalogue.views.MainActivity
 import com.andreamw96.moviecatalogue.views.favorites.FavoritesPagedAdapter
 import com.andreamw96.moviecatalogue.views.movies.list.MoviePagedAdapter
@@ -114,7 +114,7 @@ class MovieCatalogueTest {
             onView(withId(R.id.navigation_favorite)).perform(click())
 
             onView(withId(R.id.tab_layout_fav)).check(matches(isDisplayed()))
-            onView(withText("Movies")).perform(click())
+            onView(withId(R.id.tab_layout_fav)).perform(selectTabAtPosition(0))
             onView(withId(R.id.rv_favorite_movies)).check(matches(isDisplayed()))
             onView(withId(R.id.rv_favorite_movies)).perform(RecyclerViewActions.actionOnItemAtPosition<FavoritesPagedAdapter.CardViewViewHolder>(0, click()))
 
@@ -127,21 +127,21 @@ class MovieCatalogueTest {
             onView(withId(R.id.navigation_favorite)).perform(click())
 
             onView(withId(R.id.tab_layout_fav)).check(matches(isDisplayed()))
-            onView(withText("TV Shows")).perform(click())
+            onView(withId(R.id.tab_layout_fav)).perform(selectTabAtPosition(1))
             onView(withId(R.id.rv_favorite_tvshows)).check(matches(isDisplayed()))
             onView(withId(R.id.rv_favorite_tvshows)).perform(RecyclerViewActions.actionOnItemAtPosition<FavoritesPagedAdapter.CardViewViewHolder>(0, click()))
 
             onView(withId(R.id.scrollview_detail_tvshow)).check(matches(isDisplayed()))
             onView(withId(R.id.scrollview_detail_tvshow)).perform(swipeUp())
-        } catch (e: NoMatchingViewException) {
+        } catch (e: Exception) {
             onView(withId(R.id.bottom_navigation)).check(matches(isDisplayed()))
             onView(withId(R.id.navigation_favorite)).perform(click())
 
             onView(withId(R.id.tab_layout_fav)).check(matches(isDisplayed()))
-            onView(withText("Movies")).perform(click())
+            onView(withId(R.id.tab_layout_fav)).perform(selectTabAtPosition(0))
             onView(withId(R.id.rv_favorite_movies)).check(matches(isDisplayed()))
 
-            onView(withText("TV Shows")).perform(click())
+            onView(withId(R.id.tab_layout_fav)).perform(selectTabAtPosition(1))
             onView(withId(R.id.rv_favorite_tvshows)).check(matches(isDisplayed()))
         }
     }

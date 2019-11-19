@@ -1,9 +1,7 @@
 package com.andreamw96.moviecatalogue.views.favorites
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.paging.PagedList
 import com.andreamw96.moviecatalogue.data.source.local.FavoriteRepository
 import com.andreamw96.moviecatalogue.data.source.local.entity.FavoriteEntity
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +12,7 @@ class FavoritesViewModel @Inject constructor(private val favoriteRepository: Fav
 
     private val _isMovie = MutableLiveData<Boolean>()
 
-    val favorites = Transformations.switchMap(_isMovie) { isMovie ->
+    val favorites: LiveData<PagedList<FavoriteEntity>> = Transformations.switchMap(_isMovie) { isMovie ->
         favoriteRepository.getFavorites(isMovie)
     }
 

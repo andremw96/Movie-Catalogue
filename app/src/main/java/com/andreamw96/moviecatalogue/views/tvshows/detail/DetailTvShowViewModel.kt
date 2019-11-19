@@ -33,7 +33,7 @@ class DetailTvShowViewModel @Inject constructor(private val tvShowRepository: Tv
 
     private var _idTvShow = MutableLiveData<Int>()
 
-    val favorite = Transformations.switchMap(_idTvShow) { idTvShow ->
+    val favorite: LiveData<List<FavoriteEntity>> = Transformations.switchMap(_idTvShow) { idTvShow ->
         favoriteRepository.isFavorite(idTvShow)
     }
 

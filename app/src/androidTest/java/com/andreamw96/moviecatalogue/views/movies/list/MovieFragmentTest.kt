@@ -1,7 +1,6 @@
 package com.andreamw96.moviecatalogue.views.movies.list
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -14,7 +13,6 @@ import androidx.test.uiautomator.UiSelector
 import com.andreamw96.moviecatalogue.R
 import com.andreamw96.moviecatalogue.testing.SingleFragmentActivity
 import com.andreamw96.moviecatalogue.utils.EspressoIdlingResource
-import com.andreamw96.moviecatalogue.utils.Helper
 import com.andreamw96.moviecatalogue.utils.RecyclerViewItemCountAssertion
 import org.junit.After
 import org.junit.Before

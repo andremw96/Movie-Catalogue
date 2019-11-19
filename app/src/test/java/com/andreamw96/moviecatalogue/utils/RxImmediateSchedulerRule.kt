@@ -18,7 +18,7 @@ class RxImmediateSchedulerRule : TestRule {
             return super.scheduleDirect(run, 0, unit)
         }
 
-        override fun createWorker(): Scheduler.Worker {
+        override fun createWorker(): Worker {
             return ExecutorScheduler.ExecutorWorker(Executor { it.run() }, false)
         }
     }
