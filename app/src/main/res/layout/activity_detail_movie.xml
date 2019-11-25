@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@drawable/poster_infinity_war"
+            android:transitionName="@string/poster_film"
             android:contentDescription="@string/poster_film" />
 
         <com.airbnb.lottie.LottieAnimationView
